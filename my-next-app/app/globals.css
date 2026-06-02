@@ -1,0 +1,141 @@
+@import "tailwindcss";
+
+:root {
+  --background: #ffffff;
+  --foreground: #171717;
+
+  /* Cris Royal brand system */
+  --crd-bg: #0a0a0a;
+  --crd-ink: #f5f0e8;
+  --crd-muted: #8a8070;
+  --crd-gold: #c8922a;
+  --crd-gold-soft: rgba(200, 146, 42, 0.2);
+  --crd-whatsapp: #25d366;
+
+  /* semantic z-index scale */
+  --z-float: 60;
+
+  /* motion easing tokens */
+  --ease-expo: cubic-bezier(0.16, 1, 0.3, 1);
+  --ease-spring: cubic-bezier(0.32, 0.72, 0, 1);
+}
+
+@theme inline {
+  --color-background: var(--background);
+  --color-foreground: var(--foreground);
+  --font-sans: var(--font-geist-sans);
+  --font-mono: var(--font-geist-mono);
+
+  /* brand fonts (wired in layout.tsx) */
+  --font-display: var(--font-cinzel);
+  --font-serif: var(--font-cormorant);
+  --font-body: var(--font-jost);
+
+  /* brand colors as Tailwind tokens */
+  --color-crd-bg: var(--crd-bg);
+  --color-crd-ink: var(--crd-ink);
+  --color-crd-muted: var(--crd-muted);
+  --color-crd-gold: var(--crd-gold);
+  --color-crd-whatsapp: var(--crd-whatsapp);
+}
+
+@media (prefers-color-scheme: dark) {
+  :root {
+    --background: #0a0a0a;
+    --foreground: #ededed;
+  }
+}
+
+body {
+  background: var(--background);
+  color: var(--foreground);
+  font-family: Arial, Helvetica, sans-serif;
+}
+
+/* ----------------------------------------------------------------------------
+   Footer motion + craft utilities
+   ------------------------------------------------------------------------- */
+
+/* Animated gold underline that wipes in from the left on hover/focus */
+.crd-link {
+  position: relative;
+  background-image: linear-gradient(var(--crd-gold), var(--crd-gold));
+  background-position: 0 100%;
+  background-repeat: no-repeat;
+  background-size: 0% 1px;
+  transition:
+    background-size 420ms var(--ease-expo),
+    color 280ms ease-out;
+}
+.crd-link:hover,
+.crd-link:focus-visible {
+  color: var(--crd-gold);
+  background-size: 100% 1px;
+}
+
+/* A hairline that draws itself open the first time it is revealed (one-shot) */
+@keyframes crd-rule-grow {
+  from {
+    transform: scaleX(0);
+  }
+  to {
+    transform: scaleX(1);
+  }
+}
+
+/* Heartbeat — interaction-triggered only, never an idle loop.
+   Plays once when the "built with passion" line is hovered/focused. */
+@keyframes crd-beat {
+  0%,
+  100% {
+    transform: scale(1);
+  }
+  20% {
+    transform: scale(1.3);
+  }
+  40% {
+    transform: scale(1);
+  }
+  60% {
+    transform: scale(1.16);
+  }
+  80% {
+    transform: scale(1);
+  }
+}
+.crd-beat-trigger:hover .crd-beat,
+.crd-beat-trigger:focus-visible .crd-beat {
+  animation: crd-beat 1.25s ease-in-out both;
+  transform-origin: center;
+}
+
+/* A single light sweep that crosses the gold seam once, when it scrolls in */
+@keyframes crd-sweep {
+  from {
+    transform: translateX(-130%);
+  }
+  to {
+    transform: translateX(130%);
+  }
+}
+.crd-sweep {
+  opacity: 0;
+  transform: translateX(-130%);
+}
+.crd-sweep.is-in {
+  opacity: 1;
+  animation: crd-sweep 1.5s var(--ease-expo) 120ms both;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .crd-beat,
+  .crd-sweep {
+    animation: none !important;
+  }
+  .crd-sweep {
+    opacity: 0 !important;
+  }
+  .crd-link {
+    transition: color 120ms ease-out;
+  }
+}
