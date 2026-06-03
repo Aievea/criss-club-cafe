@@ -8,8 +8,8 @@
   --crd-bg: #0a0a0a;
   --crd-ink: #f5f0e8;
   --crd-muted: #8a8070;
-  --crd-gold: #c8922a;
-  --crd-gold-soft: rgba(200, 146, 42, 0.2);
+  --crd-gold: #ffffff;
+  --crd-gold-soft: rgba(255, 255, 255, 0.15);
   --crd-whatsapp: #25d366;
 
   /* semantic z-index scale */

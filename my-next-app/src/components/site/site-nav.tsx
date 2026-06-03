@@ -39,7 +39,7 @@ export function SiteNav() {
           <Image
             src={logo}
             alt="Criss Club & Cafe"
-            className="h-20 w-auto brightness-0 invert"
+            className="h-14 w-auto brightness-0 invert"
             priority
           />
         </Link>
