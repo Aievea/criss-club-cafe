@@ -34,7 +34,7 @@ export function SiteNav() {
 
   return (
     <>
-      <header className="relative z-20 mx-auto flex w-full max-w-6xl items-center justify-between gap-x-6 px-6 py-5 sm:px-8 lg:px-10">
+      <header className="relative z-20 mx-auto flex w-full max-w-5xl items-center justify-between gap-x-6 px-6 py-5 sm:px-8 lg:px-10">
         <Link href="/" className="transition-opacity duration-300 hover:opacity-80">
           <Image
             src={logo}

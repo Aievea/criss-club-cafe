@@ -17,54 +17,69 @@ import ev6 from "@/src/assets/images/images-crissclub/djs/WhatsApp Image 2026-06
 const EVENTS = [ev1, ev2, ev3, ev4, ev5, ev6].map((img) => img.src);
 
 export default function CrissClubPage() {
-  const { t } = useLanguage();
+  const { t, lang } = useLanguage();
 
   return (
     <PageHero eyebrow={t.club.kind} title="Criss Club" lead={t.pages.club}>
-      <div className="mx-auto flex max-w-md flex-col items-center gap-8">
-        <ul className="space-y-2.5 text-sm text-crd-ink/85">
-          <li>{t.club.capacity}</li>
-          <li>{t.club.open}</li>
-        </ul>
+      <div className="mx-auto flex w-full max-w-sm flex-col items-center gap-10">
 
-        <VideoFrame src={clubVideo} className="w-full max-w-xs" />
+        <VideoFrame src={clubVideo} className="w-full" />
 
-        <div className="w-full border-y border-white/[0.08] py-6">
-          <span className="text-[0.68rem] font-semibold uppercase tracking-[0.28em] text-crd-gold/80">
+        {/* Key info */}
+        <div className="flex w-full flex-col gap-2.5">
+          <div className="flex items-center justify-between rounded-xl border border-white/[0.08] bg-white/[0.02] px-4 py-3">
+            <span className="text-sm text-crd-muted">{t.club.capacity.split(":")[0]}</span>
+            <span className="text-sm font-medium text-crd-ink">220+</span>
+          </div>
+          <div className="flex items-center justify-between rounded-xl border border-white/[0.08] bg-white/[0.02] px-4 py-3">
+            <span className="text-sm text-crd-muted">{t.club.open.includes("04") ? "Program" : "Hours"}</span>
+            <span className="text-sm font-medium text-crd-ink">04:00</span>
+          </div>
+        </div>
+
+        {/* DJs */}
+        <div className="w-full rounded-2xl border border-white/[0.08] bg-white/[0.02] px-6 py-5 text-left">
+          <p className="mb-4 text-xs font-semibold uppercase tracking-[0.22em] text-crd-muted">
             {t.club.djLabel}
-          </span>
-          <div className="mt-4 flex flex-wrap items-center justify-center gap-x-3 gap-y-2 text-sm">
-            {DJS.map((dj, i) => (
-              <span key={dj} className="flex items-center gap-3">
-                <span className="text-crd-ink/90">{dj}</span>
-                {i < DJS.length - 1 && (
-                  <span className="text-crd-gold/50">•</span>
-                )}
+          </p>
+          <div className="flex flex-wrap gap-2">
+            {DJS.map((dj) => (
+              <span key={dj} className="rounded-full border border-white/10 bg-white/[0.04] px-3 py-1 text-sm text-crd-ink/90">
+                {dj}
               </span>
             ))}
           </div>
         </div>
 
-        <p className="text-sm text-crd-ink/80">{t.club.events}</p>
-        <p className="font-serif text-base italic text-crd-gold/90">
-          {t.club.selective}
-        </p>
+        {/* Events */}
+        <div className="w-full rounded-2xl border border-white/[0.08] bg-white/[0.02] px-6 py-5 text-left">
+          <p className="mb-3 text-xs font-semibold uppercase tracking-[0.22em] text-crd-muted">
+            {lang === "ro" ? "Evenimente" : "Events"}
+          </p>
+          <div className="flex flex-wrap gap-2">
+            {(t.club.events.split(" • ")).map((ev) => (
+              <span key={ev} className="rounded-full border border-white/10 bg-white/[0.04] px-3 py-1 text-sm text-crd-ink/85">
+                {ev}
+              </span>
+            ))}
+          </div>
+          <p className="mt-4 text-sm leading-relaxed text-crd-muted">{t.club.selective}</p>
+        </div>
 
-        <ContactActions />
-        <AddressLink />
+        <div className="flex flex-col items-center gap-3">
+          <ContactActions />
+          <AddressLink />
+        </div>
       </div>
 
-      {/* Event posters gallery */}
-      <div className="mx-auto mt-16 max-w-3xl">
-        <span className="block text-center text-[0.68rem] font-semibold uppercase tracking-[0.28em] text-crd-gold/80">
+      {/* Gallery */}
+      <div className="mx-auto mt-14 max-w-2xl px-6 sm:px-8">
+        <p className="mb-5 text-center text-xs font-semibold uppercase tracking-[0.22em] text-crd-muted">
           {t.club.gallery}
-        </span>
-        <div className="mt-6 grid grid-cols-2 gap-3 sm:grid-cols-3">
+        </p>
+        <div className="grid grid-cols-2 gap-2.5 sm:grid-cols-3">
           {EVENTS.map((src) => (
-            <div
-              key={src}
-              className="group overflow-hidden rounded-2xl ring-1 ring-white/10"
-            >
+            <div key={src} className="group overflow-hidden rounded-xl ring-1 ring-white/10">
               {/* eslint-disable-next-line @next/next/no-img-element */}
               <img
                 src={src}
