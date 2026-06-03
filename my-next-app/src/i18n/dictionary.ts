@@ -81,6 +81,7 @@ export const dictionary = {
       back: "Înapoi acasă",
       openMenu: "Deschide meniul",
       closeMenu: "Închide meniul",
+      reserve: "Rezervare",
     },
 
     home: {
@@ -169,6 +170,7 @@ export const dictionary = {
       back: "Back home",
       openMenu: "Open menu",
       closeMenu: "Close menu",
+      reserve: "Reserve",
     },
 
     home: {

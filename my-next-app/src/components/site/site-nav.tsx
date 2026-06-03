@@ -82,27 +82,27 @@ export function SiteNav() {
             href="tel:0746521799"
             className="hidden lg:inline-flex items-center rounded-full border border-white/30 px-4 py-2.5 text-[10.5px] tracking-[0.24em] uppercase text-white/80 transition-all duration-200 hover:bg-[#c9a86a] hover:text-[#1a1411] hover:border-[#c9a86a]"
           >
-            Rezervare
+            {t.nav.reserve}
           </a>
-
-          {/* Hamburger */}
-          <button
-            onClick={() => setIsOpen((p) => !p)}
-            aria-label={isOpen ? t.nav.closeMenu : t.nav.openMenu}
-            aria-expanded={isOpen}
-            className="relative z-[60] flex h-9 w-9 flex-col items-center justify-center gap-[5px] lg:hidden"
-          >
-            <span className={`block h-px w-5 bg-crd-ink transition-all duration-300 ${isOpen ? "translate-y-[6px] rotate-45" : ""}`} />
-            <span className={`block h-px w-5 bg-crd-ink transition-all duration-300 ${isOpen ? "opacity-0" : ""}`} />
-            <span className={`block h-px w-5 bg-crd-ink transition-all duration-300 ${isOpen ? "-translate-y-[6px] -rotate-45" : ""}`} />
-          </button>
         </div>
       </header>
+
+      {/* Hamburger — fixed above overlay */}
+      <button
+        onClick={() => setIsOpen((p) => !p)}
+        aria-label={isOpen ? t.nav.closeMenu : t.nav.openMenu}
+        aria-expanded={isOpen}
+        className="fixed top-4 right-9 z-[75] flex h-9 w-9 flex-col items-center justify-center gap-[5px] lg:hidden"
+      >
+        <span className={`block h-px w-5 bg-crd-ink transition-all duration-300 ${isOpen ? "translate-y-[6px] rotate-45" : ""}`} />
+        <span className={`block h-px w-5 bg-crd-ink transition-all duration-300 ${isOpen ? "opacity-0" : ""}`} />
+        <span className={`block h-px w-5 bg-crd-ink transition-all duration-300 ${isOpen ? "-translate-y-[6px] -rotate-45" : ""}`} />
+      </button>
 
       {/* Mobile overlay */}
       <div
         {...(!isOpen ? { inert: true } : {})}
-        className={`fixed inset-0 z-50 flex flex-col items-center justify-center bg-crd-bg/95 backdrop-blur-md transition-all duration-300 lg:hidden ${
+        className={`fixed inset-0 z-[70] flex flex-col items-center justify-center bg-crd-bg/95 backdrop-blur-md transition-all duration-300 lg:hidden ${
           isOpen ? "opacity-100 pointer-events-auto" : "opacity-0 pointer-events-none"
         }`}
         role="dialog"
