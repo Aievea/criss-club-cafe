@@ -70,9 +70,9 @@ export function SiteNav() {
 
           <button
             onClick={() => setIsOpen((prev) => !prev)}
-            aria-label={isOpen ? "Închide meniul" : "Deschide meniul"}
+            aria-label={isOpen ? t.nav.closeMenu : t.nav.openMenu}
             aria-expanded={isOpen}
-            className="relative flex h-9 w-9 flex-col items-center justify-center gap-[5px] lg:hidden"
+            className="relative z-[60] flex h-9 w-9 flex-col items-center justify-center gap-[5px] lg:hidden"
           >
             <span
               className={`block h-px w-5 bg-crd-ink transition-all duration-300 ${
@@ -94,21 +94,14 @@ export function SiteNav() {
       </header>
 
       <div
+        {...(!isOpen ? { inert: true } : {})}
         className={`fixed inset-0 z-50 flex flex-col items-center justify-center bg-crd-bg/95 backdrop-blur-md transition-all duration-300 lg:hidden ${
           isOpen ? "opacity-100 pointer-events-auto" : "opacity-0 pointer-events-none"
         }`}
+        role="dialog"
+        aria-modal="true"
         aria-hidden={!isOpen}
       >
-        <button
-          onClick={() => setIsOpen(false)}
-          aria-label="Închide meniul"
-          className="absolute right-6 top-5 flex h-9 w-9 flex-col items-center justify-center gap-[5px] sm:right-8"
-        >
-          <span className="block h-px w-5 translate-y-[6px] rotate-45 bg-crd-ink" />
-          <span className="block h-px w-5 opacity-0 bg-crd-ink" />
-          <span className="block h-px w-5 -translate-y-[6px] -rotate-45 bg-crd-ink" />
-        </button>
-
         <nav className="flex flex-col items-center gap-8">
           {LINKS.map((link, i) => {
             const active = pathname === link.href;

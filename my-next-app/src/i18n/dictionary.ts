@@ -79,6 +79,8 @@ export const dictionary = {
       club: "Criss Club",
       services: "Servicii",
       back: "Înapoi acasă",
+      openMenu: "Deschide meniul",
+      closeMenu: "Închide meniul",
     },
 
     home: {
@@ -165,6 +167,8 @@ export const dictionary = {
       club: "Criss Club",
       services: "Services",
       back: "Back home",
+      openMenu: "Open menu",
+      closeMenu: "Close menu",
     },
 
     home: {
