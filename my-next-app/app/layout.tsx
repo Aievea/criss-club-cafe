@@ -3,6 +3,7 @@ import { Geist, Geist_Mono, Cinzel, Cormorant_Garamond, Jost, Pinyon_Script } fr
 import "./globals.css";
 import { LanguageProvider } from "@/src/i18n/language-context";
 import { Footer } from "@/src/components/Footer";
+import { WhatsAppFab } from "@/src/components/site/whatsapp-fab";
 
 const geistSans = Geist({
   variable: "--font-geist-sans",
@@ -61,6 +62,7 @@ export default function RootLayout({
         <LanguageProvider>
           <div className="flex flex-1 flex-col">{children}</div>
           <Footer />
+          <WhatsAppFab />
         </LanguageProvider>
       </body>
     </html>
