@@ -1,7 +1,6 @@
 import Image from "next/image";
 import Link from "next/link";
 import logo from "@/src/assets/images/logos/logocriscafeclub.svg";
-// @ts-expect-error — Next.js resolves video static imports via next.config
 import clubVideo from "@/src/assets/video/video-crissclub/WhatsApp Video 2026-06-02 at 17.35.15.mp4";
 
 export function HomepageHero() {
