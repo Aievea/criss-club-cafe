@@ -1,5 +1,5 @@
 import type { Metadata } from "next";
-import { Geist, Geist_Mono, Cinzel, Cormorant_Garamond, Jost } from "next/font/google";
+import { Geist, Geist_Mono, Cinzel, Cormorant_Garamond, Jost, Pinyon_Script } from "next/font/google";
 import "./globals.css";
 import { LanguageProvider } from "@/src/i18n/language-context";
 import { Footer } from "@/src/components/Footer";
@@ -34,6 +34,13 @@ const jost = Jost({
   display: "swap",
 });
 
+const pinyonScript = Pinyon_Script({
+  variable: "--font-pinyon-script",
+  weight: "400",
+  subsets: ["latin"],
+  display: "swap",
+});
+
 export const metadata: Metadata = {
   title: "Cris Royal Delivery — Criss Cafe & Criss Club",
   description:
@@ -48,7 +55,7 @@ export default function RootLayout({
   return (
     <html
       lang="ro"
-      className={`${geistSans.variable} ${geistMono.variable} ${cinzel.variable} ${cormorant.variable} ${jost.variable} h-full antialiased`}
+      className={`${geistSans.variable} ${geistMono.variable} ${cinzel.variable} ${cormorant.variable} ${jost.variable} ${pinyonScript.variable} h-full antialiased`}
     >
       <body className="min-h-full flex flex-col">
         <LanguageProvider>
