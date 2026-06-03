@@ -84,6 +84,7 @@ export function ClubLineup() {
             <a
               key={i}
               href="tel:0746521799"
+              aria-label={`${ev.title} – rezervare telefon`}
               className="group relative aspect-[4/5] cursor-pointer overflow-hidden rounded-[4px] bg-crd-bg-2"
             >
               <Image

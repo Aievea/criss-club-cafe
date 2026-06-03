@@ -94,9 +94,9 @@ export function SiteNav() {
         aria-expanded={isOpen}
         className="fixed top-4 right-9 z-[75] flex h-9 w-9 flex-col items-center justify-center gap-[5px] lg:hidden"
       >
-        <span className={`block h-px w-5 bg-crd-ink transition-all duration-300 ${isOpen ? "translate-y-[6px] rotate-45" : ""}`} />
-        <span className={`block h-px w-5 bg-crd-ink transition-all duration-300 ${isOpen ? "opacity-0" : ""}`} />
-        <span className={`block h-px w-5 bg-crd-ink transition-all duration-300 ${isOpen ? "-translate-y-[6px] -rotate-45" : ""}`} />
+        <span className={`block h-px w-5 transition-all duration-300 ${scrolled ? "bg-[#1a1411]" : "bg-crd-ink"} ${isOpen ? "translate-y-[6px] rotate-45" : ""}`} />
+        <span className={`block h-px w-5 transition-all duration-300 ${scrolled ? "bg-[#1a1411]" : "bg-crd-ink"} ${isOpen ? "opacity-0" : ""}`} />
+        <span className={`block h-px w-5 transition-all duration-300 ${scrolled ? "bg-[#1a1411]" : "bg-crd-ink"} ${isOpen ? "-translate-y-[6px] -rotate-45" : ""}`} />
       </button>
 
       {/* Mobile overlay */}
@@ -106,6 +106,7 @@ export function SiteNav() {
           isOpen ? "opacity-100 pointer-events-auto" : "opacity-0 pointer-events-none"
         }`}
         role="dialog"
+        aria-label="Meniu navigație"
         aria-modal="true"
         aria-hidden={!isOpen}
       >

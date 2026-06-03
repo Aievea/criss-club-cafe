@@ -1,4 +1,6 @@
-const ITEMS = [
+type MarqueeItem = { text: string; italic: boolean; script?: boolean };
+
+const ITEMS: MarqueeItem[] = [
   { text: "Tg Mureș", italic: false },
   { text: "Lounge", italic: true },
   { text: "Piața Trandafirilor 43", italic: false },
@@ -32,7 +34,7 @@ export function MarqueeStrip() {
           <div key={i} className="flex items-center gap-12">
             <span
               className={`font-serif text-[28px] text-[#ece1c8] ${item.italic ? "italic" : ""} ${
-                (item as { script?: boolean }).script ? "font-script text-[36px] text-[#e6c787]" : ""
+                item.script ? "font-script text-[36px] text-[#e6c787]" : ""
               }`}
             >
               {item.text}
