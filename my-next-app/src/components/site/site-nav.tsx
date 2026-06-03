@@ -18,33 +18,43 @@ export function SiteNav() {
   const { t } = useLanguage();
   const pathname = usePathname();
   const [isOpen, setIsOpen] = useState(false);
+  const [scrolled, setScrolled] = useState(false);
 
   useEffect(() => {
-    if (isOpen) {
-      document.body.classList.add("overflow-hidden");
-    } else {
-      document.body.classList.remove("overflow-hidden");
-    }
+    const onScroll = () => setScrolled(window.scrollY > 50);
+    window.addEventListener("scroll", onScroll, { passive: true });
+    onScroll();
+    return () => window.removeEventListener("scroll", onScroll);
+  }, []);
+
+  useEffect(() => {
+    document.body.classList.toggle("overflow-hidden", isOpen);
     return () => document.body.classList.remove("overflow-hidden");
   }, [isOpen]);
 
-  useEffect(() => {
-    setIsOpen(false);
-  }, [pathname]);
+  useEffect(() => { setIsOpen(false); }, [pathname]);
 
   return (
     <>
-      <header className="relative z-20 mx-auto flex w-full max-w-5xl items-center px-6 py-5 sm:px-8 lg:px-10">
-        <Link href="/" className="transition-opacity duration-300 hover:opacity-80">
+      <header
+        className={`fixed top-0 left-0 right-0 z-[60] flex items-center justify-between px-9 transition-all duration-300 pointer-events-none ${
+          scrolled
+            ? "py-3 bg-[#0a0a0a]/80 backdrop-blur-[14px] border-b border-white/[0.06]"
+            : "py-5 bg-transparent"
+        }`}
+      >
+        {/* Logo */}
+        <Link href="/" className="pointer-events-auto transition-opacity hover:opacity-80 flex-shrink-0">
           <Image
             src={logo}
             alt="Criss Club & Cafe"
-            className="h-14 w-auto brightness-0 invert"
+            className={`w-auto brightness-0 invert transition-all duration-300 ${scrolled ? "h-10" : "h-12"}`}
             priority
           />
         </Link>
 
-        <nav className="mx-auto hidden items-center gap-1 lg:flex">
+        {/* Desktop links */}
+        <nav className="hidden lg:flex items-center gap-7 pointer-events-auto">
           {LINKS.map((link) => {
             const active = pathname === link.href;
             return (
@@ -52,8 +62,8 @@ export function SiteNav() {
                 key={link.href}
                 href={link.href}
                 aria-current={active ? "page" : undefined}
-                className={`rounded-full px-3 py-1.5 text-sm transition-colors duration-300 ${
-                  active ? "text-crd-gold" : "text-crd-muted hover:text-crd-ink"
+                className={`relative pb-1 text-[11px] tracking-[0.28em] uppercase font-medium transition-colors duration-200 after:absolute after:left-0 after:right-0 after:bottom-0 after:h-px after:bg-[#e6c787] after:origin-left after:scale-x-0 hover:after:scale-x-100 after:transition-transform after:duration-300 ${
+                  active ? "text-[#e6c787] after:scale-x-100" : "text-white/80 hover:text-[#e6c787]"
                 }`}
               >
                 {t.nav[link.key]}
@@ -62,37 +72,34 @@ export function SiteNav() {
           })}
         </nav>
 
-        <div className="ml-auto flex items-center gap-3">
+        {/* Right side */}
+        <div className="flex items-center gap-4 pointer-events-auto">
           <div className="hidden lg:block">
             <LanguageToggle />
           </div>
 
+          <a
+            href="tel:0746521799"
+            className="hidden lg:inline-flex items-center rounded-full border border-white/30 px-4 py-2.5 text-[10.5px] tracking-[0.24em] uppercase text-white/80 transition-all duration-200 hover:bg-[#c9a86a] hover:text-[#1a1411] hover:border-[#c9a86a]"
+          >
+            Rezervare
+          </a>
+
+          {/* Hamburger */}
           <button
-            onClick={() => setIsOpen((prev) => !prev)}
+            onClick={() => setIsOpen((p) => !p)}
             aria-label={isOpen ? t.nav.closeMenu : t.nav.openMenu}
             aria-expanded={isOpen}
             className="relative z-[60] flex h-9 w-9 flex-col items-center justify-center gap-[5px] lg:hidden"
           >
-            <span
-              className={`block h-px w-5 bg-crd-ink transition-all duration-300 ${
-                isOpen ? "translate-y-[6px] rotate-45" : ""
-              }`}
-            />
-            <span
-              className={`block h-px w-5 bg-crd-ink transition-all duration-300 ${
-                isOpen ? "opacity-0" : ""
-              }`}
-            />
-            <span
-              className={`block h-px w-5 bg-crd-ink transition-all duration-300 ${
-                isOpen ? "-translate-y-[6px] -rotate-45" : ""
-              }`}
-            />
+            <span className={`block h-px w-5 bg-crd-ink transition-all duration-300 ${isOpen ? "translate-y-[6px] rotate-45" : ""}`} />
+            <span className={`block h-px w-5 bg-crd-ink transition-all duration-300 ${isOpen ? "opacity-0" : ""}`} />
+            <span className={`block h-px w-5 bg-crd-ink transition-all duration-300 ${isOpen ? "-translate-y-[6px] -rotate-45" : ""}`} />
           </button>
         </div>
       </header>
 
-      {/* Full-screen overlay */}
+      {/* Mobile overlay */}
       <div
         {...(!isOpen ? { inert: true } : {})}
         className={`fixed inset-0 z-50 flex flex-col items-center justify-center bg-crd-bg/95 backdrop-blur-md transition-all duration-300 lg:hidden ${
@@ -121,11 +128,8 @@ export function SiteNav() {
             );
           })}
         </nav>
-
         <div
-          className={`absolute bottom-10 transition-all duration-300 ${
-            isOpen ? "translate-y-0 opacity-100" : "translate-y-4 opacity-0"
-          }`}
+          className={`absolute bottom-10 transition-all duration-300 ${isOpen ? "translate-y-0 opacity-100" : "translate-y-4 opacity-0"}`}
           style={{ transitionDelay: isOpen ? "200ms" : "0ms" }}
         >
           <LanguageToggle />

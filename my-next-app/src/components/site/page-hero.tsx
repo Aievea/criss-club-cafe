@@ -29,7 +29,7 @@ export function PageHero({
       />
 
       {/* Hero */}
-      <section className="relative z-10 mx-auto flex w-full max-w-4xl flex-col items-center px-6 pb-14 pt-10 text-center sm:px-8">
+      <section className="relative z-10 mx-auto flex w-full max-w-4xl flex-col items-center px-6 pb-14 pt-28 text-center sm:px-8">
         <span className="inline-flex items-center rounded-full border border-white/20 bg-white/[0.05] px-3.5 py-1 text-[0.62rem] uppercase tracking-[0.28em] text-white/70">
           {eyebrow}
         </span>
