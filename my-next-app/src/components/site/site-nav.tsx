@@ -1,6 +1,8 @@
 "use client";
 
 import Link from "next/link";
+import Image from "next/image";
+import { useState, useEffect } from "react";
 import { usePathname } from "next/navigation";
 import { useLanguage } from "@/src/i18n/language-context";
 import { LanguageToggle } from "@/src/components/footer/language-toggle";
@@ -11,41 +13,131 @@ const LINKS = [
   { href: "/servicii", key: "services" },
 ] as const;
 
-/** In-flow top navigation, wraps gracefully on small screens. */
 export function SiteNav() {
   const { t } = useLanguage();
   const pathname = usePathname();
+  const [isOpen, setIsOpen] = useState(false);
+
+  useEffect(() => {
+    if (isOpen) {
+      document.body.classList.add("overflow-hidden");
+    } else {
+      document.body.classList.remove("overflow-hidden");
+    }
+    return () => document.body.classList.remove("overflow-hidden");
+  }, [isOpen]);
+
+  useEffect(() => {
+    setIsOpen(false);
+  }, [pathname]);
 
   return (
-    <header className="relative z-20 mx-auto flex w-full max-w-6xl flex-wrap items-center justify-between gap-x-6 gap-y-3 px-6 py-5 sm:px-8 lg:px-10">
-      <Link
-        href="/"
-        className="font-display text-lg tracking-tight text-crd-ink transition-opacity duration-300 hover:opacity-80"
-      >
-        Criss Club <span className="text-crd-gold">&amp; Cafe</span>
-      </Link>
+    <>
+      <header className="relative z-20 mx-auto flex w-full max-w-6xl items-center justify-between gap-x-6 px-6 py-5 sm:px-8 lg:px-10">
+        <Link href="/" className="transition-opacity duration-300 hover:opacity-80">
+          <Image
+            src="/logocriscafeclub.svg"
+            alt="Criss Club & Cafe"
+            width={120}
+            height={40}
+            className="h-10 w-auto"
+            priority
+          />
+        </Link>
 
-      <nav className="order-3 flex items-center gap-1 sm:order-2">
-        {LINKS.map((link) => {
-          const active = pathname === link.href;
-          return (
-            <Link
-              key={link.href}
-              href={link.href}
-              aria-current={active ? "page" : undefined}
-              className={`rounded-full px-3 py-1.5 text-sm transition-colors duration-300 ${
-                active ? "text-crd-gold" : "text-crd-muted hover:text-crd-ink"
+        <nav className="hidden items-center gap-1 lg:flex">
+          {LINKS.map((link) => {
+            const active = pathname === link.href;
+            return (
+              <Link
+                key={link.href}
+                href={link.href}
+                aria-current={active ? "page" : undefined}
+                className={`rounded-full px-3 py-1.5 text-sm transition-colors duration-300 ${
+                  active ? "text-crd-gold" : "text-crd-muted hover:text-crd-ink"
+                }`}
+              >
+                {t.nav[link.key]}
+              </Link>
+            );
+          })}
+        </nav>
+
+        <div className="flex items-center gap-3">
+          <div className="hidden lg:block">
+            <LanguageToggle />
+          </div>
+
+          <button
+            onClick={() => setIsOpen((prev) => !prev)}
+            aria-label={isOpen ? "Închide meniul" : "Deschide meniul"}
+            aria-expanded={isOpen}
+            className="relative flex h-9 w-9 flex-col items-center justify-center gap-[5px] lg:hidden"
+          >
+            <span
+              className={`block h-px w-5 bg-crd-ink transition-all duration-300 ${
+                isOpen ? "translate-y-[6px] rotate-45" : ""
               }`}
-            >
-              {t.nav[link.key]}
-            </Link>
-          );
-        })}
-      </nav>
+            />
+            <span
+              className={`block h-px w-5 bg-crd-ink transition-all duration-300 ${
+                isOpen ? "opacity-0" : ""
+              }`}
+            />
+            <span
+              className={`block h-px w-5 bg-crd-ink transition-all duration-300 ${
+                isOpen ? "-translate-y-[6px] -rotate-45" : ""
+              }`}
+            />
+          </button>
+        </div>
+      </header>
 
-      <div className="order-2 sm:order-3">
-        <LanguageToggle />
+      <div
+        className={`fixed inset-0 z-50 flex flex-col items-center justify-center bg-crd-bg/95 backdrop-blur-md transition-all duration-300 lg:hidden ${
+          isOpen ? "opacity-100 pointer-events-auto" : "opacity-0 pointer-events-none"
+        }`}
+        aria-hidden={!isOpen}
+      >
+        <button
+          onClick={() => setIsOpen(false)}
+          aria-label="Închide meniul"
+          className="absolute right-6 top-5 flex h-9 w-9 flex-col items-center justify-center gap-[5px] sm:right-8"
+        >
+          <span className="block h-px w-5 translate-y-[6px] rotate-45 bg-crd-ink" />
+          <span className="block h-px w-5 opacity-0 bg-crd-ink" />
+          <span className="block h-px w-5 -translate-y-[6px] -rotate-45 bg-crd-ink" />
+        </button>
+
+        <nav className="flex flex-col items-center gap-8">
+          {LINKS.map((link, i) => {
+            const active = pathname === link.href;
+            return (
+              <Link
+                key={link.href}
+                href={link.href}
+                onClick={() => setIsOpen(false)}
+                aria-current={active ? "page" : undefined}
+                className={`font-display text-4xl tracking-tight transition-all duration-300 ${
+                  isOpen ? "translate-y-0 opacity-100" : "translate-y-4 opacity-0"
+                } ${active ? "text-crd-gold" : "text-crd-ink hover:text-crd-gold"}`}
+                style={{ transitionDelay: isOpen ? `${i * 60}ms` : "0ms" }}
+              >
+                {t.nav[link.key]}
+              </Link>
+            );
+          })}
+        </nav>
+
+        <div
+          className={`absolute bottom-10 transition-all duration-300 ${
+            isOpen ? "translate-y-0 opacity-100" : "translate-y-4 opacity-0"
+          }`}
+          style={{ transitionDelay: isOpen ? "200ms" : "0ms" }}
+        >
+          <LanguageToggle />
+        </div>
       </div>
-    </header>
+    </>
   );
 }
