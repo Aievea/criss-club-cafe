@@ -6,8 +6,15 @@ import { PageHero } from "@/src/components/site/page-hero";
 import { ContactActions } from "@/src/components/site/contact-actions";
 import { VideoFrame } from "@/src/components/site/video";
 import { AddressLink } from "@/src/components/site/address-link";
+import clubVideo from "@/src/assets/video/video-crissclub/WhatsApp Video 2026-06-02 at 17.35.15.mp4";
+import ev1 from "@/src/assets/images/images-crissclub/djs/WhatsApp Image 2026-06-01 at 21.29.01 (1).jpeg";
+import ev2 from "@/src/assets/images/images-crissclub/djs/WhatsApp Image 2026-06-02 at 17.36.51.jpeg";
+import ev3 from "@/src/assets/images/images-crissclub/djs/WhatsApp Image 2026-06-02 at 17.36.51 (1).jpeg";
+import ev4 from "@/src/assets/images/images-crissclub/djs/WhatsApp Image 2026-06-02 at 17.36.51 (2).jpeg";
+import ev5 from "@/src/assets/images/images-crissclub/djs/WhatsApp Image 2026-06-02 at 17.36.52.jpeg";
+import ev6 from "@/src/assets/images/images-crissclub/djs/WhatsApp Image 2026-06-02 at 17.36.52 (1).jpeg";
 
-const EVENTS = [1, 2, 3, 4, 5, 6].map((n) => `/events/event-${n}.jpg`);
+const EVENTS = [ev1, ev2, ev3, ev4, ev5, ev6].map((img) => img.src);
 
 export default function CrissClubPage() {
   const { t } = useLanguage();
@@ -20,7 +27,7 @@ export default function CrissClubPage() {
           <li>{t.club.open}</li>
         </ul>
 
-        <VideoFrame src="/videos/criss-club.mp4" className="w-full max-w-xs" />
+        <VideoFrame src={clubVideo} className="w-full max-w-xs" />
 
         <div className="w-full border-y border-white/[0.08] py-6">
           <span className="text-[0.68rem] font-semibold uppercase tracking-[0.28em] text-crd-gold/80">

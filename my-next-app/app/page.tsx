@@ -4,6 +4,8 @@ import Link from "next/link";
 import { useLanguage } from "@/src/i18n/language-context";
 import { SiteNav } from "@/src/components/site/site-nav";
 import { VideoCard } from "@/src/components/site/video";
+import cafeVideo from "@/src/assets/video/video-crisscafee/WhatsApp Video 2026-06-01 at 21.26.11.mp4";
+import clubVideo from "@/src/assets/video/video-crissclub/WhatsApp Video 2026-06-02 at 17.35.15.mp4";
 
 export default function Home() {
   const { t } = useLanguage();
@@ -44,14 +46,14 @@ export default function Home() {
         {/* Two venues, two videos, side by side */}
         <div className="mt-14 grid grid-cols-1 gap-5 sm:mt-16 sm:grid-cols-2">
           <VideoCard
-            src="/videos/criss-cafe.mp4"
+            src={cafeVideo}
             title="Criss Cafe"
             kind={t.cafe.kind}
             href="/criss-cafe"
             cta={t.home.enter}
           />
           <VideoCard
-            src="/videos/criss-club.mp4"
+            src={clubVideo}
             title="Criss Club"
             kind={t.club.kind}
             href="/criss-club"

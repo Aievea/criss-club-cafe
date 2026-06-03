@@ -5,11 +5,15 @@ import { PageHero } from "@/src/components/site/page-hero";
 import { ContactActions } from "@/src/components/site/contact-actions";
 import { VideoFrame } from "@/src/components/site/video";
 import { AddressLink } from "@/src/components/site/address-link";
+import estrelaSrc from "@/src/assets/bere/Estrela_Galiza.svg";
+import erdingerSrc from "@/src/assets/bere/Erdinger_Weißbräu_logo.svg";
+import krombacherSrc from "@/src/assets/bere/krombacher-vector-logo.svg";
+import cafeVideo from "@/src/assets/video/video-crisscafee/WhatsApp Video 2026-06-01 at 21.26.11.mp4";
 
 const BEERS = [
-  { src: "/beers/estrela.svg", name: "Estrela Galiza", dark: true },
-  { src: "/beers/erdinger.svg", name: "Erdinger Weißbräu", dark: false },
-  { src: "/beers/krombacher.svg", name: "Krombacher", dark: false },
+  { src: estrelaSrc.src, name: "Estrela Galiza", dark: true },
+  { src: erdingerSrc.src, name: "Erdinger Weißbräu", dark: false },
+  { src: krombacherSrc.src, name: "Krombacher", dark: false },
 ];
 
 export default function CrissCafePage() {
@@ -20,7 +24,7 @@ export default function CrissCafePage() {
       <div className="mx-auto flex max-w-md flex-col items-center gap-9">
         <p className="text-sm text-crd-ink/80">{t.cafe.seats}</p>
 
-        <VideoFrame src="/videos/criss-cafe.mp4" className="w-full max-w-xs" />
+        <VideoFrame src={cafeVideo} className="w-full max-w-xs" />
 
         <div className="w-full border-y border-white/[0.08] py-6 text-left">
           <span className="text-[0.68rem] font-semibold uppercase tracking-[0.28em] text-crd-gold/80">
