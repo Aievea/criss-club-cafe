@@ -1,0 +1,1448 @@
+<!DOCTYPE html>
+<html lang="ro">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>Criss Café &amp; Club — Tg Mureș</title>
+<link rel="preconnect" href="https://fonts.googleapis.com" />
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,500;0,600;0,700;1,300;1,400;1,500;1,600&family=Manrope:wght@200;300;400;500;600;700&family=Pinyon+Script&display=swap" rel="stylesheet" />
+<style>
+:root {
+  --bg: #0a0806;
+  --bg-2: #14100c;
+  --bg-3: #1d1813;
+  --cream: #ece1c8;
+  --cream-soft: #d6c7a4;
+  --paper: #f1e9d6;
+  --paper-2: #e6dcc3;
+  --ink: #1a1411;
+  --ink-soft: #4a3e32;
+  --gold: #c9a86a;
+  --gold-2: #e6c787;
+  --pink: #ff3da3;
+  --teal: #1cb1c2;
+  --serif: 'Cormorant Garamond', Georgia, serif;
+  --script: 'Pinyon Script', cursive;
+  --sans: 'Manrope', system-ui, sans-serif;
+}
+* { box-sizing: border-box; margin: 0; padding: 0; }
+html, body { background: var(--bg); color: var(--cream); font-family: var(--sans); -webkit-font-smoothing: antialiased; -moz-osx-font-smoothing: grayscale; }
+body { overflow-x: hidden; }
+body.locked { overflow: hidden; height: 100vh; }
+a { color: inherit; text-decoration: none; }
+img, video { display: block; max-width: 100%; }
+button { font: inherit; color: inherit; background: none; border: 0; cursor: pointer; }
+
+/* ============= INTRO OVERLAY ============= */
+#intro {
+  position: fixed; inset: 0; z-index: 1000;
+  background: #050402;
+  display: grid; place-items: center;
+  overflow: hidden;
+}
+#intro .bars { position: absolute; inset: 0; pointer-events: none; }
+#intro .bar { position: absolute; left: 0; right: 0; height: 50vh; background: #050402; transition: transform 1.1s cubic-bezier(.83,.01,.18,1) .2s; }
+#intro .bar.top { top: 0; }
+#intro .bar.bot { bottom: 0; }
+#intro.done .bar.top { transform: translateY(-100%); }
+#intro.done .bar.bot { transform: translateY(100%); }
+#intro.fade { opacity: 0; transition: opacity .55s ease .9s; pointer-events: none; }
+
+.intro-stack { position: relative; z-index: 2; display: grid; place-items: center; gap: 28px; padding: 0 24px; text-align: center; }
+.intro-caption {
+  font-family: var(--sans);
+  font-size: 12px; letter-spacing: 0.42em; text-transform: uppercase;
+  color: var(--gold-2);
+  opacity: 0; transform: translateY(6px);
+  animation: introCap 1s ease .2s forwards;
+}
+.intro-caption .line { display: inline-block; width: 28px; height: 1px; background: var(--gold-2); vertical-align: middle; margin: 0 12px; opacity: .55; }
+@keyframes introCap { to { opacity: 1; transform: none; } }
+
+.intro-logo-wrap {
+  width: min(640px, 80vw);
+  filter: drop-shadow(0 0 40px rgba(201,168,106,.25));
+}
+.intro-logo {
+  width: 100%;
+  /* sweeping reveal */
+  -webkit-mask-image: linear-gradient(105deg, #000 0%, #000 0%, transparent 0%, transparent 100%);
+          mask-image: linear-gradient(105deg, #000 0%, #000 0%, transparent 0%, transparent 100%);
+  -webkit-mask-size: 100% 100%;
+          mask-size: 100% 100%;
+  animation: drawLogo 2.2s cubic-bezier(.5,.05,.2,1) .55s forwards;
+  opacity: 0;
+}
+@keyframes drawLogo {
+  0%   { opacity: 0; -webkit-mask-image: linear-gradient(105deg, #000 0%, #000 0%, transparent 0%, transparent 100%);
+                            mask-image: linear-gradient(105deg, #000 0%, #000 0%, transparent 0%, transparent 100%); }
+  6%   { opacity: 1; }
+  100% { opacity: 1; -webkit-mask-image: linear-gradient(105deg, #000 0%, #000 100%, transparent 100%, transparent 100%);
+                            mask-image: linear-gradient(105deg, #000 0%, #000 100%, transparent 100%, transparent 100%); }
+}
+
+.intro-tag {
+  font-family: var(--serif);
+  font-style: italic;
+  font-weight: 400;
+  font-size: clamp(16px, 2vw, 22px);
+  letter-spacing: 0.04em;
+  color: var(--cream);
+  opacity: 0; transform: translateY(8px);
+  animation: introTag 1.1s ease 2.4s forwards;
+}
+.intro-tag b { font-weight: 600; color: var(--gold-2); font-style: normal; margin: 0 .35em; }
+@keyframes introTag { to { opacity: 1; transform: none; } }
+
+.intro-skip {
+  position: absolute; bottom: 36px; left: 50%; transform: translateX(-50%);
+  font-size: 11px; letter-spacing: 0.32em; text-transform: uppercase;
+  color: rgba(236, 225, 200, 0.45);
+  padding: 10px 14px; border: 1px solid rgba(236, 225, 200, 0.15);
+  border-radius: 999px;
+  opacity: 0; animation: introSkip 0.8s ease 3.2s forwards;
+}
+.intro-skip:hover { color: var(--gold-2); border-color: var(--gold-2); }
+@keyframes introSkip { to { opacity: 1; } }
+
+/* ============= NAV ============= */
+.nav {
+  position: fixed; top: 0; left: 0; right: 0; z-index: 60;
+  display: flex; align-items: center; justify-content: space-between;
+  padding: 20px 36px;
+  pointer-events: none;
+  transition: background .35s ease, backdrop-filter .35s ease, padding .35s ease;
+}
+.nav.scrolled { background: rgba(10, 8, 6, 0.78); backdrop-filter: blur(14px); -webkit-backdrop-filter: blur(14px); padding: 12px 36px; border-bottom: 1px solid rgba(236, 225, 200, 0.06); }
+.nav > * { pointer-events: auto; }
+.nav-brand {
+  display: inline-flex; align-items: center; gap: 0;
+  height: 48px;
+  transition: height .35s ease;
+}
+.nav.scrolled .nav-brand { height: 40px; }
+.nav-brand img { height: 100%; width: auto; display: block; filter: drop-shadow(0 2px 10px rgba(0,0,0,0.4)); }
+.nav-right { display: flex; gap: 28px; align-items: center; }
+.nav a {
+  font-size: 11px; letter-spacing: 0.28em; text-transform: uppercase;
+  color: rgba(236, 225, 200, 0.82);
+  transition: color .25s ease;
+  position: relative;
+  padding-bottom: 4px;
+  font-weight: 500;
+}
+.nav a:hover { color: var(--gold-2); }
+.nav a:not(.reserve)::after {
+  content: ''; position: absolute; left: 0; right: 0; bottom: 0;
+  height: 1px; background: var(--gold-2); transform: scaleX(0); transform-origin: left;
+  transition: transform .3s ease;
+}
+.nav a:not(.reserve):hover::after { transform: scaleX(1); }
+.nav .reserve {
+  border: 1px solid rgba(236, 225, 200, 0.3);
+  padding: 9px 16px; border-radius: 999px;
+  font-size: 10.5px; letter-spacing: 0.24em;
+}
+.nav .reserve:hover { background: var(--gold-2); color: var(--ink); border-color: var(--gold-2); }
+
+/* ============= HERO ============= */
+.hero {
+  position: relative;
+  min-height: 100vh; min-height: 100svh;
+  display: grid; place-items: center;
+  overflow: hidden;
+  isolation: isolate;
+}
+.hero-video, .hero-poster {
+  position: absolute; inset: 0; z-index: -2;
+  width: 100%; height: 100%;
+  object-fit: cover;
+  filter: saturate(0.85) brightness(0.55) contrast(1.05);
+}
+.hero-vignette {
+  position: absolute; inset: 0; z-index: -1;
+  background:
+    radial-gradient(120% 80% at 50% 40%, transparent 0%, rgba(10,8,6,0.6) 70%, rgba(10,8,6,0.95) 100%),
+    linear-gradient(180deg, rgba(10,8,6,0.55) 0%, rgba(10,8,6,0.1) 40%, rgba(10,8,6,0.85) 100%);
+}
+.hero-content {
+  text-align: center;
+  padding: 120px 24px 80px;
+  display: grid; gap: 28px;
+  justify-items: center;
+  max-width: 980px;
+}
+.hero .kicker {
+  font-size: 11px; letter-spacing: 0.42em; text-transform: uppercase;
+  color: var(--gold-2);
+  display: inline-flex; gap: 14px; align-items: center;
+}
+.hero .kicker::before, .hero .kicker::after {
+  content: ''; width: 36px; height: 1px; background: var(--gold-2); opacity: .55;
+}
+.hero-logo {
+  width: min(560px, 78vw);
+  filter: drop-shadow(0 6px 40px rgba(0,0,0,0.7));
+}
+.hero-tag {
+  font-family: var(--serif);
+  font-style: italic;
+  font-size: clamp(18px, 2.2vw, 26px);
+  font-weight: 400;
+  color: var(--cream);
+  letter-spacing: 0.05em;
+}
+.hero-tag .sep { color: var(--gold-2); font-style: normal; margin: 0 .5em; opacity: .8; }
+.hero-cta { display: flex; gap: 14px; flex-wrap: wrap; justify-content: center; margin-top: 6px; }
+.btn {
+  display: inline-flex; align-items: center; gap: 12px;
+  padding: 14px 26px;
+  font-size: 11.5px; letter-spacing: 0.28em; text-transform: uppercase;
+  border-radius: 999px;
+  background: var(--gold-2); color: var(--ink);
+  border: 1px solid var(--gold-2);
+  transition: transform .25s ease, background .25s ease, color .25s ease, box-shadow .35s ease;
+  font-weight: 600;
+}
+.btn:hover { transform: translateY(-1px); box-shadow: 0 14px 40px -10px rgba(230, 199, 135, 0.4); }
+.btn.ghost { background: transparent; color: var(--cream); border-color: rgba(236, 225, 200, 0.35); font-weight: 500; }
+.btn.ghost:hover { background: rgba(236, 225, 200, 0.06); border-color: var(--cream); color: var(--cream); box-shadow: none; }
+.btn .arr { display: inline-block; transition: transform .25s ease; }
+.btn:hover .arr { transform: translateX(4px); }
+
+.scroll-cue {
+  position: absolute; bottom: 28px; left: 50%; transform: translateX(-50%);
+  display: flex; flex-direction: column; align-items: center; gap: 12px;
+  font-size: 10px; letter-spacing: 0.4em; text-transform: uppercase;
+  color: rgba(236, 225, 200, 0.55);
+}
+.scroll-cue .line {
+  width: 1px; height: 56px;
+  background: linear-gradient(to bottom, transparent, var(--gold-2));
+  animation: scrollLine 2.4s ease-in-out infinite;
+  transform-origin: top;
+}
+@keyframes scrollLine {
+  0%, 100% { transform: scaleY(0.3); opacity: .4; }
+  50% { transform: scaleY(1); opacity: 1; }
+}
+
+/* ============= MARQUEE ============= */
+.marquee {
+  position: relative;
+  background: var(--bg);
+  border-top: 1px solid rgba(236, 225, 200, 0.08);
+  border-bottom: 1px solid rgba(236, 225, 200, 0.08);
+  overflow: hidden;
+  padding: 26px 0;
+}
+.marquee .track {
+  display: flex; gap: 48px;
+  white-space: nowrap;
+  animation: scrollX 38s linear infinite;
+  width: max-content;
+}
+.marquee span {
+  font-family: var(--serif);
+  font-style: italic;
+  font-size: 28px;
+  color: var(--cream);
+}
+.marquee .dot { color: var(--gold-2); font-style: normal; font-size: 14px; align-self: center; }
+.marquee .glyph { font-family: var(--script); font-size: 36px; color: var(--gold-2); }
+@keyframes scrollX { from { transform: translateX(0); } to { transform: translateX(-50%); } }
+
+/* ============= SOULS — DAY / NIGHT ============= */
+.souls {
+  position: relative;
+  background: var(--bg-2);
+  padding: 140px 0 0;
+}
+.section-head {
+  max-width: 1100px;
+  margin: 0 auto 80px;
+  padding: 0 36px;
+  text-align: center;
+}
+.kicker.dark { color: var(--gold); }
+.kicker.center { display: inline-flex; gap: 14px; align-items: center; }
+.kicker.center::before, .kicker.center::after { content: ''; width: 36px; height: 1px; background: currentColor; opacity: .55; }
+.kicker {
+  font-family: var(--sans);
+  font-size: 11px; letter-spacing: 0.42em; text-transform: uppercase;
+  color: var(--gold-2);
+  font-weight: 500;
+}
+.display {
+  font-family: var(--serif);
+  font-weight: 300;
+  font-size: clamp(48px, 7vw, 96px);
+  line-height: 0.95;
+  letter-spacing: -0.01em;
+  margin-top: 24px;
+  color: var(--cream);
+}
+.display em { font-style: italic; font-family: var(--serif); color: var(--gold-2); font-weight: 400; }
+.display .script { font-family: var(--script); font-style: normal; color: var(--gold-2); font-size: 1.15em; font-weight: 400; }
+.lead {
+  font-family: var(--serif);
+  font-size: clamp(18px, 1.6vw, 22px);
+  font-style: italic;
+  color: rgba(236, 225, 200, 0.75);
+  max-width: 640px;
+  margin: 28px auto 0;
+  line-height: 1.4;
+}
+
+.souls-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  position: relative;
+  min-height: 86vh;
+}
+.soul {
+  position: relative;
+  padding: 80px 60px 100px;
+  overflow: hidden;
+  display: flex; flex-direction: column; justify-content: flex-end;
+  min-height: 720px;
+}
+.soul .bg {
+  position: absolute; inset: 0; z-index: 0;
+  width: 100%; height: 100%;
+  object-fit: cover;
+  background-size: cover; background-position: center;
+  transition: transform 1.2s cubic-bezier(.2,.7,.2,1);
+}
+.soul:hover .bg { transform: scale(1.04); }
+.soul .scrim { position: absolute; inset: 0; z-index: 1; }
+.soul.day .scrim {
+  background:
+    linear-gradient(180deg, rgba(243, 237, 221, 0) 0%, rgba(243, 237, 221, 0.2) 35%, rgba(243, 237, 221, 0.92) 100%);
+}
+.soul.night .scrim {
+  background:
+    linear-gradient(180deg, rgba(10, 8, 6, 0) 0%, rgba(10, 8, 6, 0.4) 35%, rgba(10, 8, 6, 0.95) 100%);
+}
+.soul .inner { position: relative; z-index: 2; }
+.soul .time-band {
+  font-size: 11px; letter-spacing: 0.42em; text-transform: uppercase;
+  display: inline-flex; gap: 12px; align-items: baseline;
+  padding-bottom: 18px;
+  margin-bottom: 22px;
+  border-bottom: 1px solid currentColor;
+  width: 100%;
+  max-width: 360px;
+}
+.soul .time-band .hour { font-family: var(--serif); font-style: italic; font-size: 18px; letter-spacing: 0; text-transform: none; opacity: .8; margin-left: auto; }
+.soul h3 {
+  font-family: var(--script);
+  font-weight: 400;
+  font-size: clamp(56px, 6vw, 84px);
+  line-height: 0.9;
+  letter-spacing: -0.01em;
+}
+.soul .sub {
+  font-family: var(--serif);
+  font-style: italic;
+  font-size: 22px;
+  margin-top: 6px;
+}
+.soul p {
+  font-size: 14.5px; line-height: 1.7;
+  margin-top: 22px;
+  max-width: 440px;
+  font-weight: 300;
+}
+.soul .tags {
+  display: flex; gap: 10px; flex-wrap: wrap; margin-top: 26px;
+}
+.soul .tag {
+  font-size: 10px; letter-spacing: 0.24em; text-transform: uppercase;
+  padding: 7px 12px; border: 1px solid currentColor;
+  border-radius: 999px; opacity: 0.7;
+}
+.soul.day {
+  background: var(--paper);
+  color: var(--ink);
+}
+.soul.day .sub { color: var(--ink-soft); }
+.soul.day .time-band { color: var(--ink-soft); }
+.soul.day h3 { color: var(--ink); }
+.soul.night {
+  background: var(--bg);
+  color: var(--cream);
+}
+.soul.night h3 { color: var(--cream); }
+.soul.night .sub { color: var(--gold-2); }
+.soul.night .time-band { color: var(--gold-2); }
+.souls-grid::before {
+  content: '∞'; position: absolute; top: 50%; left: 50%;
+  transform: translate(-50%, -50%);
+  font-family: var(--script);
+  font-size: 96px; color: var(--gold-2);
+  background: var(--bg-2);
+  width: 110px; height: 110px;
+  display: grid; place-items: center;
+  border-radius: 50%;
+  z-index: 3;
+  border: 1px solid rgba(201, 168, 106, 0.3);
+}
+
+/* ============= MENIU ============= */
+.menu-section {
+  background: var(--paper);
+  color: var(--ink);
+  padding: 140px 0 160px;
+  position: relative;
+  overflow: hidden;
+}
+.menu-section .display { color: var(--ink); }
+.menu-section .display em { color: var(--gold); }
+.menu-section .lead { color: var(--ink-soft); }
+.menu-section .kicker { color: var(--gold); }
+
+.menu-cats {
+  max-width: 1280px;
+  margin: 0 auto;
+  padding: 0 36px;
+  display: grid;
+  gap: 100px;
+}
+.menu-cat {
+  display: grid;
+  grid-template-columns: 1.05fr 1fr;
+  gap: 80px;
+  align-items: center;
+}
+.menu-cat:nth-child(even) { grid-template-columns: 1fr 1.05fr; }
+.menu-cat:nth-child(even) .menu-cat-img { order: 2; }
+.menu-cat-img {
+  position: relative;
+  aspect-ratio: 4/5;
+  overflow: hidden;
+  border-radius: 4px;
+}
+.menu-cat-img img {
+  width: 100%; height: 100%; object-fit: cover;
+  transition: transform 1.4s cubic-bezier(.2,.7,.2,1);
+}
+.menu-cat:hover .menu-cat-img img { transform: scale(1.06); }
+.menu-cat-img::after {
+  content: ''; position: absolute; inset: 0;
+  background: linear-gradient(180deg, transparent 60%, rgba(26,20,17,0.5) 100%);
+}
+.menu-cat-img .stamp {
+  position: absolute; top: 24px; left: 24px;
+  background: var(--paper); color: var(--ink);
+  padding: 10px 16px; font-size: 10px; letter-spacing: 0.32em; text-transform: uppercase;
+  font-weight: 600;
+}
+.menu-cat-body {
+  padding: 24px 0;
+}
+.menu-cat-num {
+  font-family: var(--serif);
+  font-style: italic;
+  font-size: 15px;
+  color: var(--gold);
+  margin-bottom: 14px;
+}
+.menu-cat h3 {
+  font-family: var(--serif);
+  font-weight: 400;
+  font-size: clamp(44px, 5vw, 64px);
+  line-height: 1;
+  margin-bottom: 8px;
+  color: var(--ink);
+}
+.menu-cat h3 em { font-family: var(--script); color: var(--gold); font-style: normal; font-weight: 400; }
+.menu-cat .cat-tag {
+  font-family: var(--sans);
+  font-size: 11px; letter-spacing: 0.32em; text-transform: uppercase;
+  color: var(--ink-soft);
+  margin-bottom: 28px;
+  display: inline-block;
+  border-bottom: 1px solid var(--gold);
+  padding-bottom: 6px;
+}
+.menu-items {
+  list-style: none;
+  display: grid; gap: 18px;
+  margin-top: 14px;
+}
+.menu-items li {
+  display: grid;
+  grid-template-columns: 1fr auto;
+  gap: 18px;
+  align-items: baseline;
+  padding-bottom: 16px;
+  border-bottom: 1px dashed rgba(74, 62, 50, 0.2);
+}
+.menu-items .item-name {
+  font-family: var(--serif);
+  font-size: 22px;
+  color: var(--ink);
+  font-weight: 500;
+}
+.menu-items .item-desc {
+  font-size: 13px;
+  color: var(--ink-soft);
+  margin-top: 4px;
+  font-style: italic;
+  font-family: var(--serif);
+}
+.menu-items .item-price {
+  font-family: var(--sans);
+  font-size: 14px;
+  color: var(--gold);
+  letter-spacing: 0.08em;
+  white-space: nowrap;
+  font-weight: 600;
+}
+
+.menu-foot {
+  max-width: 1280px;
+  margin: 80px auto 0;
+  padding: 0 36px;
+  text-align: center;
+}
+.menu-strip {
+  max-width: 1400px;
+  margin: 120px auto 0;
+  padding: 0 36px;
+  display: grid;
+  grid-template-columns: 1.4fr 1fr 1fr 1fr;
+  gap: 14px;
+  height: 360px;
+}
+.menu-strip-item {
+  position: relative;
+  overflow: hidden;
+  border-radius: 3px;
+  background: var(--bg-3);
+}
+.menu-strip-item img,
+.menu-strip-item video {
+  width: 100%; height: 100%; object-fit: cover;
+  transition: transform 1.4s cubic-bezier(.2,.7,.2,1);
+}
+.menu-strip-item:hover img,
+.menu-strip-item:hover video { transform: scale(1.06); }
+.menu-foot .note {
+  display: inline-block;
+  font-family: var(--serif);
+  font-style: italic;
+  color: var(--ink-soft);
+  font-size: 16px;
+}
+.menu-foot .note::before, .menu-foot .note::after {
+  content: '·'; margin: 0 12px; color: var(--gold);
+}
+
+/* ============= CRISS CLUB NIGHT ============= */
+.club-section {
+  background: #050402;
+  color: var(--cream);
+  padding: 160px 0 140px;
+  position: relative;
+  overflow: hidden;
+}
+.club-section::before {
+  content: ''; position: absolute; inset: 0;
+  background:
+    radial-gradient(50% 40% at 20% 20%, rgba(255, 61, 163, 0.18) 0%, transparent 70%),
+    radial-gradient(40% 40% at 90% 80%, rgba(28, 177, 194, 0.14) 0%, transparent 70%);
+  pointer-events: none;
+}
+.club-section .section-head { position: relative; z-index: 2; }
+.club-section .kicker { color: var(--pink); }
+.club-section .display .script { color: var(--pink); }
+.club-section .display em { color: var(--teal); }
+.club-section .lead { color: rgba(236, 225, 200, 0.65); }
+
+.next-up {
+  position: relative; z-index: 2;
+  max-width: 1280px;
+  margin: 0 auto 80px;
+  padding: 0 36px;
+}
+.next-up-card {
+  display: grid;
+  grid-template-columns: minmax(280px, 380px) 1fr;
+  gap: 50px;
+  align-items: center;
+  background:
+    linear-gradient(135deg, rgba(255, 61, 163, 0.08), rgba(28, 177, 194, 0.04));
+  border: 1px solid rgba(255, 61, 163, 0.2);
+  padding: 40px;
+  border-radius: 8px;
+  position: relative;
+  overflow: hidden;
+}
+.next-up-card::before {
+  content: 'TONIGHT'; position: absolute; top: 24px; right: 32px;
+  font-size: 10px; letter-spacing: 0.4em;
+  color: var(--pink); font-weight: 700;
+  padding: 6px 12px;
+  border: 1px solid var(--pink);
+  border-radius: 999px;
+  animation: pulse 2.4s ease-in-out infinite;
+}
+@keyframes pulse {
+  0%, 100% { box-shadow: 0 0 0 0 rgba(255, 61, 163, 0.4); }
+  50% { box-shadow: 0 0 0 8px rgba(255, 61, 163, 0); }
+}
+.next-up-poster {
+  position: relative;
+  aspect-ratio: 4/5;
+  overflow: hidden;
+  border-radius: 4px;
+}
+.next-up-poster img { width: 100%; height: 100%; object-fit: cover; }
+.next-up-body .when {
+  font-size: 11px; letter-spacing: 0.42em; text-transform: uppercase;
+  color: var(--pink);
+  margin-bottom: 18px;
+}
+.next-up-body h3 {
+  font-family: var(--serif);
+  font-weight: 400;
+  font-size: clamp(40px, 4.5vw, 58px);
+  line-height: 1;
+  letter-spacing: -0.01em;
+  color: var(--cream);
+}
+.next-up-body h3 em { font-family: var(--script); color: var(--pink); font-style: normal; }
+.next-up-body .who {
+  margin-top: 18px;
+  font-family: var(--serif); font-style: italic;
+  font-size: 22px; color: rgba(236, 225, 200, 0.85);
+}
+.next-up-body .details {
+  margin-top: 26px;
+  display: flex; gap: 36px; flex-wrap: wrap;
+  padding-top: 24px; border-top: 1px solid rgba(236, 225, 200, 0.1);
+}
+.next-up-body .details > div { font-size: 12px; letter-spacing: 0.16em; }
+.next-up-body .details .lab { color: rgba(236, 225, 200, 0.5); text-transform: uppercase; font-size: 10px; letter-spacing: 0.32em; margin-bottom: 6px; }
+.next-up-body .details .val { font-family: var(--serif); font-size: 17px; letter-spacing: 0; font-style: italic; color: var(--cream); }
+.next-up-cta {
+  margin-top: 28px;
+  display: flex; gap: 12px; flex-wrap: wrap;
+}
+.next-up-cta .btn { background: var(--pink); border-color: var(--pink); color: #fff; }
+.next-up-cta .btn:hover { box-shadow: 0 14px 40px -10px rgba(255, 61, 163, 0.5); }
+
+.events-rail {
+  position: relative; z-index: 2;
+  max-width: 1280px;
+  margin: 0 auto;
+  padding: 0 36px;
+}
+.events-rail-head {
+  display: flex; justify-content: space-between; align-items: baseline;
+  margin-bottom: 36px;
+  border-bottom: 1px solid rgba(236, 225, 200, 0.1);
+  padding-bottom: 18px;
+}
+.events-rail-head h4 {
+  font-family: var(--serif);
+  font-weight: 400; font-size: 28px; letter-spacing: -0.01em;
+  font-style: italic;
+}
+.events-rail-head .more { font-size: 11px; letter-spacing: 0.32em; text-transform: uppercase; color: var(--pink); }
+.events {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 22px;
+}
+.event {
+  position: relative;
+  aspect-ratio: 4/5;
+  overflow: hidden;
+  border-radius: 4px;
+  cursor: pointer;
+  background: var(--bg-2);
+}
+.event img { width: 100%; height: 100%; object-fit: cover; transition: transform 1.2s cubic-bezier(.2,.7,.2,1); }
+.event:hover img { transform: scale(1.05); }
+.event-meta {
+  position: absolute; left: 0; right: 0; bottom: 0;
+  padding: 22px 20px 20px;
+  background: linear-gradient(180deg, transparent, rgba(0,0,0,0.85));
+  color: var(--cream);
+  display: grid; gap: 4px;
+}
+.event-meta .date {
+  font-family: var(--sans);
+  font-size: 10px; letter-spacing: 0.32em; text-transform: uppercase;
+  color: var(--pink);
+}
+.event-meta .title {
+  font-family: var(--serif);
+  font-style: italic;
+  font-size: 20px;
+  letter-spacing: -0.005em;
+  line-height: 1.15;
+}
+.event-meta .who {
+  font-size: 11px; letter-spacing: 0.18em; text-transform: uppercase;
+  color: rgba(236, 225, 200, 0.7);
+  margin-top: 4px;
+}
+
+/* ============= GALERIE ============= */
+.gallery-section {
+  background: var(--bg-2);
+  padding: 140px 0;
+}
+.gallery {
+  max-width: 1400px;
+  margin: 0 auto;
+  padding: 0 36px;
+  display: grid;
+  grid-template-columns: repeat(12, 1fr);
+  grid-auto-rows: 140px;
+  gap: 14px;
+}
+.gallery-item {
+  position: relative; overflow: hidden;
+  border-radius: 3px;
+}
+.gallery-item img, .gallery-item video {
+  width: 100%; height: 100%; object-fit: cover;
+  transition: transform 1.3s cubic-bezier(.2,.7,.2,1);
+}
+.gallery-item:hover img, .gallery-item:hover video { transform: scale(1.06); }
+.g-1 { grid-column: span 5; grid-row: span 3; }
+.g-2 { grid-column: span 4; grid-row: span 2; }
+.g-3 { grid-column: span 3; grid-row: span 2; }
+.g-4 { grid-column: span 4; grid-row: span 3; }
+.g-5 { grid-column: span 3; grid-row: span 2; }
+.g-6 { grid-column: span 5; grid-row: span 2; }
+
+/* ============= VISIT ============= */
+.visit-section {
+  background: var(--bg);
+  padding: 160px 0 120px;
+  position: relative;
+}
+.visit-wrap {
+  max-width: 1280px;
+  margin: 0 auto;
+  padding: 0 36px;
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 80px;
+  align-items: start;
+}
+.visit-info .display { font-size: clamp(48px, 6vw, 84px); }
+.visit-info .display em { color: var(--gold-2); }
+.visit-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 36px 48px;
+  margin-top: 50px;
+}
+.visit-cell .lab {
+  font-size: 11px; letter-spacing: 0.32em; text-transform: uppercase;
+  color: var(--gold-2);
+  border-bottom: 1px solid rgba(201, 168, 106, 0.3);
+  padding-bottom: 10px;
+  margin-bottom: 14px;
+}
+.visit-cell .val {
+  font-family: var(--serif);
+  font-size: 19px;
+  line-height: 1.5;
+  color: var(--cream);
+}
+.visit-cell .val em { font-family: var(--script); color: var(--gold-2); font-style: normal; font-size: 24px; }
+.visit-cta {
+  margin-top: 56px;
+  display: flex; gap: 14px; flex-wrap: wrap;
+}
+
+.visit-map {
+  position: relative;
+  aspect-ratio: 4/5;
+  background: var(--bg-3);
+  border-radius: 4px;
+  overflow: hidden;
+  border: 1px solid rgba(236, 225, 200, 0.08);
+}
+.visit-map svg { width: 100%; height: 100%; display: block; }
+.visit-map .pin-label {
+  position: absolute; left: 50%; top: 50%;
+  transform: translate(-50%, -100%);
+  background: var(--paper); color: var(--ink);
+  padding: 12px 18px;
+  font-family: var(--serif);
+  font-style: italic;
+  font-size: 16px;
+  white-space: nowrap;
+  margin-top: -18px;
+  box-shadow: 0 8px 30px rgba(0,0,0,0.4);
+}
+.visit-map .pin-label::after {
+  content: ''; position: absolute; left: 50%; bottom: -6px;
+  width: 12px; height: 12px;
+  background: var(--paper);
+  transform: translateX(-50%) rotate(45deg);
+}
+.visit-map .pin {
+  position: absolute; left: 50%; top: 50%;
+  width: 18px; height: 18px;
+  border-radius: 50%;
+  background: var(--gold-2);
+  transform: translate(-50%, -50%);
+  box-shadow: 0 0 0 4px rgba(201, 168, 106, 0.25), 0 0 0 12px rgba(201, 168, 106, 0.12);
+  animation: pinPulse 2.4s ease-in-out infinite;
+}
+@keyframes pinPulse {
+  0%, 100% { box-shadow: 0 0 0 4px rgba(201, 168, 106, 0.25), 0 0 0 12px rgba(201, 168, 106, 0.12); }
+  50% { box-shadow: 0 0 0 6px rgba(201, 168, 106, 0.35), 0 0 0 20px rgba(201, 168, 106, 0); }
+}
+
+/* ============= FOOTER ============= */
+.footer {
+  background: #050402;
+  padding: 100px 0 36px;
+  position: relative;
+  border-top: 1px solid rgba(236, 225, 200, 0.06);
+}
+.footer-grid {
+  max-width: 1280px;
+  margin: 0 auto;
+  padding: 0 36px;
+  display: grid;
+  grid-template-columns: 1.4fr 1fr 1fr 1fr;
+  gap: 48px;
+  margin-bottom: 80px;
+}
+.footer-brand img { width: 220px; margin-bottom: 20px; }
+.footer-brand p { font-family: var(--serif); font-style: italic; font-size: 16px; color: rgba(236, 225, 200, 0.6); max-width: 320px; line-height: 1.5; }
+.footer-col h5 {
+  font-size: 11px; letter-spacing: 0.32em; text-transform: uppercase;
+  color: var(--gold-2); margin-bottom: 18px;
+  border-bottom: 1px solid rgba(201, 168, 106, 0.2);
+  padding-bottom: 10px;
+  font-weight: 500;
+}
+.footer-col ul { list-style: none; display: grid; gap: 10px; }
+.footer-col a, .footer-col .text { font-family: var(--serif); font-size: 17px; color: rgba(236, 225, 200, 0.8); transition: color .25s ease; }
+.footer-col a:hover { color: var(--gold-2); }
+.footer-col .small { font-size: 12px; color: rgba(236, 225, 200, 0.5); margin-top: 4px; font-family: var(--sans); letter-spacing: 0.04em; font-style: normal; }
+
+.madeby-strip {
+  max-width: 1280px;
+  margin: 0 auto;
+  padding: 30px 36px 0;
+  border-top: 1px solid rgba(236, 225, 200, 0.06);
+  display: flex; justify-content: space-between; align-items: center; gap: 24px;
+  flex-wrap: wrap;
+}
+.madeby-strip .copy {
+  font-size: 11px; letter-spacing: 0.24em; text-transform: uppercase;
+  color: rgba(236, 225, 200, 0.4);
+}
+.madeby {
+  display: inline-flex; align-items: center; gap: 14px;
+  font-size: 11px; letter-spacing: 0.32em; text-transform: uppercase;
+  color: rgba(236, 225, 200, 0.55);
+  transition: color .3s ease;
+}
+.madeby:hover { color: var(--cream); }
+.madeby img {
+  width: 32px;
+  filter: drop-shadow(0 0 12px rgba(255, 61, 163, 0.4));
+  transition: transform .5s cubic-bezier(.2,.7,.2,1);
+}
+.madeby:hover img { transform: rotate(-12deg) scale(1.1); }
+.madeby .ae { font-family: var(--serif); font-style: italic; font-size: 18px; color: var(--cream); letter-spacing: 0; text-transform: none; }
+
+/* ============= WHATSAPP FAB ============= */
+.wa-fab {
+  position: fixed; bottom: 24px; right: 24px;
+  z-index: 80;
+  display: inline-flex; align-items: center;
+  background: #25d366;
+  color: #ffffff;
+  border-radius: 999px;
+  padding: 14px;
+  text-decoration: none;
+  box-shadow:
+    0 10px 30px -6px rgba(0, 0, 0, 0.45),
+    0 0 0 6px rgba(37, 211, 102, 0.18);
+  transition: transform .3s cubic-bezier(.2,.7,.2,1), padding .35s cubic-bezier(.2,.7,.2,1), box-shadow .3s ease;
+  font-family: var(--sans);
+}
+.wa-fab::before {
+  content: ''; position: absolute; inset: -6px;
+  border-radius: 999px;
+  border: 2px solid rgba(37, 211, 102, 0.4);
+  animation: waPulse 2.4s ease-out infinite;
+  pointer-events: none;
+}
+@keyframes waPulse {
+  0% { transform: scale(0.95); opacity: 0.7; }
+  100% { transform: scale(1.5); opacity: 0; }
+}
+.wa-fab:hover {
+  transform: translateY(-2px);
+  padding-right: 22px;
+  box-shadow:
+    0 18px 40px -6px rgba(37, 211, 102, 0.5),
+    0 0 0 6px rgba(37, 211, 102, 0.24);
+}
+.wa-fab .wa-icon {
+  width: 30px; height: 30px;
+  display: grid; place-items: center;
+  flex-shrink: 0;
+}
+.wa-fab .wa-icon svg { width: 28px; height: 28px; }
+.wa-fab .wa-label {
+  max-width: 0;
+  overflow: hidden;
+  white-space: nowrap;
+  font-size: 11px; letter-spacing: 0.28em; text-transform: uppercase;
+  font-weight: 700;
+  transition: max-width .45s cubic-bezier(.2,.7,.2,1), opacity .3s ease, margin-left .35s ease;
+  opacity: 0;
+  margin-left: 0;
+}
+.wa-fab:hover .wa-label {
+  max-width: 280px;
+  opacity: 1;
+  margin-left: 14px;
+}
+@media (max-width: 560px) {
+  .wa-fab { bottom: 16px; right: 16px; padding: 12px; }
+  .wa-fab .wa-icon { width: 26px; height: 26px; }
+  .wa-fab .wa-icon svg { width: 24px; height: 24px; }
+}
+
+/* ============= REVEAL ANIMATIONS ============= */
+.reveal { opacity: 0; transform: translateY(28px); transition: opacity 1s ease, transform 1.1s cubic-bezier(.2,.7,.2,1); }
+.reveal.in { opacity: 1; transform: none; }
+.reveal-up { opacity: 0; transform: translateY(48px); transition: opacity 1.1s ease, transform 1.2s cubic-bezier(.2,.7,.2,1); }
+.reveal-up.in { opacity: 1; transform: none; }
+.reveal-img { clip-path: inset(0 100% 0 0); transition: clip-path 1.4s cubic-bezier(.83,.01,.18,1); }
+.reveal-img.in { clip-path: inset(0 0 0 0); }
+.delay-1 { transition-delay: .12s; }
+.delay-2 { transition-delay: .24s; }
+.delay-3 { transition-delay: .36s; }
+.delay-4 { transition-delay: .48s; }
+
+@media (prefers-reduced-motion: reduce) {
+  .reveal, .reveal-up, .reveal-img { opacity: 1; transform: none; clip-path: none; }
+  .marquee .track { animation: none; }
+  .scroll-cue .line { animation: none; }
+}
+
+/* ============= RESPONSIVE ============= */
+@media (max-width: 960px) {
+  .nav { padding: 14px 20px; }
+  .nav.scrolled { padding: 10px 20px; }
+  .nav-brand { height: 38px; }
+  .nav.scrolled .nav-brand { height: 34px; }
+  .nav-right a:not(.reserve) { display: none; }
+  .souls-grid { grid-template-columns: 1fr; }
+  .souls-grid::before { display: none; }
+  .soul { min-height: 540px; padding: 60px 32px 70px; }
+  .menu-cat, .menu-cat:nth-child(even) { grid-template-columns: 1fr; gap: 40px; }
+  .menu-cat:nth-child(even) .menu-cat-img { order: 0; }
+  .menu-cat-img { aspect-ratio: 16/10; }
+  .next-up-card { grid-template-columns: 1fr; padding: 24px; gap: 28px; }
+  .events { grid-template-columns: repeat(2, 1fr); }
+  .visit-wrap { grid-template-columns: 1fr; gap: 60px; }
+  .visit-map { aspect-ratio: 1; }
+  .footer-grid { grid-template-columns: 1fr 1fr; gap: 36px; }
+  .gallery { grid-auto-rows: 110px; }
+  .section-head { padding: 0 24px; margin-bottom: 60px; }
+  .souls { padding: 100px 0 0; }
+  .menu-cats { padding: 0 24px; gap: 60px; }
+  .menu-strip { grid-template-columns: 1fr 1fr; height: auto; grid-auto-rows: 220px; margin-top: 80px; padding: 0 24px; }
+}
+@media (max-width: 560px) {
+  .footer-grid { grid-template-columns: 1fr; }
+  .gallery { grid-template-columns: repeat(6, 1fr); grid-auto-rows: 100px; }
+  .g-1 { grid-column: span 6; grid-row: span 2; }
+  .g-2, .g-3, .g-4, .g-5, .g-6 { grid-column: span 3; grid-row: span 2; }
+  .marquee span { font-size: 22px; }
+  .hero-content { padding: 100px 16px 80px; }
+}
+</style>
+</head>
+<body class="locked">
+
+<!-- ============================================================
+     INTRO OVERLAY
+     ============================================================ -->
+<div id="intro">
+  <div class="bars">
+    <div class="bar top"></div>
+    <div class="bar bot"></div>
+  </div>
+  <div class="intro-stack">
+    <div class="intro-caption"><span class="line"></span>Piața Trandafirilor 43 · Tg Mureș<span class="line"></span></div>
+    <div class="intro-logo-wrap">
+      <img class="intro-logo" src="assets/logo-criss-white.png" alt="Criss Café &amp; Club" />
+    </div>
+    <div class="intro-tag">Lounge <b>·</b> Pub <b>·</b> Social Club</div>
+  </div>
+  <button class="intro-skip" id="skipIntro">Enter</button>
+</div>
+
+<!-- ============================================================
+     NAV
+     ============================================================ -->
+<nav class="nav" id="nav">
+  <a class="nav-brand" href="#top" aria-label="Criss Café &amp; Club">
+    <img src="assets/logo-criss-white.png" alt="Criss Café &amp; Club" />
+  </a>
+  <div class="nav-right">
+    <a href="#meniu">Meniu</a>
+    <a href="#noapte">Criss Club</a>
+    <a href="#vizita">Vizită</a>
+    <a class="reserve" href="tel:0746521799">Rezervare</a>
+  </div>
+</nav>
+
+<!-- ============================================================
+     HERO
+     ============================================================ -->
+<section class="hero" data-screen-label="Hero">
+  <video class="hero-video" autoplay loop muted playsinline poster="assets/photos/interior-wide.jpeg">
+    <source src="assets/videos/clip-1.mp4" type="video/mp4" />
+  </video>
+  <div class="hero-vignette"></div>
+  <div class="hero-content">
+    <div class="kicker reveal">Piața Trandafirilor 43 · Tg Mureș</div>
+    <img class="hero-logo reveal delay-1" src="assets/logo-criss-white.png" alt="Criss Café &amp; Club" />
+    <div class="hero-tag reveal delay-2">Lounge <span class="sep">·</span> Pub <span class="sep">·</span> Social Club</div>
+    <div class="hero-cta reveal delay-3">
+      <a class="btn" href="#meniu">Vezi meniul <span class="arr">→</span></a>
+      <a class="btn ghost" href="tel:0746521799">Rezervare · 0746 521 799</a>
+    </div>
+  </div>
+  <div class="scroll-cue">
+    <span>scroll</span>
+    <div class="line"></div>
+  </div>
+</section>
+
+<!-- ============================================================
+     MARQUEE
+     ============================================================ -->
+<div class="marquee" aria-hidden="true">
+  <div class="track" id="marqueeTrack">
+    <span>Tg Mureș</span><span class="dot">●</span>
+    <span><i>Lounge</i></span><span class="dot">●</span>
+    <span>Piața Trandafirilor 43</span><span class="dot">●</span>
+    <span><i>Pub</i></span><span class="dot">●</span>
+    <span>Social Club</span><span class="dot">●</span>
+    <span class="glyph">Criss</span><span class="dot">●</span>
+    <span><i>Cocktails</i></span><span class="dot">●</span>
+    <span>Espresso</span><span class="dot">●</span>
+    <span><i>Live Music</i></span><span class="dot">●</span>
+    <span>Manele All Night</span><span class="dot">●</span>
+  </div>
+</div>
+
+<!-- ============================================================
+     DOUĂ SUFLETE — DAY / NIGHT
+     ============================================================ -->
+<section class="souls" id="despre" data-screen-label="Două suflete">
+  <div class="section-head">
+    <div class="kicker center reveal">Două suflete · One address</div>
+    <h2 class="display reveal-up delay-1">Cafenea <em>ziua.</em><br /><span class="script">Club</span> noaptea.</h2>
+    <p class="lead reveal-up delay-2">Un loc cu două vieți. Dimineața — espresso de specialitate și croissant cald. Seara — lumini joase, ritmuri bune și companie aleasă. Același bar, două dispoziții.</p>
+  </div>
+
+  <div class="souls-grid">
+    <div class="soul day">
+      <video class="bg" autoplay loop muted playsinline poster="assets/photos/coffee-basket.jpeg">
+        <source src="assets/videos/clip-2.mp4" type="video/mp4" />
+      </video>
+      <div class="scrim"></div>
+      <div class="inner">
+        <div class="time-band"><span>Cafeneaua</span><span class="hour">07:00 → 18:00</span></div>
+        <h3>Café</h3>
+        <div class="sub">Slow mornings, espresso lent.</div>
+        <p>Boabe proaspăt prăjite, lapte din lapte, patiserie făcută la fața locului. Loc de respirat înainte ca ziua să te prindă din urmă.</p>
+        <div class="tags">
+          <span class="tag">Specialty Coffee</span>
+          <span class="tag">Patiserie</span>
+          <span class="tag">Brunch</span>
+          <span class="tag">Wi-Fi</span>
+        </div>
+      </div>
+    </div>
+    <div class="soul night">
+      <video class="bg" autoplay loop muted playsinline poster="assets/posters/charisma-night.jpeg">
+        <source src="assets/videos/clip-2.mp4" type="video/mp4" />
+      </video>
+      <div class="scrim"></div>
+      <div class="inner">
+        <div class="time-band"><span>Clubul</span><span class="hour">22:00 → late</span></div>
+        <h3>Club</h3>
+        <div class="sub">DJ sets, manele, live music.</div>
+        <p>Cea mai bună noapte din Tg Mureș. DJ invitați, bar fără așteptare și o pistă pe care nu rămâi pe scaun. Joi → Sâmbătă.</p>
+        <div class="tags">
+          <span class="tag">DJ Sets</span>
+          <span class="tag">Live Music</span>
+          <span class="tag">Cocktails</span>
+          <span class="tag">VIP</span>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ============================================================
+     MENIU
+     ============================================================ -->
+<section class="menu-section" id="meniu" data-screen-label="Meniu">
+  <div class="section-head">
+    <div class="kicker center reveal">Meniul casei</div>
+    <h2 class="display reveal-up delay-1">Mic <em>dejun.</em><br />Prânz. <em>Noapte.</em></h2>
+    <p class="lead reveal-up delay-2">Trei momente ale zilei, trei capitole. Tot ce trebuie să știi e că nimic nu pleacă din bucătărie până nu arată exact așa cum vrem noi.</p>
+  </div>
+
+  <div class="menu-cats">
+
+    <!-- CAFEA & MIC DEJUN -->
+    <div class="menu-cat">
+      <div class="menu-cat-img reveal-img">
+        <img src="assets/photos/coffee-croissant.jpeg" alt="" />
+        <div class="stamp">01 · Dimineața</div>
+      </div>
+      <div class="menu-cat-body">
+        <div class="menu-cat-num reveal">— Capitolul I —</div>
+        <h3 class="reveal-up delay-1">Cafea <em>&amp;</em> mic dejun</h3>
+        <div class="cat-tag reveal delay-1">Servit zilnic 07:00 — 12:00</div>
+        <ul class="menu-items">
+          <li class="reveal delay-1"><div><div class="item-name">Espresso · Cappuccino · Flat White</div><div class="item-desc">boabe proaspăt prăjite, lapte integral sau vegetal</div></div><div class="item-price">de la 9 lei</div></li>
+          <li class="reveal delay-2"><div><div class="item-name">Croissant cu unt</div><div class="item-desc">copt în casă, miez aerat, crustă aurie</div></div><div class="item-price">7 lei</div></li>
+          <li class="reveal delay-3"><div><div class="item-name">Croissant cu ciocolată belgiană</div><div class="item-desc">ciocolată 64% în interior</div></div><div class="item-price">9 lei</div></li>
+          <li class="reveal delay-4"><div><div class="item-name">Mic dejun complet</div><div class="item-desc">ouă ochiuri, bacon, brânză, legume, pâine prăjită</div></div><div class="item-price">29 lei</div></li>
+        </ul>
+      </div>
+    </div>
+
+    <!-- BUCĂTĂRIE -->
+    <div class="menu-cat">
+      <div class="menu-cat-img reveal-img">
+        <img src="assets/photos/pizza.jpeg" alt="" />
+        <div class="stamp">02 · Prânz</div>
+      </div>
+      <div class="menu-cat-body">
+        <div class="menu-cat-num reveal">— Capitolul II —</div>
+        <h3 class="reveal-up delay-1">Din <em>cuptor</em></h3>
+        <div class="cat-tag reveal delay-1">Pizza, paste &amp; ceva în plus</div>
+        <ul class="menu-items">
+          <li class="reveal delay-1"><div><div class="item-name">Pizza casei</div><div class="item-desc">sos roșu, mozzarella, prosciutto, bacon, busuioc proaspăt</div></div><div class="item-price">38 lei</div></li>
+          <li class="reveal delay-2"><div><div class="item-name">Margherita</div><div class="item-desc">sos San Marzano, mozzarella di bufala, busuioc</div></div><div class="item-price">32 lei</div></li>
+          <li class="reveal delay-3"><div><div class="item-name">Capricciosa</div><div class="item-desc">șuncă, ciuperci, ardei, măsline, mozzarella</div></div><div class="item-price">36 lei</div></li>
+          <li class="reveal delay-4"><div><div class="item-name">Paste napoletane</div><div class="item-desc">sos roșu copt încet, busuioc, parmezan</div></div><div class="item-price">29 lei</div></li>
+        </ul>
+      </div>
+    </div>
+
+    <!-- BAR & COCKTAILS -->
+    <div class="menu-cat">
+      <div class="menu-cat-img reveal-img">
+        <img src="assets/photos/belaire-bottles.jpeg" alt="" />
+        <div class="stamp">03 · Seara</div>
+      </div>
+      <div class="menu-cat-body">
+        <div class="menu-cat-num reveal">— Capitolul III —</div>
+        <h3 class="reveal-up delay-1">Bar <em>&amp;</em> cocktails</h3>
+        <div class="cat-tag reveal delay-1">Open bar 17:00 — late</div>
+        <ul class="menu-items">
+          <li class="reveal delay-1"><div><div class="item-name">Strawberry Crush</div><div class="item-desc">frișcă, sos de căpșuni proaspete, lapte de fermă</div></div><div class="item-price">22 lei</div></li>
+          <li class="reveal delay-2"><div><div class="item-name">Aperol Spritz</div><div class="item-desc">Aperol, Prosecco, soda, felie de portocală</div></div><div class="item-price">28 lei</div></li>
+          <li class="reveal delay-3"><div><div class="item-name">Bumbu Rum Old Fashioned</div><div class="item-desc">Bumbu Original, sirop demerara, bitter de portocale</div></div><div class="item-price">42 lei</div></li>
+          <li class="reveal delay-4"><div><div class="item-name">Luc Belaire France · sticla</div><div class="item-desc">sparkling rosé, gheață, două pahare</div></div><div class="item-price">la cerere</div></li>
+        </ul>
+      </div>
+    </div>
+
+  </div>
+
+  <!-- BAR -->
+  <div class="menu-strip">
+    <div class="menu-strip-item reveal-up"><img src="assets/photos/interior-wide.jpeg" alt="Interior Criss Café" /></div>
+    <div class="menu-strip-item reveal-up delay-1"><img src="assets/photos/coffee-basket.jpeg" alt="Cafea și croissant" /></div>
+    <div class="menu-strip-item reveal-up delay-2">
+      <video autoplay loop muted playsinline>
+        <source src="assets/videos/clip-2.mp4" type="video/mp4" />
+      </video>
+    </div>
+    <div class="menu-strip-item reveal-up delay-3"><img src="assets/photos/milkshake.jpeg" alt="Strawberry Crush" /></div>
+  </div>
+
+  <div class="menu-foot">
+    <span class="note">Meniul complet disponibil la masă · alergeni la cerere · prețurile pot suferi modificări</span>
+  </div>
+</section>
+
+<!-- ============================================================
+     CRISS CLUB NIGHT
+     ============================================================ -->
+<section class="club-section" id="noapte" data-screen-label="Criss Club">
+  <div class="section-head">
+    <div class="kicker center reveal">Criss Club Night</div>
+    <h2 class="display reveal-up delay-1">Cea mai bună <em>noapte</em><br />din <span class="script">Tg Mureș.</span></h2>
+    <p class="lead reveal-up delay-2">Joi, vineri, sâmbătă — line-up de DJ, live music, manele all night. Intrarea liberă cu rezervare. RSVP la <b style="color:var(--pink);">0746 521 799</b>.</p>
+  </div>
+
+  <!-- LINE-UP RAIL -->
+  <div class="events-rail">
+    <div class="events-rail-head">
+      <h4>Line-up</h4>
+      <a class="more" href="tel:0746521799">Rezervări →</a>
+    </div>
+    <div class="events">
+      <a class="event reveal-up" href="#">
+        <img src="assets/posters/manele-night.jpeg" alt="" />
+        <div class="event-meta">
+          <div class="date">05 iunie</div>
+          <div class="title">Manele All Night Long</div>
+          <div class="who">DJ Seft</div>
+        </div>
+      </a>
+      <a class="event reveal-up delay-1" href="#">
+        <img src="assets/posters/everybodys-night.jpeg" alt="" />
+        <div class="event-meta">
+          <div class="date">06 iunie · 22:00</div>
+          <div class="title">Everybody's Night</div>
+          <div class="who">DJ David Serban</div>
+        </div>
+      </a>
+      <a class="event reveal-up delay-2" href="#">
+        <img src="assets/posters/charisma-night.jpeg" alt="" />
+        <div class="event-meta">
+          <div class="date">07 iunie</div>
+          <div class="title">Charisma Night</div>
+          <div class="who">DJ Adrian Stan</div>
+        </div>
+      </a>
+      <a class="event reveal-up delay-3" href="#">
+        <img src="assets/posters/live-music.jpeg" alt="" />
+        <div class="event-meta">
+          <div class="date">12 iunie · 22:00</div>
+          <div class="title">Live Music · Special Guests</div>
+          <div class="who">Tomas PCZ &amp; C.A. Strings</div>
+        </div>
+      </a>
+      <a class="event reveal-up" href="#">
+        <img src="assets/posters/latino-night.jpeg" alt="" />
+        <div class="event-meta">
+          <div class="date">13 iunie · 22:00</div>
+          <div class="title">Latino Night</div>
+          <div class="who">DJ M.I.G</div>
+        </div>
+      </a>
+      <a class="event reveal-up delay-1" href="#">
+        <img src="assets/posters/retro-night.jpeg" alt="" />
+        <div class="event-meta">
+          <div class="date">19 iunie · 22:00</div>
+          <div class="title">Retro Night</div>
+          <div class="who">Adrian Țepeș</div>
+        </div>
+      </a>
+      <a class="event reveal-up delay-2" href="#">
+        <img src="assets/posters/anniversary-night.jpeg" alt="" />
+        <div class="event-meta">
+          <div class="date">20 iunie · 22:00</div>
+          <div class="title">Anniversary Night · Live</div>
+          <div class="who">Raul Furnea &amp; Formația</div>
+        </div>
+      </a>
+    </div>
+  </div>
+</section>
+
+<!-- ============================================================
+     VISIT
+     ============================================================ -->
+<section class="visit-section" id="vizita" data-screen-label="Vizită">
+  <div class="visit-wrap">
+    <div class="visit-info">
+      <div class="kicker reveal">Vizitează-ne</div>
+      <h2 class="display reveal-up delay-1">Te <em>așteptăm</em><br />la <span class="script">masă.</span></h2>
+      <div class="visit-grid">
+        <div class="visit-cell reveal-up">
+          <div class="lab">Adresa</div>
+          <div class="val">Piața Trandafirilor, <em>Nr. 43</em><br />Tg Mureș, jud. Mureș</div>
+        </div>
+        <div class="visit-cell reveal-up delay-1">
+          <div class="lab">Telefon</div>
+          <div class="val">0746 521 799<br /><span style="font-size: 13px; opacity: .6; font-style: normal; font-family: var(--sans); letter-spacing: 0.18em;">REZERVĂRI · EVENIMENTE</span></div>
+        </div>
+        <div class="visit-cell reveal-up delay-2">
+          <div class="lab">Café · Lounge</div>
+          <div class="val">Luni → Joi<br />07:00 — 23:00<br /><span style="font-size: 13px; opacity: .6; font-style: normal; font-family: var(--sans); letter-spacing: 0.04em;">vineri &amp; sâmbătă — non-stop până late</span></div>
+        </div>
+        <div class="visit-cell reveal-up delay-3">
+          <div class="lab">Criss Club Night</div>
+          <div class="val">Joi · Vineri · Sâmbătă<br />22:00 — <em>late</em></div>
+        </div>
+      </div>
+      <div class="visit-cta">
+        <a class="btn" href="tel:0746521799">Sună pentru rezervare <span class="arr">→</span></a>
+        <a class="btn ghost" href="https://maps.google.com/?q=Piata+Trandafirilor+43+Targu+Mures" target="_blank" rel="noopener">Deschide harta</a>
+      </div>
+    </div>
+
+    <div class="visit-map reveal-up delay-1">
+      <svg viewBox="0 0 400 500" xmlns="http://www.w3.org/2000/svg" preserveAspectRatio="xMidYMid slice">
+        <defs>
+          <pattern id="grid" width="40" height="40" patternUnits="userSpaceOnUse">
+            <path d="M 40 0 L 0 0 0 40" fill="none" stroke="rgba(236, 225, 200, 0.06)" stroke-width="0.5" />
+          </pattern>
+          <linearGradient id="mapGrad" x1="0" y1="0" x2="0" y2="1">
+            <stop offset="0%" stop-color="#1d1813"/>
+            <stop offset="100%" stop-color="#0f0c09"/>
+          </linearGradient>
+        </defs>
+        <rect width="400" height="500" fill="url(#mapGrad)"/>
+        <rect width="400" height="500" fill="url(#grid)"/>
+        <!-- Stylized streets -->
+        <path d="M 0 180 Q 120 160 200 200 T 400 220" stroke="rgba(201, 168, 106, 0.25)" stroke-width="1.5" fill="none"/>
+        <path d="M 200 0 Q 220 120 200 250 T 240 500" stroke="rgba(201, 168, 106, 0.25)" stroke-width="1.5" fill="none"/>
+        <path d="M 0 340 L 400 320" stroke="rgba(201, 168, 106, 0.15)" stroke-width="1" fill="none"/>
+        <path d="M 60 0 L 80 500" stroke="rgba(201, 168, 106, 0.15)" stroke-width="1" fill="none"/>
+        <path d="M 320 0 L 300 500" stroke="rgba(201, 168, 106, 0.15)" stroke-width="1" fill="none"/>
+        <!-- Plaza / park shape near pin -->
+        <ellipse cx="200" cy="250" rx="80" ry="50" fill="rgba(28, 177, 194, 0.06)" stroke="rgba(28, 177, 194, 0.2)" stroke-width="0.8"/>
+        <text x="200" y="200" text-anchor="middle" font-family="Cormorant Garamond, serif" font-style="italic" font-size="11" fill="rgba(236, 225, 200, 0.4)">Piața Trandafirilor</text>
+        <text x="30" y="170" font-family="Manrope, sans-serif" font-size="9" letter-spacing="2" fill="rgba(236, 225, 200, 0.3)">STR. ENESCU</text>
+        <text x="240" y="50" font-family="Manrope, sans-serif" font-size="9" letter-spacing="2" fill="rgba(236, 225, 200, 0.3)">BD. 1 DEC.</text>
+        <text x="250" y="340" font-family="Manrope, sans-serif" font-size="9" letter-spacing="2" fill="rgba(236, 225, 200, 0.3)">STR. BOLYAI</text>
+      </svg>
+      <div class="pin-label">Criss Café &amp; Club</div>
+      <div class="pin"></div>
+    </div>
+  </div>
+</section>
+
+<!-- ============================================================
+     FOOTER
+     ============================================================ -->
+<footer class="footer">
+  <div class="footer-grid">
+    <div class="footer-brand">
+      <img src="assets/logo-criss-white.png" alt="Criss Café &amp; Club" />
+      <p>Lounge, pub și social club în inima Tg Mureșului. Cafeneaua deschisă de la 7. Clubul deschis până dimineața.</p>
+    </div>
+    <div class="footer-col">
+      <h5>Vizită</h5>
+      <ul>
+        <li><span class="text">P-ța Trandafirilor 43</span></li>
+        <li><span class="text">Tg Mureș, jud. Mureș</span></li>
+        <li><a href="https://maps.google.com/?q=Piata+Trandafirilor+43+Targu+Mures" target="_blank" rel="noopener" class="small">Deschide în Maps →</a></li>
+      </ul>
+    </div>
+    <div class="footer-col">
+      <h5>Contact</h5>
+      <ul>
+        <li><a href="tel:0746521799" class="text">0746 521 799</a></li>
+        <li><a href="/cdn-cgi/l/email-protection#adc5c8c1c1c2edcedfc4dedececccbc883dfc2" class="text"><span class="__cf_email__" data-cfemail="650d0009090a2506170c1616060403004b170a">[email&#160;protected]</span></a></li>
+        <li><span class="small">Rezervări &amp; evenimente private</span></li>
+      </ul>
+    </div>
+    <div class="footer-col">
+      <h5>Urmărește</h5>
+      <ul>
+        <li><a href="#" class="text">Instagram</a></li>
+        <li><a href="#" class="text">Facebook</a></li>
+        <li><a href="#" class="text">TikTok</a></li>
+      </ul>
+    </div>
+  </div>
+  <div class="madeby-strip">
+    <span class="copy">© 2026 Criss Café &amp; Club · Toate drepturile rezervate</span>
+    <a class="madeby" href="#" target="_blank" rel="noopener">
+      <span>made by</span>
+      <img src="assets/aievea.png" alt="aievea" />
+      <span class="ae">aievea</span>
+    </a>
+  </div>
+</footer>
+
+<script data-cfasync="false" src="/cdn-cgi/scripts/5c5dd728/cloudflare-static/email-decode.min.js"></script><script>
+(function(){
+  // ---------- INTRO ----------
+  const intro = document.getElementById('intro');
+  const body = document.body;
+  const skipBtn = document.getElementById('skipIntro');
+
+  function endIntro() {
+    if (intro.classList.contains('done')) return;
+    intro.classList.add('done');
+    setTimeout(() => {
+      intro.classList.add('fade');
+      body.classList.remove('locked');
+      window.scrollTo({ top: 0 });
+    }, 1100);
+    setTimeout(() => { intro.style.display = 'none'; }, 2400);
+  }
+
+  // Auto-end intro
+  const INTRO_MS = 4400;
+  const introTimer = setTimeout(endIntro, INTRO_MS);
+  skipBtn.addEventListener('click', () => { clearTimeout(introTimer); endIntro(); });
+
+  // Honor reduced motion: short intro
+  if (matchMedia('(prefers-reduced-motion: reduce)').matches) {
+    clearTimeout(introTimer);
+    setTimeout(endIntro, 400);
+  }
+
+  // ---------- NAV scrolled ----------
+  const nav = document.getElementById('nav');
+  function onScroll() {
+    if (window.scrollY > 60) nav.classList.add('scrolled');
+    else nav.classList.remove('scrolled');
+  }
+  window.addEventListener('scroll', onScroll, { passive: true });
+  onScroll();
+
+  // ---------- REVEAL on scroll ----------
+  const io = new IntersectionObserver((entries) => {
+    entries.forEach(e => {
+      if (e.isIntersecting) {
+        e.target.classList.add('in');
+        io.unobserve(e.target);
+      }
+    });
+  }, { threshold: 0.15, rootMargin: '0px 0px -80px 0px' });
+
+  document.querySelectorAll('.reveal, .reveal-up, .reveal-img').forEach(el => io.observe(el));
+
+  // ---------- MARQUEE: duplicate track for seamless loop ----------
+  const track = document.getElementById('marqueeTrack');
+  if (track) {
+    track.innerHTML = track.innerHTML + track.innerHTML;
+  }
+})();
+</script>
+<!-- ============================================================
+     WHATSAPP FAB (sticky)
+     ============================================================ -->
+<a class="wa-fab" href="https://wa.me/40746521799" target="_blank" rel="noopener" aria-label="Contact pe WhatsApp">
+  <span class="wa-icon" aria-hidden="true">
+    <svg viewBox="0 0 32 32" fill="currentColor" xmlns="http://www.w3.org/2000/svg">
+      <path d="M16.004 5.333c-5.886 0-10.671 4.785-10.671 10.671 0 1.879 .49 3.71 1.419 5.323L5.334 26.667l5.486-1.388a10.6 10.6 0 0 0 5.184 1.32h.004c5.886 0 10.671-4.785 10.671-10.671 0-2.85-1.11-5.53-3.124-7.547a10.6 10.6 0 0 0-7.551-3.048Zm0 19.535h-.004a8.86 8.86 0 0 1-4.515-1.236l-.323-.192-3.255 .823 .869-3.173-.211-.337a8.87 8.87 0 0 1-1.36-4.749c.001-4.896 3.987-8.879 8.802-8.879 2.353 0 4.564 .917 6.226 2.582a8.74 8.74 0 0 1 2.577 6.301c-.001 4.896-3.987 8.86-8.806 8.86Zm4.832-6.643c-.265-.132-1.566-.773-1.809-.861s-.419-.132-.596 .133c-.176 .265-.683 .861-.838 1.038s-.309 .199-.573 .066c-.265-.132-1.117-.412-2.128-1.313-.787-.701-1.318-1.567-1.473-1.832s-.017-.408 .116-.539c.119-.118 .265-.309 .397-.464s.176-.265 .265-.441 .044-.331-.022-.464c-.066-.132-.595-1.434-.815-1.964-.215-.516-.434-.446-.595-.454-.154-.008-.331-.01-.508-.01s-.464 .066-.706 .331-.926 .904-.926 2.207 .949 2.561 1.081 2.737c.132 .176 1.867 2.85 4.524 3.995 .632 .273 1.125 .436 1.51 .558 .635 .202 1.213 .173 1.67 .105 .51-.076 1.566-.64 1.788-1.258s.221-1.148 .155-1.259c-.066-.111-.243-.176-.508-.309Z"/>
+    </svg>
+  </span>
+  <span class="wa-label">Contact pe WhatsApp</span>
+</a>
+
+</body>
+</html>
