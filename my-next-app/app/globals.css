@@ -12,6 +12,18 @@
   --crd-gold-soft: rgba(255, 255, 255, 0.15);
   --crd-whatsapp: #25d366;
 
+  /* Extended brand palette */
+  --crd-gold-accent: #c9a86a;
+  --crd-gold-2: #e6c787;
+  --crd-paper: #f1e9d6;
+  --crd-paper-2: #e6dcc3;
+  --crd-ink-dark: #1a1411;
+  --crd-ink-soft: #4a3e32;
+  --crd-pink: #ff3da3;
+  --crd-teal: #1cb1c2;
+  --crd-bg-2: #14100c;
+  --crd-bg-3: #1d1813;
+
   /* semantic z-index scale */
   --z-float: 60;
 
@@ -37,6 +49,16 @@
   --color-crd-muted: var(--crd-muted);
   --color-crd-gold: var(--crd-gold);
   --color-crd-whatsapp: var(--crd-whatsapp);
+  --color-crd-gold-accent: var(--crd-gold-accent);
+  --color-crd-gold-2: var(--crd-gold-2);
+  --color-crd-paper: var(--crd-paper);
+  --color-crd-ink-dark: var(--crd-ink-dark);
+  --color-crd-ink-soft: var(--crd-ink-soft);
+  --color-crd-pink: var(--crd-pink);
+  --color-crd-teal: var(--crd-teal);
+  --color-crd-bg-2: var(--crd-bg-2);
+  --color-crd-bg-3: var(--crd-bg-3);
+  --font-script: var(--font-pinyon-script);
 }
 
 @media (prefers-color-scheme: dark) {
@@ -127,6 +149,32 @@ body {
   animation: crd-sweep 1.5s var(--ease-expo) 120ms both;
 }
 
+/* ============= Homepage animations ============= */
+@keyframes marqueeScroll {
+  from { transform: translateX(0); }
+  to   { transform: translateX(-50%); }
+}
+
+@keyframes scrollLine {
+  0%, 100% { transform: scaleY(0.3); opacity: 0.4; }
+  50%       { transform: scaleY(1);   opacity: 1; }
+}
+
+@keyframes pinPulse {
+  0%, 100% { box-shadow: 0 0 0 4px rgba(201,168,106,.25), 0 0 0 12px rgba(201,168,106,.12); }
+  50%      { box-shadow: 0 0 0 6px rgba(201,168,106,.35), 0 0 0 20px rgba(201,168,106,0); }
+}
+
+@keyframes waPulse {
+  0%   { transform: scale(0.95); opacity: 0.7; }
+  100% { transform: scale(1.5);  opacity: 0; }
+}
+
+@keyframes nightPulse {
+  0%, 100% { box-shadow: 0 0 0 0 rgba(255,61,163,.4); }
+  50%      { box-shadow: 0 0 0 8px rgba(255,61,163,0); }
+}
+
 @media (prefers-reduced-motion: reduce) {
   .crd-beat,
   .crd-sweep {
@@ -137,5 +185,14 @@ body {
   }
   .crd-link {
     transition: color 120ms ease-out;
+  }
+
+  /* silence homepage animations */
+  [class*="animate-[marquee"],
+  [class*="animate-[scroll"],
+  [class*="animate-[pin"],
+  [class*="animate-[wa"],
+  [class*="animate-[night"] {
+    animation: none !important;
   }
 }
