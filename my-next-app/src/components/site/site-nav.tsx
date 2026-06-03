@@ -6,7 +6,7 @@ import { useState, useEffect } from "react";
 import { usePathname } from "next/navigation";
 import { useLanguage } from "@/src/i18n/language-context";
 import { LanguageToggle } from "@/src/components/footer/language-toggle";
-import logo from "@/src/assets/images/logos/logocriscafeclub.png";
+import logo from "@/src/assets/images/logos/2cfd48d9-5856-4b6b-90cc-a9e14fc021d8_removalai_preview.png";
 
 const LINKS = [
   { href: "/criss-cafe", key: "cafe" },
@@ -39,7 +39,7 @@ export function SiteNav() {
           <Image
             src={logo}
             alt="Criss Club & Cafe"
-            className="h-10 w-auto"
+            className="h-10 w-auto brightness-0 invert"
             priority
           />
         </Link>
