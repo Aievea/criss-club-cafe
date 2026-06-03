@@ -1,6 +1,5 @@
 "use client";
 
-import Link from "next/link";
 import { useLanguage } from "@/src/i18n/language-context";
 import { SiteNav } from "@/src/components/site/site-nav";
 import { VideoCard } from "@/src/components/site/video";
@@ -35,8 +34,8 @@ export default function Home() {
           </span>
         </div>
 
-        {/* Videos — full width, no max-width cap */}
-        <div className="mt-4 grid grid-cols-1 gap-3 px-3 pb-3 sm:grid-cols-2 sm:px-4">
+        {/* Videos */}
+        <div className="mt-4 grid grid-cols-1 gap-3 px-4 pb-4 sm:grid-cols-2 sm:px-6 lg:px-8">
           <VideoCard
             src={cafeVideo}
             title="Criss Cafe"
@@ -53,33 +52,6 @@ export default function Home() {
           />
         </div>
 
-        {/* Services link */}
-        <div className="px-3 pb-4 sm:px-4">
-          <Link
-            href="/servicii"
-            className="group flex w-full items-center justify-between gap-4 rounded-2xl border border-white/[0.08] bg-white/[0.01] px-6 py-4 transition-all duration-300 ease-[cubic-bezier(0.32,0.72,0,1)] hover:border-white/20 hover:bg-white/[0.03]"
-          >
-            <span className="font-display text-xl tracking-tight text-crd-ink transition-colors duration-300 group-hover:text-white sm:text-2xl">
-              {t.nav.services}
-            </span>
-            <span className="flex h-9 w-9 shrink-0 items-center justify-center rounded-full bg-white/[0.06] ring-1 ring-white/10 text-crd-ink transition-all duration-[450ms] ease-[cubic-bezier(0.32,0.72,0,1)] group-hover:translate-x-0.5 group-hover:-translate-y-0.5 group-hover:bg-white/[0.12]">
-              <svg
-                width="16"
-                height="16"
-                viewBox="0 0 24 24"
-                fill="none"
-                stroke="currentColor"
-                strokeWidth="1.5"
-                strokeLinecap="round"
-                strokeLinejoin="round"
-                aria-hidden
-              >
-                <path d="M5 12h14" />
-                <path d="m13 6 6 6-6 6" />
-              </svg>
-            </span>
-          </Link>
-        </div>
       </div>
     </main>
   );

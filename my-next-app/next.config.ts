@@ -5,6 +5,7 @@ const nextConfig: NextConfig = {
     rules: {
       "*.mp4": { type: "asset" },
       "*.webm": { type: "asset" },
+      "*.pdf": { type: "asset" },
     },
   },
 };
