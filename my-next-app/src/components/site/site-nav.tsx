@@ -34,7 +34,7 @@ export function SiteNav() {
 
   return (
     <>
-      <header className="relative z-20 mx-auto flex w-full max-w-5xl items-center gap-x-6 px-6 py-5 sm:px-8 lg:px-10">
+      <header className="relative z-20 mx-auto flex w-full max-w-5xl items-center px-6 py-5 sm:px-8 lg:px-10">
         <Link href="/" className="transition-opacity duration-300 hover:opacity-80">
           <Image
             src={logo}
@@ -44,7 +44,7 @@ export function SiteNav() {
           />
         </Link>
 
-        <nav className="ml-10 hidden items-center gap-1 lg:flex">
+        <nav className="mx-auto hidden items-center gap-1 lg:flex">
           {LINKS.map((link) => {
             const active = pathname === link.href;
             return (
@@ -62,7 +62,7 @@ export function SiteNav() {
           })}
         </nav>
 
-        <div className="ml-auto flex items-center gap-3">
+        <div className="flex items-center gap-3">
           <div className="hidden lg:block">
             <LanguageToggle />
           </div>
