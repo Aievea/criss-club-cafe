@@ -37,19 +37,15 @@ export default function CrissCafePage() {
 
         <p className="text-sm font-medium tracking-wide text-crd-ink/70">{t.cafe.seats}</p>
 
-        {/* Menu PDF */}
-        <a
-          href={menuPdf}
-          target="_blank"
-          rel="noopener noreferrer"
-          className="group inline-flex items-center gap-2.5 rounded-full border border-white/[0.12] bg-white/[0.04] px-6 py-2.5 text-sm font-medium text-crd-ink transition-all duration-300 hover:border-white/25 hover:bg-white/[0.08]"
-        >
-          <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round" aria-hidden>
-            <path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z" />
-            <polyline points="14 2 14 8 20 8" />
-          </svg>
-          {lang === "ro" ? "Vezi meniul" : "View menu"}
-        </a>
+        {/* Menu PDF — embedded */}
+        <div className="w-full overflow-hidden rounded-2xl ring-1 ring-white/[0.08]">
+          <iframe
+            src={menuPdf}
+            title={lang === "ro" ? "Meniu Criss Cafe" : "Criss Cafe Menu"}
+            className="w-full"
+            style={{ height: "780px", border: "none" }}
+          />
+        </div>
 
         {/* Hours */}
         <div className="w-full rounded-2xl border border-white/[0.08] bg-white/[0.02] px-6 py-5 text-left">
