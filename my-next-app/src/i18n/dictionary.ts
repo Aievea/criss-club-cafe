@@ -63,12 +63,19 @@ export const dictionary = {
 
     legal: {
       entity: "Cris Royal Delivery SRL • Târgu Mureș, România",
-      rights: "Toate drepturile rezervate © 2025",
+      rights: "Toate drepturile rezervate © 2026",
       clientele: "Clubul își rezervă dreptul de a selecta clientela.",
+      age: "Acces permis persoanelor cu vârsta de minimum 18 ani în Criss Club.",
+      anpcLabel: "Protecția consumatorilor: ANPC",
+      solLabel: "Soluționare online a litigiilor: platforma SOL",
+      privacyLabel: "Politica de confidențialitate",
+      termsLabel: "Termeni și condiții",
+      cookiesLabel: "Politica cookies",
+      gdpr: "Prelucrăm datele personale în conformitate cu GDPR (Reg. UE 2016/679).",
     },
 
     bottom: {
-      copyright: "© 2025 Cris Royal Delivery",
+      copyright: "© 2026 Cris Royal Delivery SRL",
       built: "Construit cu pasiune pentru Târgu Mureș",
       crafted: "made by",
     },
@@ -152,12 +159,19 @@ export const dictionary = {
 
     legal: {
       entity: "Cris Royal Delivery SRL • Târgu Mureș, Romania",
-      rights: "All rights reserved © 2025",
+      rights: "All rights reserved © 2026",
       clientele: "The club reserves the right to select its clientele.",
+      age: "Criss Club entry restricted to persons aged 18 and over.",
+      anpcLabel: "Consumer protection: ANPC",
+      solLabel: "Online dispute resolution: SOL platform",
+      privacyLabel: "Privacy policy",
+      termsLabel: "Terms & conditions",
+      cookiesLabel: "Cookie policy",
+      gdpr: "We process personal data in accordance with GDPR (EU Reg. 2016/679).",
     },
 
     bottom: {
-      copyright: "© 2025 Cris Royal Delivery",
+      copyright: "© 2026 Cris Royal Delivery SRL",
       built: "Built with passion for Târgu Mureș",
       crafted: "made by",
     },

@@ -1,8 +1,8 @@
 import Image, { StaticImageData } from "next/image";
 import Link from "next/link";
 import img1 from "@/src/assets/images/images-crisscafee/WhatsApp Image 2026-06-01 at 21.25.25.jpeg";
-import img2 from "@/src/assets/images/images-crisscafee/WhatsApp Image 2026-06-01 at 21.28.55.jpeg";
-import img3 from "@/src/assets/images/images-crisscafee/WhatsApp Image 2026-06-01 at 21.28.56.jpeg";
+import img2 from "@/src/assets/images/images-crisscafee/WhatsApp Image 2026-06-01 at 19.28.56.jpeg";
+import img3 from "@/src/assets/images/images-crisscafee/WhatsApp Image 2026-06-01 at 21.29.01 (1).jpeg";
 
 type Item = { name: string; desc: string; price: string };
 type Chapter = {

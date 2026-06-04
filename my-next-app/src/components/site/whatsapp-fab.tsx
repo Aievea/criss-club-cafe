@@ -29,8 +29,8 @@ export function WhatsAppFab() {
       </span>
 
       {/* Expanding label */}
-      <span className="relative z-10 max-w-0 overflow-hidden whitespace-nowrap text-[11px] font-bold tracking-[0.28em] uppercase opacity-0 transition-all duration-[450ms] ease-[cubic-bezier(0.2,0.7,0.2,1)] group-hover:ml-3.5 group-hover:max-w-[280px] group-hover:opacity-100">
-        WhatsApp
+      <span className="relative z-10 max-w-0 overflow-hidden whitespace-nowrap text-[10px] font-bold tracking-[0.22em] uppercase opacity-0 transition-all duration-[450ms] ease-[cubic-bezier(0.2,0.7,0.2,1)] group-hover:ml-3.5 group-hover:max-w-[280px] group-hover:opacity-100">
+        Contact us on WhatsApp
       </span>
     </a>
   );
