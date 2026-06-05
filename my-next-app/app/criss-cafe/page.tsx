@@ -1,15 +1,18 @@
 "use client";
 
+import Link from "next/link";
+import Image from "next/image";
 import { useLanguage } from "@/src/i18n/language-context";
-import { PageHero } from "@/src/components/site/page-hero";
+import { SiteNav } from "@/src/components/site/site-nav";
+import { BackButton } from "@/src/components/site/back-button";
 import { ContactActions } from "@/src/components/site/contact-actions";
-import { CafeMenu } from "@/src/components/site/cafe-menu";
 import { AddressLink } from "@/src/components/site/address-link";
-import estrelaSrc from "@/src/assets/bere/Estrela_Galiza.svg";
-import erdingerSrc from "@/src/assets/bere/Erdinger_Weißbräu_logo.svg";
-import krombacherSrc from "@/src/assets/bere/krombacher-vector-logo.svg";
+import { Reveal } from "@/src/components/footer/reveal";
+import estrelaImg from "@/src/assets/bere/Estrela_Galiza.svg";
+import erdingerImg from "@/src/assets/bere/Erdinger_Weißbräu_logo.svg";
+import krombacherImg from "@/src/assets/bere/krombacher-vector-logo.svg";
 import cafeVideo from "@/src/assets/video/video-crisscafee/WhatsApp Video 2026-06-01 at 21.26.11.mp4";
-import menuPdf from "@/src/assets/meniu/Meniu Criss Cafe.pdf";
+import cafeLogoIg from "@/src/assets/images/logos/criscafelogoig.jpeg";
 import p1 from "@/src/assets/images/images-crisscafee/WhatsApp Image 2026-06-01 at 21.25.25.jpeg";
 import p2 from "@/src/assets/images/images-crisscafee/WhatsApp Image 2026-06-01 at 21.25.27.jpeg";
 import p3 from "@/src/assets/images/images-crisscafee/WhatsApp Image 2026-06-01 at 21.28.55.jpeg";
@@ -20,9 +23,9 @@ import p7 from "@/src/assets/images/images-crisscafee/WhatsApp Image 2026-06-01 
 import { PHONE_TEL, PHONE_DISPLAY } from "@/src/lib/contact";
 
 const BEERS = [
-  { src: estrelaSrc.src, name: "Estrela Galiza", dark: true },
-  { src: erdingerSrc.src, name: "Erdinger Weißbräu", dark: false },
-  { src: krombacherSrc.src, name: "Krombacher", dark: false },
+  { img: estrelaImg, name: "Estrela Galiza", dark: true },
+  { img: erdingerImg, name: "Erdinger Weißbräu", dark: false },
+  { img: krombacherImg, name: "Krombacher", dark: false },
 ];
 
 const PHOTOS = [p1, p2, p3, p4, p5, p6, p7].map((img) => img.src);
@@ -35,17 +38,19 @@ function GoldDivider() {
   );
 }
 
-function SectionHead({ eyebrow, title }: { eyebrow: string; title: React.ReactNode }) {
+function IgIcon() {
   return (
-    <div className="mb-10 flex flex-col items-start gap-2.5">
-      <span className="flex items-center gap-2.5 text-[0.65rem] font-semibold uppercase tracking-[0.36em] text-[#c9a86a]/75">
-        <span className="h-px w-6 bg-[#c9a86a]/50" />
-        {eyebrow}
-      </span>
-      <h2 className="font-display text-[clamp(1.5rem,3.2vw,2.4rem)] font-semibold leading-tight tracking-[-0.02em] text-[#f5f0e8]">
-        {title}
-      </h2>
-    </div>
+    <svg viewBox="0 0 24 24" className="h-5 w-5 shrink-0" aria-hidden>
+      <defs>
+        <radialGradient id="ig-cafe" cx="30%" cy="107%" r="150%">
+          <stop offset="0%" stopColor="#ffd600"/>
+          <stop offset="30%" stopColor="#ff6930"/>
+          <stop offset="60%" stopColor="#fe3b96"/>
+          <stop offset="100%" stopColor="#a60dca"/>
+        </radialGradient>
+      </defs>
+      <path fill="url(#ig-cafe)" d="M12 2.163c3.204 0 3.584.012 4.85.07 3.252.148 4.771 1.691 4.919 4.919.058 1.265.069 1.645.069 4.849 0 3.205-.012 3.584-.069 4.849-.149 3.225-1.664 4.771-4.919 4.919-1.266.058-1.644.07-4.85.07-3.204 0-3.584-.012-4.849-.07-3.26-.149-4.771-1.699-4.919-4.92-.058-1.265-.07-1.644-.07-4.849 0-3.204.013-3.583.07-4.849.149-3.227 1.664-4.771 4.919-4.919 1.266-.057 1.645-.069 4.849-.069zm0-2.163c-3.259 0-3.667.014-4.947.072-4.358.2-6.78 2.618-6.98 6.98-.059 1.281-.073 1.689-.073 4.948 0 3.259.014 3.668.072 4.948.2 4.358 2.618 6.78 6.98 6.98 1.281.058 1.689.072 4.948.072 3.259 0 3.668-.014 4.948-.072 4.354-.2 6.782-2.618 6.979-6.98.059-1.28.073-1.689.073-4.948 0-3.259-.014-3.667-.072-4.947-.196-4.354-2.617-6.78-6.979-6.98-1.281-.059-1.69-.073-4.949-.073zm0 5.838c-3.403 0-6.162 2.759-6.162 6.162s2.759 6.163 6.162 6.163 6.162-2.759 6.162-6.163c0-3.403-2.759-6.162-6.162-6.162zm0 10.162c-2.209 0-4-1.79-4-4 0-2.209 1.791-4 4-4s4 1.791 4 4c0 2.21-1.791 4-4 4zm6.406-11.845c-.796 0-1.441.645-1.441 1.44s.645 1.44 1.441 1.44c.795 0 1.439-.645 1.439-1.44s-.644-1.44-1.439-1.44z"/>
+    </svg>
   );
 }
 
@@ -53,136 +58,186 @@ export default function CrissCafePage() {
   const { t, lang } = useLanguage();
 
   return (
-    <PageHero
-      eyebrow={t.cafe.kind}
-      title="Criss Cafe"
-      lead={t.pages.cafe}
-      below={
-        <div className="w-full">
-          {/* ── Video + Info ─────────────────────────── */}
-          <div className="relative">
-            <div
-              aria-hidden
-              className="pointer-events-none absolute -top-16 left-1/2 h-[300px] w-[700px] max-w-full -translate-x-1/2"
-              style={{ background: "radial-gradient(ellipse, rgba(201,168,106,0.07), transparent 65%)" }}
-            />
-            <div className="mx-auto grid max-w-5xl gap-5 px-6 sm:px-8 lg:grid-cols-2">
-              {/* Video */}
-              <div className="relative overflow-hidden rounded-3xl shadow-[0_24px_64px_rgba(0,0,0,0.55)] ring-1 ring-white/[0.08]">
-                <video
-                  className="aspect-video w-full object-cover"
-                  autoPlay muted loop playsInline preload="metadata"
-                >
-                  <source src={cafeVideo} type="video/mp4" />
-                </video>
-                <div className="pointer-events-none absolute inset-0 bg-gradient-to-t from-[#0a0a0a]/30 via-transparent to-transparent" />
-              </div>
+    <main className="overflow-hidden bg-crd-bg font-body text-crd-ink">
+      <SiteNav />
+      <BackButton />
 
-              {/* Info stack */}
-              <div className="flex flex-col gap-4">
-                {/* Seats card */}
-                <div className="flex items-center gap-4 rounded-2xl border border-[#c9a86a]/15 bg-white/[0.025] px-5 py-4 ring-1 ring-[#c9a86a]/[0.04]">
-                  <span className="flex h-10 w-10 shrink-0 items-center justify-center rounded-full border border-[#c9a86a]/25 bg-[#c9a86a]/[0.08] text-[#c9a86a]">
-                    <svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round" aria-hidden>
-                      <path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2" /><circle cx="9" cy="7" r="4" /><path d="M23 21v-2a4 4 0 0 0-3-3.87" /><path d="M16 3.13a4 4 0 0 1 0 7.75" />
-                    </svg>
-                  </span>
-                  <div>
-                    <div className="text-sm font-medium text-[#f5f0e8]">{t.cafe.seats}</div>
-                    <div className="mt-0.5 text-xs text-[#a89f90]">Piața Trandafirilor 43, Tg. Mureș</div>
+      {/* â”€â”€ Cinematic video hero with text overlay â”€â”€ */}
+      <section className="relative isolate flex min-h-screen min-h-[100svh] flex-col overflow-hidden">
+        {/* Video */}
+        <video
+          className="absolute inset-0 h-full w-full object-cover -z-20"
+          style={{ filter: "saturate(0.88) brightness(0.54) contrast(1.06)" }}
+          autoPlay muted loop playsInline preload="metadata"
+        >
+          <source src={cafeVideo} type="video/mp4" />
+        </video>
+
+        {/* Gradient overlay */}
+        <div
+          className="absolute inset-0 -z-10"
+          style={{
+            background: `
+              radial-gradient(120% 80% at 50% 40%, transparent 0%, rgba(10,8,6,0.5) 65%, rgba(10,8,6,0.92) 100%),
+              linear-gradient(180deg, rgba(10,8,6,0.45) 0%, rgba(10,8,6,0.06) 35%, rgba(10,8,6,0.85) 100%)
+            `,
+          }}
+        />
+
+        {/* Hero text â€” centered over video */}
+        <div className="relative z-10 flex flex-1 flex-col items-center justify-start px-6 pt-32 pb-10 text-center">
+          <span
+            className="inline-flex items-center rounded-full border border-white/20 bg-white/[0.05] px-3.5 py-1 text-[0.62rem] uppercase tracking-[0.28em] text-white/70"
+            style={{ animation: "crd-fade-up 1100ms var(--ease-expo) 0ms both" }}
+          >
+            {t.cafe.kind}
+          </span>
+          <h1
+            className="mt-5 font-display text-[clamp(3rem,9vw,7rem)] font-semibold leading-[0.95] tracking-[-0.02em] text-[#f5f0e8] text-balance"
+            style={{ animation: "crd-fade-up 1200ms var(--ease-expo) 110ms both" }}
+          >
+            Criss Cafe
+          </h1>
+          <p
+            className="mx-auto mt-6 max-w-2xl text-[clamp(1.1rem,1.6vw,1.4rem)] leading-[1.75] text-[#f5f0e8]/75 text-pretty"
+            style={{ animation: "crd-fade-up 1200ms var(--ease-expo) 220ms both" }}
+          >
+            {t.pages.cafe}
+          </p>
+        </div>
+
+        {/* Buttons + scroll cue â€” pinned to bottom */}
+        <div className="relative z-10 mt-auto flex flex-col items-center gap-5 pb-8">
+          <div
+            className="flex flex-wrap justify-center gap-3"
+            style={{ animation: "crd-fade-up 1100ms var(--ease-expo) 330ms both" }}
+          >
+            <Link
+              href="/meniu"
+              className="inline-flex items-center gap-2 rounded-full bg-[#c9a86a] px-6 py-3 text-[11px] font-semibold tracking-[0.28em] uppercase text-[#1a1411] transition-all duration-300 hover:-translate-y-0.5 hover:shadow-[0_12px_30px_-8px_rgba(201,168,106,0.5)]"
+            >
+              {lang === "ro" ? "Vezi meniul" : "View menu"} →
+            </Link>
+            <a
+              href={`tel:${PHONE_TEL}`}
+              className="inline-flex items-center gap-2 rounded-full border border-white/25 px-6 py-3 text-[11px] font-medium tracking-[0.28em] uppercase text-[#f5f0e8]/75 transition-all duration-300 hover:border-white/50 hover:text-[#f5f0e8]"
+            >
+              {lang === "ro" ? "Rezervare" : "Book a table"}
+            </a>
+          </div>
+          <div className="flex flex-col items-center gap-3 text-[10px] tracking-[0.4em] uppercase text-white/45">
+            <span>scroll</span>
+            <div className="h-12 w-px origin-top bg-gradient-to-b from-transparent to-[#c9a86a] animate-[scrollLine_2.4s_ease-in-out_infinite]" aria-hidden />
+          </div>
+        </div>
+      </section>
+
+      {/* â”€â”€ Info row â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€ */}
+      <div className="bg-crd-bg">
+        <Reveal>
+          <div className="mx-auto grid max-w-5xl gap-10 px-6 py-16 sm:px-8 md:grid-cols-3">
+            <div className="flex flex-col items-center border-t border-[#c9a86a]/20 pt-5 text-center">
+              <p className="mb-1 text-xs font-semibold uppercase tracking-[0.3em] text-[#c9a86a]/60 sm:text-sm">Capacitate</p>
+              <p className="font-serif text-xl text-[#f5f0e8]">{t.cafe.seats}</p>
+            </div>
+            <div className="flex flex-col items-center border-t border-[#c9a86a]/20 pt-5 text-center">
+              <p className="mb-3 text-xs font-semibold uppercase tracking-[0.3em] text-[#c9a86a]/60 sm:text-sm">{t.cafe.hoursLabel}</p>
+              <dl className="w-full space-y-1.5">
+                {t.cafe.hours.map((row) => (
+                  <div key={row.days} className="flex justify-between text-base sm:text-lg">
+                    <dt className="text-[#f5f0e8]/55">{row.days}</dt>
+                    <dd className="tabular-nums text-[#f5f0e8]">{row.time}</dd>
                   </div>
-                </div>
-
-                {/* Hours card */}
-                <div className="flex-1 rounded-2xl border border-[#c9a86a]/15 bg-white/[0.025] px-5 py-5 ring-1 ring-[#c9a86a]/[0.04]">
-                  <p className="mb-4 flex items-center gap-2.5 text-[0.63rem] font-semibold uppercase tracking-[0.3em] text-[#c9a86a]/75">
-                    <span className="h-px w-5 bg-[#c9a86a]/40" />
-                    {t.cafe.hoursLabel}
-                  </p>
-                  <dl className="space-y-2.5">
-                    {t.cafe.hours.map((row) => (
-                      <div key={row.days} className="flex items-center justify-between border-b border-[#c9a86a]/[0.09] pb-2.5 last:border-0 last:pb-0">
-                        <dt className="text-sm text-[#f5f0e8]/60">{row.days}</dt>
-                        <dd className="text-sm font-medium tabular-nums text-[#f5f0e8]">{row.time}</dd>
-                      </div>
-                    ))}
-                  </dl>
-                </div>
-
-                {/* Contact card */}
-                <div className="rounded-2xl border border-[#c9a86a]/15 bg-white/[0.025] px-5 py-5 ring-1 ring-[#c9a86a]/[0.04]">
-                  <p className="mb-4 flex items-center gap-2.5 text-[0.63rem] font-semibold uppercase tracking-[0.3em] text-[#c9a86a]/75">
-                    <span className="h-px w-5 bg-[#c9a86a]/40" />
-                    {t.cafe.contactLabel}
-                  </p>
-                  <ContactActions />
-                  <p className="mt-3 text-xs text-[#a89f90]">{t.cafe.reservations}</p>
-                  <div className="mt-3"><AddressLink /></div>
-                </div>
-              </div>
+                ))}
+              </dl>
+            </div>
+            <div className="flex flex-col items-center border-t border-[#c9a86a]/20 pt-5 text-center">
+              <p className="mb-3 text-xs font-semibold uppercase tracking-[0.3em] text-[#c9a86a]/60 sm:text-sm">{t.cafe.contactLabel}</p>
+              <ContactActions />
+              <div className="mt-3"><AddressLink /></div>
             </div>
           </div>
+        </Reveal>
 
-          {/* ── Divider ─── */}
-          <div className="mt-16"><GoldDivider /></div>
+        <GoldDivider />
 
-          {/* ── Beers ─────────────────────────────────── */}
-          <div className="mx-auto mt-16 max-w-5xl px-6 sm:px-8">
-            <SectionHead
-              eyebrow={lang === "ro" ? "La halbă" : "On tap"}
-              title={t.cafe.beers}
-            />
-            <div className="flex flex-wrap gap-4">
-              {BEERS.map((beer) => (
+        {/* â”€â”€ Beers â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€ */}
+        <div className="mx-auto mt-16 max-w-5xl px-6 sm:px-8">
+          <Reveal>
+            <h2 className="mb-10 text-center font-display text-[clamp(2rem,4vw,3.5rem)] font-semibold leading-tight tracking-[-0.02em] text-[#f5f0e8]">
+              {t.cafe.beers}
+            </h2>
+          </Reveal>
+          <div className="flex flex-wrap justify-center gap-12">
+            {BEERS.map((beer, i) => (
+              <Reveal key={beer.name} delay={i * 70}>
                 <div
-                  key={beer.name}
                   title={beer.name}
-                  className={`group flex h-20 w-40 items-center justify-center rounded-2xl px-5 transition-all duration-500 hover:-translate-y-1 hover:shadow-[0_14px_36px_rgba(0,0,0,0.45)] ${
-                    beer.dark
-                      ? "bg-white/[0.04] ring-1 ring-[#c9a86a]/20"
-                      : "bg-white ring-1 ring-black/5"
-                  }`}
+                  className="group flex h-20 w-44 items-center justify-center rounded-xl bg-white px-4 transition-all duration-500 hover:-translate-y-1"
                 >
-                  {/* eslint-disable-next-line @next/next/no-img-element */}
-                  <img src={beer.src} alt={beer.name} loading="lazy" className="max-h-12 w-auto object-contain" />
+                  <Image
+                    src={beer.img}
+                    alt={beer.name}
+                    height={56}
+                    unoptimized
+                    className="max-h-14 w-auto object-contain opacity-95"
+                  />
                 </div>
-              ))}
-            </div>
+              </Reveal>
+            ))}
           </div>
+        </div>
 
-          {/* ── Divider ─── */}
-          <div className="mt-16"><GoldDivider /></div>
-
-          {/* ── Menu ──────────────────────────────────── */}
-          <div className="mx-auto mt-16 max-w-5xl px-6 sm:px-8">
-            <div className="mb-8 flex items-end justify-between">
-              <SectionHead
-                eyebrow={lang === "ro" ? "La masă" : "At the table"}
-                title={lang === "ro" ? "Meniu" : "Menu"}
-              />
-              <a
-                href={menuPdf}
-                target="_blank"
-                rel="noopener noreferrer"
-                className="mb-1 inline-flex items-center gap-2 rounded-full border border-[#c9a86a]/30 px-4 py-2 text-[0.68rem] tracking-[0.2em] uppercase text-[#c9a86a]/75 transition-all duration-300 hover:bg-[#c9a86a]/10 hover:text-[#c9a86a]"
-              >
-                {lang === "ro" ? "Descarcă PDF" : "Download PDF"} ↓
-              </a>
-            </div>
-            <CafeMenu lang={lang} />
+        {/* â”€â”€ Instagram â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€ */}
+        <Reveal>
+          <div className="mx-auto mt-10 max-w-5xl px-6 sm:px-8">
+            <a href="https://www.instagram.com/criss.cafe" target="_blank" rel="noopener noreferrer"
+              className="group flex items-center gap-5 rounded-2xl border border-[#c9a86a]/15 bg-[#0e0c0a] px-5 py-4 transition-all duration-300 hover:border-[#c9a86a]/30"
+            >
+              <div className="h-14 w-14 shrink-0 overflow-hidden rounded-full bg-white p-1 shadow-[0_4px_16px_rgba(0,0,0,0.35)]">
+                {/* eslint-disable-next-line @next/next/no-img-element */}
+                <img src={cafeLogoIg.src} alt="Criss Cafe" className="h-full w-full rounded-full object-cover" />
+              </div>
+              <div className="flex-1">
+                <div className="mb-1 flex items-center gap-2">
+                  <IgIcon />
+                  <span className="text-sm font-medium text-[#f5f0e8]">@criss.cafe</span>
+                </div>
+                <p className="text-xs text-[#a89f90]">{lang === "ro" ? "Urmărește-ne pe Instagram" : "Follow us on Instagram"}</p>
+              </div>
+              <span className="text-[#c9a86a]/50 transition-transform duration-300 group-hover:translate-x-1">→</span>
+            </a>
           </div>
+        </Reveal>
 
-          {/* ── Divider ─── */}
-          <div className="mt-16"><GoldDivider /></div>
+        <div className="mt-16"><GoldDivider /></div>
 
-          {/* ── Gallery ───────────────────────────────── */}
-          <div className="mx-auto mt-16 max-w-5xl px-6 sm:px-8">
-            <SectionHead
-              eyebrow={lang === "ro" ? "Spațiul nostru" : "Our space"}
-              title={lang === "ro" ? "Galerie foto" : "Gallery"}
-            />
+        {/* â”€â”€ Menu button â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€ */}
+        <Reveal>
+          <div className="mx-auto mt-16 max-w-5xl px-6 sm:px-8 text-center">
+            <h2 className="mb-6 font-display text-[clamp(2rem,4vw,3.5rem)] font-semibold leading-tight tracking-[-0.02em] text-[#f5f0e8]">
+              {lang === "ro" ? "Meniu" : "Menu"}
+            </h2>
+            <Link href="/meniu"
+              className="inline-flex items-center gap-3 rounded-full bg-[#c9a86a] px-8 py-4 text-[11.5px] font-semibold tracking-[0.28em] uppercase text-[#1a1411] transition-all duration-300 hover:-translate-y-0.5 hover:shadow-[0_14px_40px_-10px_rgba(201,168,106,0.5)]"
+            >
+              {lang === "ro" ? "Vezi meniul complet" : "View full menu"} →
+            </Link>
+          </div>
+        </Reveal>
+
+        <div className="mt-16"><GoldDivider /></div>
+
+        {/* â”€â”€ Gallery â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€ */}
+        <div className="mx-auto mt-16 max-w-5xl px-6 sm:px-8">
+          <Reveal>
+            <h2 className="mb-10 font-display text-[clamp(2rem,4vw,3.5rem)] font-semibold leading-tight tracking-[-0.02em] text-[#f5f0e8]">
+              {lang === "ro" ? "Galerie foto" : "Gallery"}
+            </h2>
+          </Reveal>
+          <Reveal delay={60}>
             <div className="grid grid-cols-2 gap-3 sm:grid-cols-3 lg:grid-cols-4">
-              <div className="group col-span-2 overflow-hidden rounded-2xl ring-1 ring-[#c9a86a]/15 shadow-[0_8px_32px_rgba(0,0,0,0.35)]">
+              <div className="group col-span-2 overflow-hidden rounded-xl border border-[#c9a86a]/12 shadow-[0_8px_32px_rgba(0,0,0,0.35)]">
                 <div className="relative aspect-[16/9]">
                   {/* eslint-disable-next-line @next/next/no-img-element */}
                   <img src={PHOTOS[0]} alt="" loading="lazy" className="h-full w-full object-cover transition-transform duration-[1000ms] ease-[cubic-bezier(0.2,0.7,0.2,1)] group-hover:scale-[1.04]" />
@@ -190,7 +245,7 @@ export default function CrissCafePage() {
                 </div>
               </div>
               {PHOTOS.slice(1).map((src) => (
-                <div key={src} className="group overflow-hidden rounded-2xl ring-1 ring-[#c9a86a]/15 shadow-[0_4px_16px_rgba(0,0,0,0.3)]">
+                <div key={src} className="group overflow-hidden rounded-xl border border-[#c9a86a]/12 shadow-[0_4px_16px_rgba(0,0,0,0.3)]">
                   <div className="relative aspect-square">
                     {/* eslint-disable-next-line @next/next/no-img-element */}
                     <img src={src} alt="" loading="lazy" className="h-full w-full object-cover transition-transform duration-[1000ms] ease-[cubic-bezier(0.2,0.7,0.2,1)] group-hover:scale-[1.04]" />
@@ -199,59 +254,32 @@ export default function CrissCafePage() {
                 </div>
               ))}
             </div>
-          </div>
+          </Reveal>
+        </div>
 
-          {/* ── CTA band ──────────────────────────────── */}
-          <div className="relative mt-24 overflow-hidden pb-20">
-            <div
-              aria-hidden
-              className="pointer-events-none absolute inset-0"
-              style={{ background: "linear-gradient(180deg, transparent, rgba(201,168,106,0.05) 50%, transparent)" }}
-            />
-            <div className="mx-auto max-w-5xl px-6 py-16 sm:px-8 text-center">
-              <p className="font-serif italic text-lg text-[#f5f0e8]/65 mb-8">
-                {lang === "ro"
-                  ? "Rezervă-ți masa sau descarcă meniul complet"
-                  : "Reserve your table or download the full menu"}
-              </p>
-              <div className="flex flex-wrap items-center justify-center gap-4">
-                <a
-                  href={`tel:${PHONE_TEL}`}
-                  className="inline-flex items-center gap-3 rounded-full bg-[#c9a86a] px-7 py-3.5 text-[11px] font-semibold tracking-[0.28em] uppercase text-[#1a1411] transition-all duration-300 hover:-translate-y-0.5 hover:shadow-[0_14px_40px_-10px_rgba(201,168,106,0.5)]"
-                >
-                  {lang === "ro" ? "Rezervare" : "Book a table"} · {PHONE_DISPLAY}
-                </a>
-                <a
-                  href={menuPdf}
-                  target="_blank"
-                  rel="noopener noreferrer"
-                  className="inline-flex items-center gap-3 rounded-full border border-white/20 px-7 py-3.5 text-[11px] font-medium tracking-[0.28em] uppercase text-[#f5f0e8]/75 transition-all duration-300 hover:border-[#c9a86a]/50 hover:text-[#c9a86a]"
-                >
-                  {lang === "ro" ? "Meniu PDF" : "PDF Menu"} →
-                </a>
-              </div>
+        {/* â”€â”€ CTA band â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€ */}
+        <Reveal>
+          <div className="mx-auto max-w-5xl px-6 py-24 sm:px-8 text-center">
+            <p className="font-serif italic text-lg text-[#f5f0e8]/60 mb-8">
+              {lang === "ro" ? "Rezervă-ți masa sau explorează meniul" : "Reserve your table or explore the menu"}
+            </p>
+            <div className="flex flex-wrap items-center justify-center gap-4">
+              <a href={`tel:${PHONE_TEL}`}
+                className="inline-flex items-center gap-3 rounded-full bg-[#c9a86a] px-7 py-3.5 text-[11px] font-semibold tracking-[0.28em] uppercase text-[#1a1411] transition-all duration-300 hover:-translate-y-0.5 hover:shadow-[0_14px_40px_-10px_rgba(201,168,106,0.5)]"
+              >
+                {lang === "ro" ? "Rezervare" : "Book a table"} · {PHONE_DISPLAY}
+              </a>
+              <Link href="/meniu"
+                className="inline-flex items-center gap-3 rounded-full border border-white/20 px-7 py-3.5 text-[11px] font-medium tracking-[0.28em] uppercase text-[#f5f0e8]/75 transition-all duration-300 hover:border-[#c9a86a]/50 hover:text-[#c9a86a]"
+              >
+                {lang === "ro" ? "Meniu" : "Menu"} →
+              </Link>
             </div>
           </div>
-        </div>
-      }
-    >
-      {/* Hero CTAs */}
-      <div className="flex flex-wrap items-center justify-center gap-3">
-        <a
-          href={menuPdf}
-          target="_blank"
-          rel="noopener noreferrer"
-          className="inline-flex items-center gap-2 rounded-full bg-[#c9a86a] px-6 py-3 text-[11px] font-semibold tracking-[0.28em] uppercase text-[#1a1411] transition-all duration-300 hover:-translate-y-0.5 hover:shadow-[0_12px_30px_-8px_rgba(201,168,106,0.5)]"
-        >
-          {lang === "ro" ? "Vezi meniul" : "View menu"} →
-        </a>
-        <a
-          href={`tel:${PHONE_TEL}`}
-          className="inline-flex items-center gap-2 rounded-full border border-white/20 px-6 py-3 text-[11px] font-medium tracking-[0.28em] uppercase text-[#f5f0e8]/70 transition-all duration-300 hover:border-white/40 hover:text-[#f5f0e8]"
-        >
-          {lang === "ro" ? "Rezervare" : "Book a table"}
-        </a>
+        </Reveal>
       </div>
-    </PageHero>
+
+    </main>
   );
 }
+

@@ -1,5 +1,6 @@
 import Image, { StaticImageData } from "next/image";
 import Link from "next/link";
+import { Reveal } from "@/src/components/footer/reveal";
 import img1 from "@/src/assets/images/images-crisscafee/WhatsApp Image 2026-06-01 at 21.25.25.jpeg";
 import img2 from "@/src/assets/images/images-crisscafee/WhatsApp Image 2026-06-01 at 19.28.56.jpeg";
 import img3 from "@/src/assets/images/images-crisscafee/WhatsApp Image 2026-06-01 at 21.29.01 (1).jpeg";
@@ -64,6 +65,7 @@ export function MenuShowcase() {
   return (
     <section id="meniu" className="relative overflow-hidden bg-crd-paper py-36 text-crd-ink-dark">
       {/* Section head */}
+      <Reveal>
       <div className="mx-auto mb-20 max-w-[1100px] px-9 text-center">
         <div className="mb-6 inline-flex items-center gap-3.5 text-[11px] tracking-[0.42em] uppercase text-crd-gold-accent">
           <span className="h-px w-9 bg-crd-gold-accent opacity-55" aria-hidden />
@@ -78,18 +80,19 @@ export function MenuShowcase() {
           <br />
           Prânz. <em className="italic text-crd-gold-accent">Noapte.</em>
         </h2>
-        <p className="mx-auto mt-7 max-w-[640px] font-serif italic leading-[1.4] text-crd-ink-soft" style={{ fontSize: "clamp(18px,1.6vw,22px)" }}>
+        <p className="mx-auto mt-7 max-w-[640px] font-serif italic leading-[1.4] text-crd-ink-soft" style={{ fontSize: "clamp(20px,1.8vw,28px)" }}>
           Trei momente ale zilei, trei capitole. Tot ce trebuie să știi e că nimic nu pleacă din bucătărie până nu arată exact așa cum vrem noi.
         </p>
       </div>
+      </Reveal>
 
       {/* Chapters */}
       <div className="mx-auto flex max-w-[1280px] flex-col gap-24 px-9">
         {CHAPTERS.map((ch, idx) => {
           const even = idx % 2 === 1;
           return (
+            <Reveal key={ch.num} delay={idx * 60}>
             <div
-              key={ch.num}
               className={`grid items-center gap-20 lg:grid-cols-2`}
             >
               {/* Image */}
@@ -128,20 +131,22 @@ export function MenuShowcase() {
                       className="grid grid-cols-[1fr_auto] items-baseline gap-[18px] border-b border-dashed border-crd-ink-soft/20 pb-4"
                     >
                       <div>
-                        <div className="font-serif text-[22px] font-medium text-crd-ink-dark">{item.name}</div>
-                        <div className="mt-1 font-serif italic text-[13px] text-crd-ink-soft">{item.desc}</div>
+                        <div className="font-serif text-[26px] font-medium text-crd-ink-dark">{item.name}</div>
+                        <div className="mt-1 font-serif italic text-[18px] text-crd-ink-soft">{item.desc}</div>
                       </div>
-                      <div className="whitespace-nowrap text-[14px] font-semibold tracking-[0.08em] text-crd-gold-accent">{item.price}</div>
+                      <div className="whitespace-nowrap text-[18px] font-semibold tracking-[0.08em] text-crd-gold-accent">{item.price}</div>
                     </li>
                   ))}
                 </ul>
               </div>
             </div>
+            </Reveal>
           );
         })}
       </div>
 
       {/* Footer */}
+      <Reveal>
       <div className="mx-auto mt-20 max-w-[1280px] px-9 text-center">
         <p className="inline-block font-serif italic text-[16px] text-crd-ink-soft before:mx-3 before:text-crd-gold-accent before:content-['·'] after:mx-3 after:text-crd-gold-accent after:content-['·']">
           Meniul complet disponibil la masă · alergeni la cerere
@@ -155,6 +160,7 @@ export function MenuShowcase() {
           </Link>
         </div>
       </div>
+      </Reveal>
     </section>
   );
 }

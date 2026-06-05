@@ -28,17 +28,7 @@ function isLang(value: string | null): value is Lang {
 export function LanguageProvider({ children }: { children: React.ReactNode }) {
   const [lang, setLangState] = useState<Lang>(DEFAULT_LANG);
 
-  // Hydrate from storage / browser preference once on mount.
-  useEffect(() => {
-    const stored = window.localStorage.getItem(STORAGE_KEY);
-    if (isLang(stored)) {
-      setLangState(stored);
-      return;
-    }
-    if (navigator.language?.toLowerCase().startsWith("en")) {
-      setLangState("en");
-    }
-  }, []);
+  // Always start in Romanian — never read language from storage.
 
   // Keep <html lang> and storage in sync.
   useEffect(() => {

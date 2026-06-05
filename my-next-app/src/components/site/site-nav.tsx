@@ -48,14 +48,14 @@ export function SiteNav() {
           <Image
             src={logo}
             alt="Criss Club & Cafe"
-            className={`w-auto brightness-0 invert transition-all duration-300 ${scrolled ? "h-14" : "h-16"}`}
+            className={`w-auto brightness-0 invert transition-all duration-300 ${scrolled ? "h-10" : "h-12"}`}
             priority
             unoptimized
           />
         </Link>
 
-        {/* Desktop links */}
-        <nav className="hidden lg:flex items-center gap-7 pointer-events-auto">
+        {/* Desktop links — absolutely centered */}
+        <nav className="hidden lg:flex absolute left-1/2 -translate-x-1/2 items-center gap-7 pointer-events-auto">
           {LINKS.map((link) => {
             const active = pathname === link.href;
             return (

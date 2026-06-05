@@ -46,11 +46,11 @@ export function VisitSection() {
                 <div className="mb-3.5 border-b border-[rgba(201,168,106,0.3)] pb-2.5 text-[11px] tracking-[0.32em] uppercase text-crd-gold-2">
                   {cell.lab}
                 </div>
-                <div className="font-serif text-[19px] leading-[1.5] text-crd-ink whitespace-pre-line">
+                <div className="font-serif text-[clamp(18px,2.2vw,24px)] leading-[1.5] text-crd-ink whitespace-pre-line">
                   {cell.val}
                 </div>
                 {cell.sub && (
-                  <div className="mt-1 text-[12px] tracking-[0.04em] text-crd-ink/50 font-body">
+                  <div className="mt-1 text-[clamp(14px,1.4vw,17px)] tracking-[0.04em] text-crd-ink/50 font-body">
                     {cell.sub}
                   </div>
                 )}

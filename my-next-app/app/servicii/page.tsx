@@ -2,9 +2,11 @@
 
 import type { SVGProps } from "react";
 import { useLanguage } from "@/src/i18n/language-context";
-import { PageHero } from "@/src/components/site/page-hero";
+import { SiteNav } from "@/src/components/site/site-nav";
+import { BackButton } from "@/src/components/site/back-button";
 import { ContactActions } from "@/src/components/site/contact-actions";
 import { AddressLink } from "@/src/components/site/address-link";
+import { Reveal } from "@/src/components/footer/reveal";
 import {
   TruckIcon,
   CateringIcon,
@@ -12,7 +14,9 @@ import {
   BouquetIcon,
 } from "@/src/components/footer/icons";
 
-const SERVICE_ICON: Record<string, (p: SVGProps<SVGSVGElement>) => React.ReactElement> = {
+type IconFn = (p: SVGProps<SVGSVGElement>) => React.ReactElement;
+
+const SERVICE_ICON: Record<string, IconFn> = {
   delivery: TruckIcon,
   catering: CateringIcon,
   cocktail: CocktailIcon,
@@ -23,31 +27,104 @@ export default function ServiciiPage() {
   const { t } = useLanguage();
 
   return (
-    <PageHero
-      eyebrow={t.nav.services}
-      title={t.services.heading}
-      lead={t.pages.services}
+    <main className="relative min-h-screen overflow-hidden font-body text-[#f5f0e8]"
+      style={{ background: "#06050400", backgroundColor: "#080706" }}
     >
-      <ul className="mx-auto grid max-w-2xl gap-x-8 gap-y-5 text-left sm:grid-cols-2">
-        {t.services.items.map((item) => {
-          const Icon = SERVICE_ICON[item.id] ?? CocktailIcon;
-          return (
-            <li key={item.id} className="group flex items-start gap-3.5">
-              <span className="mt-0.5 flex h-10 w-10 shrink-0 items-center justify-center rounded-full border border-crd-gold/20 bg-crd-gold/[0.06] text-crd-gold shadow-[inset_0_1px_0_rgba(245,240,232,0.06)] transition-[transform,border-color,background-color] duration-[450ms] [transition-timing-function:var(--ease-spring)] group-hover:-translate-y-0.5 group-hover:scale-105 group-hover:border-crd-gold/55 group-hover:bg-crd-gold/[0.13]">
-                <Icon className="h-5 w-5" />
-              </span>
-              <span className="pt-2 text-sm leading-snug text-crd-ink/85 transition-colors duration-300 group-hover:text-crd-ink">
-                {item.label}
-              </span>
-            </li>
-          );
-        })}
-      </ul>
+      <SiteNav />
+      <BackButton />
 
-      <div className="mt-14 flex flex-col items-center gap-6">
-        <ContactActions />
-        <AddressLink />
+      {/* Fixed decorative orbs */}
+      <div aria-hidden className="pointer-events-none fixed inset-0 overflow-hidden -z-10">
+        <div className="absolute left-[-20%] top-[10%] h-[700px] w-[700px] rounded-full"
+          style={{ background: "radial-gradient(circle, rgba(201,168,106,0.06), transparent 70%)" }} />
+        <div className="absolute right-[-15%] bottom-[5%] h-[500px] w-[500px] rounded-full"
+          style={{ background: "radial-gradient(circle, rgba(201,168,106,0.05), transparent 70%)" }} />
       </div>
-    </PageHero>
+
+      <div className="relative z-10 mx-auto max-w-6xl px-6 sm:px-10">
+
+        {/* â”€â”€ Massive hero heading â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€ */}
+        <div className="flex min-h-[55vh] flex-col justify-end pb-16 pt-40">
+          <span
+            className="mb-6 flex items-center gap-3 text-[0.6rem] uppercase tracking-[0.5em] text-[#c9a86a]/50"
+            style={{ animation: "crd-fade-up 1100ms var(--ease-expo) 0ms both" }}
+          >
+            <span className="h-px w-10 bg-[#c9a86a]/30" />
+            Cris Royal Delivery
+          </span>
+
+          <h1
+            className="font-display font-semibold leading-[0.85] tracking-[-0.04em] text-[#f5f0e8]"
+            style={{
+              fontSize: "clamp(3.5rem,12vw,9rem)",
+              animation: "crd-fade-up 1200ms var(--ease-expo) 60ms both",
+            }}
+          >
+            {t.services.heading}
+          </h1>
+
+          <p
+            className="mt-8 max-w-lg font-serif italic text-[1.05rem] leading-relaxed text-[#f5f0e8]/40"
+            style={{ animation: "crd-fade-up 1100ms var(--ease-expo) 180ms both" }}
+          >
+            {t.pages.services}
+          </p>
+        </div>
+
+        {/* â”€â”€ Gold rule â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€ */}
+        <div className="h-px w-full bg-gradient-to-r from-[#c9a86a]/30 via-[#c9a86a]/10 to-transparent" />
+
+        {/* â”€â”€ Service list â€” editorial rows â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€ */}
+        <Reveal>
+          <div className="divide-y divide-[#c9a86a]/8">
+            {t.services.items.map((item, i) => {
+              const Icon = SERVICE_ICON[item.id] ?? CocktailIcon;
+              return (
+                <div
+                  key={item.id}
+                  className="group flex items-center gap-8 py-8 transition-all duration-500 hover:pl-4"
+                  style={{ transitionTimingFunction: "var(--ease-expo)" }}
+                >
+                  {/* Number */}
+                  <span className="hidden font-display text-[0.7rem] font-semibold tracking-[0.3em] text-[#c9a86a]/30 sm:block w-8 shrink-0">
+                    0{i + 1}
+                  </span>
+
+                  {/* Icon */}
+                  <span className="flex h-11 w-11 shrink-0 items-center justify-center rounded-full border border-[#c9a86a]/15 bg-[#c9a86a]/[0.05] text-[#c9a86a] transition-all duration-500 [transition-timing-function:var(--ease-spring)] group-hover:border-[#c9a86a]/40 group-hover:bg-[#c9a86a]/[0.1] group-hover:shadow-[0_0_24px_-4px_rgba(201,168,106,0.3)]">
+                    <Icon className="h-5 w-5" />
+                  </span>
+
+                  {/* Label */}
+                  <p className="flex-1 font-serif text-[1.1rem] leading-snug text-[#f5f0e8]/65 transition-colors duration-300 group-hover:text-[#f5f0e8]/90 sm:text-[1.2rem]">
+                    {item.label}
+                  </p>
+
+                  {/* Arrow */}
+                  <span className="text-[#c9a86a]/20 transition-all duration-500 group-hover:translate-x-1 group-hover:text-[#c9a86a]/60">
+                    →
+                  </span>
+                </div>
+              );
+            })}
+          </div>
+        </Reveal>
+
+        {/* â”€â”€ Gold rule â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€ */}
+        <div className="h-px w-full bg-gradient-to-r from-[#c9a86a]/30 via-[#c9a86a]/10 to-transparent" />
+
+        {/* â”€â”€ Contact â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€ */}
+        <Reveal>
+          <div className="flex flex-col items-center gap-5 py-24 text-center">
+            <p className="font-serif italic text-sm text-[#f5f0e8]/30 tracking-wide">
+              {t.cafe.contactLabel}
+            </p>
+            <ContactActions />
+            <AddressLink />
+          </div>
+        </Reveal>
+      </div>
+    </main>
   );
 }
+

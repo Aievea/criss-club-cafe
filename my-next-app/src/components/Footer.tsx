@@ -159,7 +159,7 @@ export function Footer() {
           <Reveal as="section" delay={0} className="md:px-9 md:first:pl-0">
             <Wordmark name="Criss Cafe" kind={t.cafe.kind} href="/criss-cafe" />
 
-            <p className="mt-6 text-sm leading-relaxed text-crd-ink/80">
+            <p className="mt-6 text-base leading-relaxed text-crd-ink/80">
               {t.cafe.seats}
             </p>
 
@@ -169,7 +169,7 @@ export function Footer() {
                 {t.cafe.hours.map((row) => (
                   <div
                     key={row.days}
-                    className="flex items-baseline justify-between gap-4 text-sm"
+                    className="flex items-baseline justify-between gap-4 text-base"
                   >
                     <dt className="text-crd-ink/70">{row.days}</dt>
                     <dd className="font-[family-name:var(--font-body)] tabular-nums tracking-wide text-crd-ink/90">
@@ -185,14 +185,14 @@ export function Footer() {
               <div className="mt-3 flex flex-col gap-3">
                 <a
                   href={`tel:${PHONE_TEL}`}
-                  className="crd-link inline-flex w-fit items-center gap-2.5 text-sm text-crd-ink/90"
+                  className="crd-link inline-flex w-fit items-center gap-2.5 text-base text-crd-ink/90"
                 >
                   <PhoneIcon className="h-4 w-4 text-crd-gold-accent" />
                   <span className="tabular-nums tracking-wide">{PHONE_DISPLAY}</span>
                 </a>
                 <WhatsAppButton label="WhatsApp" />
               </div>
-              <p className="mt-4 text-xs leading-relaxed text-crd-muted">
+              <p className="mt-4 text-base leading-relaxed text-crd-muted">
                 {t.cafe.reservations}
               </p>
             </div>
@@ -206,7 +206,7 @@ export function Footer() {
           >
             <Wordmark name="Criss Club" kind={t.club.kind} href="/criss-club" />
 
-            <ul className="mt-6 space-y-2.5 text-sm text-crd-ink/85">
+            <ul className="mt-6 space-y-2.5 text-base text-crd-ink/85">
               <li className="flex items-center gap-2.5">
                 <Dot /> {t.club.capacity}
               </li>
@@ -216,21 +216,8 @@ export function Footer() {
               </li>
             </ul>
 
-            <div className="mt-6">
-              <SectionLabel>{t.club.djLabel}</SectionLabel>
-              <div className="mt-3 flex flex-wrap gap-x-2 gap-y-2 text-sm">
-                {DJS.map((dj, i) => (
-                  <span key={dj} className="flex items-center gap-2">
-                    <span className="text-crd-ink/90">{dj}</span>
-                    {i < DJS.length - 1 && (
-                      <span className="text-crd-gold-accent/50">•</span>
-                    )}
-                  </span>
-                ))}
-              </div>
-            </div>
 
-            <p className="mt-6 text-sm leading-relaxed text-crd-ink/80">
+            <p className="mt-6 text-base leading-relaxed text-crd-ink/80">
               {t.club.events}
             </p>
 
@@ -259,7 +246,7 @@ export function Footer() {
                     <span className="mt-0.5 flex h-9 w-9 shrink-0 items-center justify-center rounded-full border border-crd-gold-accent/20 bg-crd-gold-accent/[0.07] text-crd-gold-accent shadow-[inset_0_1px_0_rgba(245,240,232,0.05)] transition-[transform,border-color,background-color] duration-[450ms] [transition-timing-function:var(--ease-spring)] group-hover:-translate-y-0.5 group-hover:scale-105 group-hover:border-crd-gold-accent/50 group-hover:bg-crd-gold-accent/[0.14]">
                       <Icon className="h-[18px] w-[18px]" />
                     </span>
-                    <span className="pt-1.5 text-sm leading-snug text-crd-ink/80 transition-colors duration-300 group-hover:text-crd-ink">
+                    <span className="pt-1.5 text-base leading-snug text-crd-ink/80 transition-colors duration-300 group-hover:text-crd-ink">
                       {item.label}
                     </span>
                   </li>
@@ -301,26 +288,26 @@ export function Footer() {
         {/* ---------------------------------------------------------------- */}
         {/*  Legal strip                                                      */}
         {/* ---------------------------------------------------------------- */}
-        <div className="mt-10 flex flex-col items-center gap-2 text-center">
+        <div className="mt-10 flex flex-col items-center gap-2.5 text-center">
           {/* Entity + address */}
-          <p className="text-xs leading-relaxed text-crd-muted">{t.legal.entity}</p>
+          <p className="text-base leading-relaxed text-crd-muted">{t.legal.entity}</p>
           <a
             href={MAPS_URL}
             target="_blank"
             rel="noopener noreferrer"
-            className="crd-link text-xs text-crd-muted"
+            className="crd-link text-base text-crd-muted"
           >
             {ADDRESS}
           </a>
-          <p className="text-xs text-crd-muted">{t.legal.rights}</p>
+          <p className="text-base text-crd-muted">{t.legal.rights}</p>
 
           {/* Age restriction */}
-          <p className="mt-1 text-[0.7rem] font-medium text-crd-gold-accent/70">
+          <p className="mt-1 text-base font-medium text-crd-gold-accent/70">
             🔞 {t.legal.age}
           </p>
 
           {/* GDPR notice */}
-          <p className="mt-1 max-w-lg text-[0.68rem] italic leading-relaxed text-crd-muted/70">
+          <p className="mt-1 max-w-lg text-base italic leading-relaxed text-crd-muted/70">
             {t.legal.gdpr}
           </p>
 
@@ -330,43 +317,43 @@ export function Footer() {
               href="https://anpc.ro/ce-este-sal/"
               target="_blank"
               rel="noopener noreferrer"
-              className="text-[0.68rem] text-crd-muted/80 underline underline-offset-2 transition-colors hover:text-crd-gold-accent"
+              className="text-base text-crd-muted/80 underline underline-offset-2 transition-colors hover:text-crd-gold-accent"
             >
               {t.legal.anpcLabel}
             </a>
-            <span className="text-crd-gold-accent/30 text-[0.68rem]">·</span>
+            <span className="text-crd-gold-accent/30 text-xs">·</span>
             <a
               href="https://ec.europa.eu/consumers/odr"
               target="_blank"
               rel="noopener noreferrer"
-              className="text-[0.68rem] text-crd-muted/80 underline underline-offset-2 transition-colors hover:text-crd-gold-accent"
+              className="text-base text-crd-muted/80 underline underline-offset-2 transition-colors hover:text-crd-gold-accent"
             >
               {t.legal.solLabel}
             </a>
-            <span className="text-crd-gold-accent/30 text-[0.68rem]">·</span>
+            <span className="text-crd-gold-accent/30 text-xs">·</span>
             <Link
               href="/politica-confidentialitate"
-              className="text-[0.68rem] text-crd-muted/80 underline underline-offset-2 transition-colors hover:text-crd-gold-accent"
+              className="text-base text-crd-muted/80 underline underline-offset-2 transition-colors hover:text-crd-gold-accent"
             >
               {t.legal.privacyLabel}
             </Link>
-            <span className="text-crd-gold-accent/30 text-[0.68rem]">·</span>
+            <span className="text-crd-gold-accent/30 text-xs">·</span>
             <Link
               href="/termeni-conditii"
-              className="text-[0.68rem] text-crd-muted/80 underline underline-offset-2 transition-colors hover:text-crd-gold-accent"
+              className="text-base text-crd-muted/80 underline underline-offset-2 transition-colors hover:text-crd-gold-accent"
             >
               {t.legal.termsLabel}
             </Link>
-            <span className="text-crd-gold-accent/30 text-[0.68rem]">·</span>
+            <span className="text-crd-gold-accent/30 text-xs">·</span>
             <Link
               href="/politica-cookies"
-              className="text-[0.68rem] text-crd-muted/80 underline underline-offset-2 transition-colors hover:text-crd-gold-accent"
+              className="text-base text-crd-muted/80 underline underline-offset-2 transition-colors hover:text-crd-gold-accent"
             >
               {t.legal.cookiesLabel}
             </Link>
           </div>
 
-          <p className="mt-2 italic text-[0.68rem] text-crd-muted/60">{t.legal.clientele}</p>
+          <p className="mt-2 italic text-base text-crd-muted/60">{t.legal.clientele}</p>
         </div>
       </div>
 
@@ -393,11 +380,11 @@ export function Footer() {
         </div>
 
         <div className="mx-auto flex w-full max-w-6xl flex-col items-center gap-5 px-6 py-7 text-center sm:px-8 md:flex-row md:justify-between md:gap-6 md:text-left lg:px-10">
-          <p className="order-2 text-xs tracking-wide text-crd-muted md:order-1">
+          <p className="order-2 text-base tracking-wide text-crd-muted md:order-1">
             {t.bottom.copyright}
           </p>
 
-          <p className="crd-beat-trigger order-1 flex items-center gap-2 text-xs text-crd-ink/75 md:order-2">
+          <p className="crd-beat-trigger order-1 flex items-center gap-2 text-base text-crd-ink/75 md:order-2">
             <HeartIcon className="crd-beat h-3.5 w-3.5 text-crd-gold-accent" />
             {t.bottom.built}
           </p>
@@ -409,7 +396,7 @@ export function Footer() {
               href={AIEVEA_URL}
               target="_blank"
               rel="noopener noreferrer"
-              className="group inline-flex items-center gap-2 text-xs text-crd-muted transition-colors hover:text-crd-ink"
+              className="group inline-flex items-center gap-2 text-base text-crd-muted transition-colors hover:text-crd-ink"
               aria-label={`${t.bottom.crafted} Aievea`}
             >
               <span>{t.bottom.crafted}</span>
@@ -433,7 +420,7 @@ export function Footer() {
 
 function SectionLabel({ children }: { children: React.ReactNode }) {
   return (
-    <span className="text-[0.68rem] font-semibold uppercase tracking-[0.28em] text-crd-gold-accent/80">
+    <span className="text-xs font-semibold uppercase tracking-[0.28em] text-crd-gold-accent/80">
       {children}
     </span>
   );

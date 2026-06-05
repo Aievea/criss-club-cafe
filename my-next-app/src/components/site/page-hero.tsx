@@ -30,19 +30,35 @@ export function PageHero({
 
       {/* Hero */}
       <section className="relative z-10 mx-auto flex w-full max-w-4xl flex-col items-center px-6 pb-14 pt-28 text-center sm:px-8">
-        <span className="inline-flex items-center rounded-full border border-white/20 bg-white/[0.05] px-3.5 py-1 text-[0.62rem] uppercase tracking-[0.28em] text-white/70">
+        <span
+          className="inline-flex items-center rounded-full border border-white/20 bg-white/[0.05] px-3.5 py-1 text-[0.62rem] uppercase tracking-[0.28em] text-white/70"
+          style={{ animation: "crd-fade-up 1100ms var(--ease-expo) 0ms both" }}
+        >
           {eyebrow}
         </span>
 
-        <h1 className="mt-5 font-display text-[clamp(2.4rem,7vw,4.5rem)] font-semibold leading-[0.95] tracking-[-0.02em] text-balance">
+        <h1
+          className="mt-5 font-display text-[clamp(2.4rem,7vw,4.5rem)] font-semibold leading-[0.95] tracking-[-0.02em] text-balance"
+          style={{ animation: "crd-fade-up 1100ms var(--ease-expo) 100ms both" }}
+        >
           {title}
         </h1>
 
-        <p className="mx-auto mt-5 max-w-xl text-base leading-[1.75] text-crd-ink/80 text-pretty">
+        <p
+          className="mx-auto mt-5 max-w-xl text-base leading-[1.75] text-crd-ink/80 text-pretty"
+          style={{ animation: "crd-fade-up 1100ms var(--ease-expo) 210ms both" }}
+        >
           {lead}
         </p>
 
-        {children && <div className="mt-10 w-full">{children}</div>}
+        {children && (
+          <div
+            className="mt-10 w-full"
+            style={{ animation: "crd-fade-up 1100ms var(--ease-expo) 330ms both" }}
+          >
+            {children}
+          </div>
+        )}
       </section>
 
       {/* Full-width sections after hero */}
@@ -50,3 +66,4 @@ export function PageHero({
     </main>
   );
 }
+

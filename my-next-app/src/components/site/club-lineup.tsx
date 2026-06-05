@@ -1,4 +1,5 @@
 import Image, { StaticImageData } from "next/image";
+import { Reveal } from "@/src/components/footer/reveal";
 import dj1 from "@/src/assets/images/images-crissclub/djs/WhatsApp Image 2026-06-01 at 21.29.01 (1).jpeg";
 import dj2 from "@/src/assets/images/images-crissclub/djs/WhatsApp Image 2026-06-02 at 17.36.51.jpeg";
 import dj3 from "@/src/assets/images/images-crissclub/djs/WhatsApp Image 2026-06-02 at 17.36.51 (1).jpeg";
@@ -43,6 +44,7 @@ export function ClubLineup() {
       />
 
       {/* Section head */}
+      <Reveal>
       <div className="relative z-10 mx-auto mb-20 max-w-[1100px] px-9 text-center">
         <div className="mb-6 inline-flex items-center gap-3.5 text-[11px] tracking-[0.42em] uppercase text-crd-pink">
           <span className="h-px w-9 bg-crd-pink opacity-55" aria-hidden />
@@ -61,16 +63,17 @@ export function ClubLineup() {
             Tg Mureș.
           </span>
         </h2>
-        <p className="mx-auto mt-7 max-w-[640px] font-serif italic leading-[1.4] text-[rgba(236,225,200,0.65)]" style={{ fontSize: "clamp(18px,1.6vw,22px)" }}>
-          Joi, vineri, sâmbătă — line-up de DJ, live music, manele all night. Intrarea liberă cu rezervare. RSVP la{" "}
-          <strong className="font-semibold not-italic text-crd-pink">0746 521 799</strong>.
+        <p className="mx-auto mt-7 max-w-[640px] font-serif italic leading-[1.4] text-[rgba(236,225,200,0.65)]" style={{ fontSize: "clamp(20px,1.8vw,28px)" }}>
+          Joi, vineri, sâmbătă — line-up de DJ, live music, manele all night. Intrarea liberă cu rezervare.
         </p>
       </div>
+      </Reveal>
 
       {/* Events rail */}
+      <Reveal>
       <div className="relative z-10 mx-auto max-w-[1280px] px-9">
         <div className="mb-9 flex items-baseline justify-between border-b border-white/10 pb-[18px]">
-          <h4 className="font-serif font-normal italic text-[28px] tracking-[-0.01em] text-crd-ink">Line-up</h4>
+          <h4 className="font-serif font-normal italic text-[28px] tracking-[-0.01em] text-crd-ink">Nopți ce nu le putem uita</h4>
           <a
             href="tel:0746521799"
             className="text-[11px] tracking-[0.32em] uppercase text-crd-pink transition-opacity hover:opacity-70"
@@ -93,15 +96,11 @@ export function ClubLineup() {
                 fill
                 className="object-cover transition-transform duration-[1200ms] ease-[cubic-bezier(0.2,0.7,0.2,1)] group-hover:scale-[1.05]"
               />
-              <div className="absolute inset-x-0 bottom-0 bg-gradient-to-t from-black/85 to-transparent px-5 pb-5 pt-[22px]">
-                <div className="mb-1 text-[10px] tracking-[0.32em] uppercase text-crd-pink">{ev.date}</div>
-                <div className="font-serif italic text-[20px] leading-[1.15] tracking-[-0.005em] text-crd-ink">{ev.title}</div>
-                <div className="mt-1 text-[11px] tracking-[0.18em] uppercase text-[rgba(236,225,200,0.7)]">{ev.who}</div>
-              </div>
             </a>
           ))}
         </div>
       </div>
+      </Reveal>
     </section>
   );
 }

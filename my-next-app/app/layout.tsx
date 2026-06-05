@@ -2,8 +2,9 @@ import type { Metadata } from "next";
 import { Geist, Geist_Mono, Cinzel, Cormorant_Garamond, Jost, Pinyon_Script } from "next/font/google";
 import "./globals.css";
 import { LanguageProvider } from "@/src/i18n/language-context";
-import { Footer } from "@/src/components/Footer";
+import { ConditionalFooter } from "@/src/components/ConditionalFooter";
 import { WhatsAppFab } from "@/src/components/site/whatsapp-fab";
+import { AudioProvider } from "@/src/components/site/audio-player";
 
 const geistSans = Geist({
   variable: "--font-geist-sans",
@@ -60,9 +61,11 @@ export default function RootLayout({
     >
       <body className="min-h-full flex flex-col">
         <LanguageProvider>
+          <AudioProvider>
           <div className="flex flex-1 flex-col">{children}</div>
-          <Footer />
+          <ConditionalFooter />
           <WhatsAppFab />
+          </AudioProvider>
         </LanguageProvider>
       </body>
     </html>
