@@ -1,8 +1,9 @@
 "use client";
 
-import { useEffect, useRef } from "react";
+import { useEffect, useRef, useState } from "react";
 import Image from "next/image";
 import Link from "next/link";
+import { MenuChoiceModal } from "@/src/components/site/menu-choice-modal";
 import { MuteButton } from "@/src/components/site/audio-player";
 import logo from "@/src/assets/images/logos/2cfd48d9-5856-4b6b-90cc-a9e14fc021d8_removalai_preview.png";
 import clubVideo from "@/src/assets/video/video-crissclub/WhatsApp Video 2026-06-02 at 17.35.15.mp4";
@@ -11,6 +12,7 @@ import cafeVideo from "@/src/assets/video/video-crisscafee/WhatsApp Video 2026-0
 export function HomepageHero() {
   const cafeRef = useRef<HTMLVideoElement>(null);
   const clubRef = useRef<HTMLVideoElement>(null);
+  const [menuOpen, setMenuOpen] = useState(false);
 
   useEffect(() => {
     const tryPlay = (v: HTMLVideoElement | null) => {
@@ -94,12 +96,13 @@ export function HomepageHero() {
             className="flex flex-wrap justify-center gap-3.5"
             style={{ animation: "crd-fade-up 1100ms var(--ease-expo) 420ms both" }}
           >
-            <Link
-              href="#meniu"
+            <button
+              onClick={() => setMenuOpen(true)}
               className="inline-flex items-center gap-3 rounded-full border border-[#e6c787] bg-[#e6c787] px-6 py-3.5 text-[11.5px] font-semibold tracking-[0.28em] uppercase text-[#1a1411] transition-all duration-200 hover:-translate-y-px hover:shadow-[0_14px_40px_-10px_rgba(230,199,135,0.4)]"
             >
               Descoperă meniul <span className="inline-block transition-transform duration-200">→</span>
-            </Link>
+            </button>
+            <MenuChoiceModal open={menuOpen} onClose={() => setMenuOpen(false)} />
             <a
               href="tel:0746521799"
               className="inline-flex items-center gap-3 rounded-full border border-white/35 bg-transparent px-6 py-3.5 text-[11.5px] font-medium tracking-[0.28em] uppercase text-[#ece1c8] transition-all duration-200 hover:border-white hover:bg-white/[0.06]"
@@ -109,6 +112,28 @@ export function HomepageHero() {
           </div>
         </div>
       </div>
+
+      {/* Half-video CTA labels — left = Cafe, right = Club */}
+      <Link
+        href="/criss-cafe"
+        className="pointer-events-auto group absolute left-1/4 top-1/2 z-10 -translate-x-1/2 -translate-y-1/2 flex flex-col items-center gap-3"
+        aria-label="Criss Cafe"
+      >
+        <span className="font-display text-[clamp(1.1rem,2.5vw,2rem)] font-semibold tracking-[0.18em] uppercase text-[#f5f0e8]/50 transition-all duration-500 group-hover:text-[#f5f0e8] select-none whitespace-nowrap">
+          ← Criss Cafe
+        </span>
+        <span className="block h-px w-8 bg-[#c9a86a]/50 transition-all duration-500 group-hover:w-24 group-hover:bg-[#c9a86a]" />
+      </Link>
+      <Link
+        href="/criss-club"
+        className="pointer-events-auto group absolute left-3/4 top-1/2 z-10 -translate-x-1/2 -translate-y-1/2 flex flex-col items-center gap-3"
+        aria-label="Criss Club"
+      >
+        <span className="font-display text-[clamp(1.1rem,2.5vw,2rem)] font-semibold tracking-[0.18em] uppercase text-[#f5f0e8]/50 transition-all duration-500 group-hover:text-[#f5f0e8] select-none whitespace-nowrap">
+          Criss&nbsp;Club →
+        </span>
+        <span className="block h-px w-8 bg-[#c9a86a]/50 transition-all duration-500 group-hover:w-24 group-hover:bg-[#c9a86a]" />
+      </Link>
 
       {/* Scroll cue - always anchored at the visual bottom */}
       <div className="relative z-10 flex flex-col items-center gap-3 pb-7 text-[10px] tracking-[0.4em] uppercase text-white/55">
