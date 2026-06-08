@@ -4,6 +4,7 @@ import { useState, useRef } from "react";
 import Link from "next/link";
 import Image from "next/image";
 import { useRouter } from "next/navigation";
+import { Coffee, GlassWater, Wine, UtensilsCrossed, type LucideProps } from "lucide-react";
 import { BackButton } from "@/src/components/site/back-button";
 import { SiteNav } from "@/src/components/site/site-nav";
 import { MENU_TABS } from "@/src/data/cafe-menu";
@@ -19,11 +20,11 @@ const TAB_PHOTOS: Record<string, typeof coffeeImg> = {
   food: foodImg,
 };
 
-const TAB_ICONS: Record<string, string> = {
-  coffee: "☕",
-  drinks: "🥤",
-  cocktails: "ðŸ¹",
-  food: "ðŸ½",
+const TAB_ICONS: Record<string, React.ComponentType<LucideProps>> = {
+  coffee: Coffee,
+  drinks: GlassWater,
+  cocktails: Wine,
+  food: UtensilsCrossed,
 };
 
 export default function MeniuPage() {
@@ -83,7 +84,7 @@ export default function MeniuPage() {
                   : "border border-white/10 text-[#f5f0e8]/60 hover:border-[#c9a86a]/30 hover:text-[#f5f0e8]/90"
               }`}
             >
-              <span className="text-lg leading-none sm:text-base">{TAB_ICONS[t.id]}</span>
+              {(() => { const Icon = TAB_ICONS[t.id]; return <Icon className="h-5 w-5 sm:h-4 sm:w-4" strokeWidth={1.5} />; })()}
               <span className="text-[10px] font-semibold tracking-[0.08em] sm:text-[12px] sm:tracking-[0.12em]">{t.label}</span>
             </button>
           ))}
