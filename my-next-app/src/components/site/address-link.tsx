@@ -21,13 +21,13 @@ function PinIcon() {
   );
 }
 
-export function AddressLink() {
+export function AddressLink({ className }: { className?: string }) {
   return (
     <a
       href={MAPS_URL}
       target="_blank"
       rel="noopener noreferrer"
-      className="crd-link inline-flex items-center gap-2 text-xs text-crd-muted"
+      className={className ?? "crd-link inline-flex items-center gap-2 text-xs text-crd-muted"}
     >
       <span className="text-crd-gold">
         <PinIcon />

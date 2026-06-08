@@ -18,6 +18,8 @@ export interface MenuCategory {
   name_ro: string;
   name_en: string;
   sort_order: number;
+  parent_id: string | null;
+  photo_url: string | null;
 }
 
 export interface MenuItem {
@@ -35,28 +37,44 @@ export interface MenuItem {
 
 export interface CategoryWithItems extends MenuCategory {
   items: MenuItem[];
+  subcategories: CategoryWithItems[];
 }
 
 export async function getMenu(venue: Venue): Promise<CategoryWithItems[]> {
-  const { data: categories, error: catError } = await supabase
+  const { data: categories } = await supabase
     .from("menu_categories")
     .select("*")
     .eq("venue", venue)
     .order("sort_order");
 
-  if (catError || !categories) return [];
+  if (!categories) return [];
 
-  const { data: items, error: itemError } = await supabase
+  const { data: items } = await supabase
     .from("menu_items")
     .select("*")
     .in("category_id", categories.map((c) => c.id))
     .eq("available", true)
     .order("sort_order");
 
-  if (itemError || !items) return categories.map((c) => ({ ...c, items: [] }));
+  const allItems = items ?? [];
 
-  return categories.map((cat) => ({
-    ...cat,
-    items: items.filter((item) => item.category_id === cat.id),
-  }));
+  const catMap = new Map<string, CategoryWithItems>();
+  for (const cat of categories) {
+    catMap.set(cat.id, {
+      ...cat,
+      items: allItems.filter((i) => i.category_id === cat.id),
+      subcategories: [],
+    });
+  }
+
+  const topLevel: CategoryWithItems[] = [];
+  for (const cat of catMap.values()) {
+    if (cat.parent_id && catMap.has(cat.parent_id)) {
+      catMap.get(cat.parent_id)!.subcategories.push(cat);
+    } else if (!cat.parent_id) {
+      topLevel.push(cat);
+    }
+  }
+
+  return topLevel;
 }

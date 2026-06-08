@@ -1,11 +1,11 @@
 import { createBrowserClient } from "@/src/lib/supabase";
-import type { Venue, MenuCategory, MenuItem } from "@/src/lib/supabase";
+import type { Venue, MenuCategory, MenuItem, CategoryWithItems } from "@/src/lib/supabase";
 
 function client() {
   return createBrowserClient();
 }
 
-export async function getAdminMenu(venue: Venue) {
+export async function getAdminMenu(venue: Venue): Promise<CategoryWithItems[]> {
   const sb = client();
   const { data: categories } = await sb
     .from("menu_categories")
@@ -21,22 +21,58 @@ export async function getAdminMenu(venue: Venue) {
     .in("category_id", categories.map((c) => c.id))
     .order("sort_order");
 
-  return categories.map((cat: MenuCategory) => ({
-    ...cat,
-    items: (items ?? []).filter((i: MenuItem) => i.category_id === cat.id),
-  }));
+  const allItems = items ?? [];
+
+  const catMap = new Map<string, CategoryWithItems>();
+  for (const cat of categories as MenuCategory[]) {
+    catMap.set(cat.id, {
+      ...cat,
+      items: allItems.filter((i: MenuItem) => i.category_id === cat.id),
+      subcategories: [],
+    });
+  }
+
+  const topLevel: CategoryWithItems[] = [];
+  for (const cat of catMap.values()) {
+    if (cat.parent_id && catMap.has(cat.parent_id)) {
+      catMap.get(cat.parent_id)!.subcategories.push(cat);
+    } else if (!cat.parent_id) {
+      topLevel.push(cat);
+    }
+  }
+
+  return topLevel;
 }
 
-export async function addCategory(venue: Venue, name_ro: string, name_en: string, sort_order: number) {
+export async function uploadCategoryPhoto(file: File, categoryId: string): Promise<string | null> {
+  const sb = client();
+  const ext = file.name.split(".").pop() ?? "jpg";
+  const path = `categories/${categoryId}.${ext}`;
+  const { error } = await sb.storage.from("menu-photos").upload(path, file, { upsert: true });
+  if (error) return null;
+  const { data } = sb.storage.from("menu-photos").getPublicUrl(path);
+  return data.publicUrl;
+}
+
+export async function addCategory(
+  venue: Venue,
+  name_ro: string,
+  name_en: string,
+  sort_order: number,
+  parent_id?: string | null,
+) {
   const { data, error } = await client()
     .from("menu_categories")
-    .insert({ venue, name_ro, name_en, sort_order })
+    .insert({ venue, name_ro, name_en, sort_order, parent_id: parent_id ?? null })
     .select()
     .single();
   return { data, error };
 }
 
-export async function updateCategory(id: string, patch: Partial<Pick<MenuCategory, "name_ro" | "name_en" | "sort_order">>) {
+export async function updateCategory(
+  id: string,
+  patch: Partial<Pick<MenuCategory, "name_ro" | "name_en" | "sort_order" | "photo_url">>,
+) {
   const { error } = await client().from("menu_categories").update(patch).eq("id", id);
   return { error };
 }

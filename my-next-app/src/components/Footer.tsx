@@ -25,6 +25,8 @@ import {
 import {
   PHONE_DISPLAY,
   PHONE_TEL,
+  PHONE2_DISPLAY,
+  PHONE2_TEL,
   WHATSAPP_URL,
   AIEVEA_URL,
   ADDRESS,
@@ -88,36 +90,52 @@ function GoldRule({ className = "" }: { className?: string }) {
 /*  Footer                                                                     */
 /* -------------------------------------------------------------------------- */
 
-export function Footer() {
+export function Footer({ variant }: { variant?: "club" }) {
   const { t } = useLanguage();
   const { ref: sweepRef, inView: sweepIn } = useInView<HTMLDivElement>();
+  const isClub = variant === "club";
 
   return (
     <footer
       className="relative overflow-hidden font-body text-crd-ink"
-      style={{ background: "linear-gradient(180deg, #0a0a0a 0%, #110e0b 40%, #1a1410 100%)" }}
+      style={{
+        background: isClub
+          ? "linear-gradient(180deg, #060410 0%, #0b0818 45%, #0f0c20 100%)"
+          : "linear-gradient(180deg, #111009 0%, #16120e 45%, #1d1813 100%)",
+        "--crd-gold-accent": isClub ? "#a855f7" : undefined,
+        "--crd-gold-2": isClub ? "#c084fc" : undefined,
+      } as React.CSSProperties}
     >
-      {/* top gradient fade — blends seamlessly from the page above */}
+      {/* top seam */}
       <div
         aria-hidden
-        className="pointer-events-none absolute inset-x-0 top-0 h-px"
-        style={{ background: "linear-gradient(90deg, transparent 0%, rgba(201,168,106,0.35) 50%, transparent 100%)" }}
-      />
-
-      {/* ambient gold aura */}
-      <div
-        aria-hidden
-        className="pointer-events-none absolute left-1/2 top-0 h-[480px] w-[900px] max-w-[120vw] -translate-x-1/2"
+        className="pointer-events-none absolute inset-x-0 top-0 h-[2px]"
         style={{
-          background:
-            "radial-gradient(ellipse at center top, rgba(201,168,106,0.12), rgba(201,168,106,0) 60%)",
+          background: isClub
+            ? "linear-gradient(90deg, transparent 0%, rgba(168,85,247,0.6) 35%, rgba(255,61,163,0.85) 50%, rgba(168,85,247,0.6) 65%, transparent 100%)"
+            : "linear-gradient(90deg, transparent 0%, rgba(201,168,106,0.65) 40%, rgba(230,199,135,0.85) 50%, rgba(201,168,106,0.65) 60%, transparent 100%)",
         }}
       />
-      {/* base vignette */}
+
+      {/* ambient aura */}
       <div
         aria-hidden
-        className="pointer-events-none absolute inset-x-0 bottom-0 h-52"
-        style={{ background: "linear-gradient(to top, rgba(0,0,0,0.55), rgba(0,0,0,0))" }}
+        className="pointer-events-none absolute left-1/2 top-0 h-[600px] w-[1000px] max-w-[130vw] -translate-x-1/2"
+        style={{
+          background: isClub
+            ? "radial-gradient(ellipse at center top, rgba(168,85,247,0.18), rgba(168,85,247,0) 58%)"
+            : "radial-gradient(ellipse at center top, rgba(201,168,106,0.22), rgba(201,168,106,0) 58%)",
+        }}
+      />
+      {/* secondary fill */}
+      <div
+        aria-hidden
+        className="pointer-events-none absolute left-1/2 top-[120px] h-[320px] w-[600px] max-w-[100vw] -translate-x-1/2"
+        style={{
+          background: isClub
+            ? "radial-gradient(ellipse at center, rgba(255,61,163,0.07), transparent 70%)"
+            : "radial-gradient(ellipse at center, rgba(201,168,106,0.07), transparent 70%)",
+        }}
       />
 
       <div className="relative mx-auto w-full max-w-6xl px-6 pt-20 pb-10 sm:px-8 lg:px-10">
@@ -129,7 +147,7 @@ export function Footer() {
             {t.parentEyebrow}
           </span>
 
-          <h2 className="mt-4 font-display text-[clamp(2.2rem,6vw,3.6rem)] font-semibold leading-[0.95] tracking-[-0.02em] text-crd-ink text-balance">
+          <h2 className="mt-4 font-display text-[clamp(2.4rem,6vw,3.8rem)] font-semibold leading-[0.95] tracking-[-0.02em] text-[#f5f0e8] text-balance">
             <Link
               href="/"
               className="inline-block transition-opacity duration-300 hover:opacity-90"
@@ -140,13 +158,13 @@ export function Footer() {
           </h2>
 
           {/* royal flourish */}
-          <div className="mt-5 flex items-center gap-3 text-crd-gold-accent/70">
-            <span className="h-px w-12 bg-gradient-to-r from-transparent to-crd-gold-accent/55" />
+          <div className="mt-5 flex items-center gap-3 text-crd-gold-accent/80">
+            <span className="h-px w-14 bg-gradient-to-r from-transparent to-crd-gold-accent/70" />
             <Diamond />
-            <span className="h-px w-12 bg-gradient-to-l from-transparent to-crd-gold-accent/55" />
+            <span className="h-px w-14 bg-gradient-to-l from-transparent to-crd-gold-accent/70" />
           </div>
 
-          <p className="mt-5 w-full max-w-xl font-serif text-lg italic leading-snug text-crd-ink/85 text-pretty sm:text-xl">
+          <p className="mt-5 w-full max-w-xl font-serif text-lg italic leading-snug text-[#f5f0e8]/90 text-pretty sm:text-xl">
             {t.tagline}
           </p>
         </Reveal>
@@ -159,7 +177,7 @@ export function Footer() {
           <Reveal as="section" delay={0} className="md:px-9 md:first:pl-0">
             <Wordmark name="Criss Cafe" kind={t.cafe.kind} href="/criss-cafe" />
 
-            <p className="mt-6 text-base leading-relaxed text-crd-ink/80">
+            <p className="mt-6 text-[0.95rem] leading-relaxed text-[#f5f0e8]/75">
               {t.cafe.seats}
             </p>
 
@@ -169,10 +187,10 @@ export function Footer() {
                 {t.cafe.hours.map((row) => (
                   <div
                     key={row.days}
-                    className="flex items-baseline justify-between gap-4 text-base"
+                    className="flex items-baseline justify-between gap-4 text-[0.95rem]"
                   >
-                    <dt className="text-crd-ink/70">{row.days}</dt>
-                    <dd className="font-[family-name:var(--font-body)] tabular-nums tracking-wide text-crd-ink/90">
+                    <dt className="text-[#f5f0e8]/65">{row.days}</dt>
+                    <dd className="tabular-nums tracking-wide text-[#f5f0e8]">
                       {row.time}
                     </dd>
                   </div>
@@ -185,14 +203,21 @@ export function Footer() {
               <div className="mt-3 flex flex-col gap-3">
                 <a
                   href={`tel:${PHONE_TEL}`}
-                  className="crd-link inline-flex w-fit items-center gap-2.5 text-base text-crd-ink/90"
+                  className="crd-link inline-flex w-fit items-center gap-2.5 text-[0.95rem] text-[#f5f0e8]"
                 >
                   <PhoneIcon className="h-4 w-4 text-crd-gold-accent" />
                   <span className="tabular-nums tracking-wide">{PHONE_DISPLAY}</span>
                 </a>
+                <a
+                  href={`tel:${PHONE2_TEL}`}
+                  className="crd-link inline-flex w-fit items-center gap-2.5 text-[0.95rem] text-[#f5f0e8]"
+                >
+                  <PhoneIcon className="h-4 w-4 text-crd-gold-accent" />
+                  <span className="tabular-nums tracking-wide">{PHONE2_DISPLAY}</span>
+                </a>
                 <WhatsAppButton label="WhatsApp" />
               </div>
-              <p className="mt-4 text-base leading-relaxed text-crd-muted">
+              <p className="mt-4 text-[0.88rem] leading-relaxed text-[#a89f90]">
                 {t.cafe.reservations}
               </p>
             </div>
@@ -202,11 +227,11 @@ export function Footer() {
           <Reveal
             as="section"
             delay={90}
-            className="md:border-l md:border-crd-gold-accent/[0.12] md:px-9"
+            className="md:border-l md:border-crd-gold-accent/[0.22] md:px-9"
           >
             <Wordmark name="Criss Club" kind={t.club.kind} href="/criss-club" />
 
-            <ul className="mt-6 space-y-2.5 text-base text-crd-ink/85">
+            <ul className="mt-6 space-y-2.5 text-[0.95rem] text-[#f5f0e8]/90">
               <li className="flex items-center gap-2.5">
                 <Dot /> {t.club.capacity}
               </li>
@@ -216,12 +241,11 @@ export function Footer() {
               </li>
             </ul>
 
-
-            <p className="mt-6 text-base leading-relaxed text-crd-ink/80">
+            <p className="mt-6 text-[0.95rem] leading-relaxed text-[#f5f0e8]/75">
               {t.club.events}
             </p>
 
-            <p className="mt-5 border-t border-crd-gold-accent/15 pt-4 font-serif text-base italic leading-snug text-crd-gold-accent/85">
+            <p className="mt-5 border-t border-crd-gold-accent/25 pt-4 font-serif text-[0.95rem] italic leading-snug text-crd-gold-accent">
               {t.club.selective}
             </p>
           </Reveal>
@@ -230,9 +254,9 @@ export function Footer() {
           <Reveal
             as="section"
             delay={180}
-            className="md:border-l md:border-crd-gold-accent/[0.12] md:px-9"
+            className="md:border-l md:border-crd-gold-accent/[0.22] md:px-9"
           >
-            <h3 className="font-display text-2xl leading-tight tracking-[-0.01em] text-crd-ink text-balance">
+            <h3 className="font-display text-2xl leading-tight tracking-[-0.01em] text-[#f5f0e8] text-balance">
               <Link href="/servicii" className="crd-link inline-block">
                 {t.services.heading}
               </Link>
@@ -243,10 +267,10 @@ export function Footer() {
                 const Icon = SERVICE_ICON[item.id] ?? CocktailIcon;
                 return (
                   <li key={item.id} className="group flex items-start gap-3.5">
-                    <span className="mt-0.5 flex h-9 w-9 shrink-0 items-center justify-center rounded-full border border-crd-gold-accent/20 bg-crd-gold-accent/[0.07] text-crd-gold-accent shadow-[inset_0_1px_0_rgba(245,240,232,0.05)] transition-[transform,border-color,background-color] duration-[450ms] [transition-timing-function:var(--ease-spring)] group-hover:-translate-y-0.5 group-hover:scale-105 group-hover:border-crd-gold-accent/50 group-hover:bg-crd-gold-accent/[0.14]">
+                    <span className="mt-0.5 flex h-9 w-9 shrink-0 items-center justify-center rounded-full border border-crd-gold-accent/30 bg-crd-gold-accent/[0.10] text-crd-gold-accent transition-[transform,border-color,background-color] duration-[450ms] [transition-timing-function:var(--ease-spring)] group-hover:-translate-y-0.5 group-hover:scale-105 group-hover:border-crd-gold-accent/60 group-hover:bg-crd-gold-accent/[0.18]">
                       <Icon className="h-[18px] w-[18px]" />
                     </span>
-                    <span className="pt-1.5 text-base leading-snug text-crd-ink/80 transition-colors duration-300 group-hover:text-crd-ink">
+                    <span className="pt-1.5 text-[0.95rem] leading-snug text-[#f5f0e8]/80 transition-colors duration-300 group-hover:text-[#f5f0e8]">
                       {item.label}
                     </span>
                   </li>
@@ -272,10 +296,10 @@ export function Footer() {
                   key={badge}
                   className="group flex flex-col items-center gap-3 px-2 text-center md:flex-row md:gap-3.5 md:text-left"
                 >
-                  <span className="flex h-11 w-11 shrink-0 items-center justify-center rounded-full border border-crd-gold-accent/25 text-crd-gold-accent shadow-[inset_0_1px_0_rgba(245,240,232,0.05)] transition-[transform,border-color] duration-[450ms] [transition-timing-function:var(--ease-spring)] group-hover:-translate-y-0.5 group-hover:border-crd-gold-accent/55">
+                  <span className="flex h-11 w-11 shrink-0 items-center justify-center rounded-full border border-crd-gold-accent/35 bg-crd-gold-accent/[0.08] text-crd-gold-accent transition-[transform,border-color] duration-[450ms] [transition-timing-function:var(--ease-spring)] group-hover:-translate-y-0.5 group-hover:border-crd-gold-accent/65 group-hover:bg-crd-gold-accent/[0.15]">
                     <Icon className="h-5 w-5" />
                   </span>
-                  <span className="text-[0.82rem] font-medium leading-snug text-crd-ink/80 text-balance">
+                  <span className="text-[0.88rem] font-medium leading-snug text-[#f5f0e8]/85 text-balance">
                     {badge}
                   </span>
                 </li>
@@ -290,70 +314,35 @@ export function Footer() {
         {/* ---------------------------------------------------------------- */}
         <div className="mt-10 flex flex-col items-center gap-2.5 text-center">
           {/* Entity + address */}
-          <p className="text-base leading-relaxed text-crd-muted">{t.legal.entity}</p>
+          <p className="text-[0.88rem] leading-relaxed text-[#a89f90]">{t.legal.entity}</p>
           <a
             href={MAPS_URL}
             target="_blank"
             rel="noopener noreferrer"
-            className="crd-link text-base text-crd-muted"
+            className="crd-link text-[0.88rem] text-crd-gold-accent/70 transition-colors hover:text-crd-gold-accent"
           >
             {ADDRESS}
           </a>
-          <p className="text-base text-crd-muted">{t.legal.rights}</p>
+          <p className="text-[0.88rem] text-[#a89f90]">{t.legal.rights}</p>
 
           {/* Age restriction */}
-          <p className="mt-1 text-base font-medium text-crd-gold-accent/70">
+          <p className="mt-1 text-[0.88rem] font-medium text-crd-gold-accent/80">
             🔞 {t.legal.age}
           </p>
 
-          {/* GDPR notice */}
-          <p className="mt-1 max-w-lg text-base italic leading-relaxed text-crd-muted/70">
-            {t.legal.gdpr}
-          </p>
-
           {/* Legal links row */}
-          <div className="mt-4 flex flex-wrap items-center justify-center gap-x-5 gap-y-2">
+          <div className="mt-4">
             <a
               href="https://anpc.ro/ce-este-sal/"
               target="_blank"
               rel="noopener noreferrer"
-              className="text-base text-crd-muted/80 underline underline-offset-2 transition-colors hover:text-crd-gold-accent"
+              className="text-[0.88rem] text-[#a89f90] underline underline-offset-2 transition-colors hover:text-crd-gold-accent"
             >
               {t.legal.anpcLabel}
             </a>
-            <span className="text-crd-gold-accent/30 text-xs">·</span>
-            <a
-              href="https://ec.europa.eu/consumers/odr"
-              target="_blank"
-              rel="noopener noreferrer"
-              className="text-base text-crd-muted/80 underline underline-offset-2 transition-colors hover:text-crd-gold-accent"
-            >
-              {t.legal.solLabel}
-            </a>
-            <span className="text-crd-gold-accent/30 text-xs">·</span>
-            <Link
-              href="/politica-confidentialitate"
-              className="text-base text-crd-muted/80 underline underline-offset-2 transition-colors hover:text-crd-gold-accent"
-            >
-              {t.legal.privacyLabel}
-            </Link>
-            <span className="text-crd-gold-accent/30 text-xs">·</span>
-            <Link
-              href="/termeni-conditii"
-              className="text-base text-crd-muted/80 underline underline-offset-2 transition-colors hover:text-crd-gold-accent"
-            >
-              {t.legal.termsLabel}
-            </Link>
-            <span className="text-crd-gold-accent/30 text-xs">·</span>
-            <Link
-              href="/politica-cookies"
-              className="text-base text-crd-muted/80 underline underline-offset-2 transition-colors hover:text-crd-gold-accent"
-            >
-              {t.legal.cookiesLabel}
-            </Link>
           </div>
 
-          <p className="mt-2 italic text-base text-crd-muted/60">{t.legal.clientele}</p>
+          <p className="mt-2 italic text-[0.88rem] text-[#a89f90]/70">{t.legal.clientele}</p>
         </div>
       </div>
 
@@ -363,7 +352,7 @@ export function Footer() {
       <div
         ref={sweepRef}
         className="relative"
-        style={{ borderTop: "1px solid rgba(201,168,106,0.18)" }}
+        style={{ borderTop: isClub ? "1px solid rgba(168,85,247,0.22)" : "1px solid rgba(201,168,106,0.18)" }}
       >
         {/* one-time light sweep across the gold seam */}
         <div
@@ -380,23 +369,23 @@ export function Footer() {
         </div>
 
         <div className="mx-auto flex w-full max-w-6xl flex-col items-center gap-5 px-6 py-7 text-center sm:px-8 md:flex-row md:justify-between md:gap-6 md:text-left lg:px-10">
-          <p className="order-2 text-base tracking-wide text-crd-muted md:order-1">
+          <p className="order-2 text-[0.88rem] tracking-wide text-[#a89f90] md:order-1">
             {t.bottom.copyright}
           </p>
 
-          <p className="crd-beat-trigger order-1 flex items-center gap-2 text-base text-crd-ink/75 md:order-2">
+          <p className="crd-beat-trigger order-1 flex items-center gap-2 text-[0.88rem] text-[#f5f0e8]/70 md:order-2">
             <HeartIcon className="crd-beat h-3.5 w-3.5 text-crd-gold-accent" />
             {t.bottom.built}
           </p>
 
           <div className="order-3 flex items-center gap-4">
             <LanguageToggle />
-            <span className="hidden h-4 w-px bg-white/10 sm:block" />
+            <span className="hidden h-4 w-px bg-white/15 sm:block" />
             <a
               href={AIEVEA_URL}
               target="_blank"
               rel="noopener noreferrer"
-              className="group inline-flex items-center gap-2 text-base text-crd-muted transition-colors hover:text-crd-ink"
+              className="group inline-flex items-center gap-2 text-[0.88rem] text-[#a89f90] transition-colors hover:text-[#f5f0e8]"
               aria-label={`${t.bottom.crafted} Aievea`}
             >
               <span>{t.bottom.crafted}</span>
@@ -420,7 +409,7 @@ export function Footer() {
 
 function SectionLabel({ children }: { children: React.ReactNode }) {
   return (
-    <span className="text-xs font-semibold uppercase tracking-[0.28em] text-crd-gold-accent/80">
+    <span className="text-[0.7rem] font-semibold uppercase tracking-[0.32em] text-crd-gold-accent">
       {children}
     </span>
   );

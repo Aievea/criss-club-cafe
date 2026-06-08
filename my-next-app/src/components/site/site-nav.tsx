@@ -6,6 +6,7 @@ import { useState, useEffect } from "react";
 import { usePathname } from "next/navigation";
 import { useLanguage } from "@/src/i18n/language-context";
 import { LanguageToggle } from "@/src/components/footer/language-toggle";
+import { ReservationTrigger } from "@/src/components/site/reservation-modal";
 import logo from "@/src/assets/images/logos/2cfd48d9-5856-4b6b-90cc-a9e14fc021d8_removalai_preview.png";
 
 const LINKS = [
@@ -79,12 +80,11 @@ export function SiteNav() {
             <LanguageToggle />
           </div>
 
-          <a
-            href="tel:0746521799"
+          <ReservationTrigger
             className="hidden lg:inline-flex items-center rounded-full border border-white/30 px-4 py-2.5 text-[10.5px] tracking-[0.24em] uppercase text-white/80 transition-all duration-200 hover:bg-[#c9a86a] hover:text-[#1a1411] hover:border-[#c9a86a]"
           >
             {t.nav.reserve}
-          </a>
+          </ReservationTrigger>
         </div>
       </header>
 

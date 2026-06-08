@@ -1,13 +1,15 @@
 "use client";
 
-import { useEffect, useState, useCallback } from "react";
+import { useEffect, useRef, useState, useCallback } from "react";
 import { useParams } from "next/navigation";
+import Image from "next/image";
 import {
-  Plus, Trash2, Pencil, Check, X, ChevronDown, ChevronUp, ToggleLeft, ToggleRight,
+  Plus, Trash2, Pencil, Check, X, ChevronDown, ChevronUp,
+  ToggleLeft, ToggleRight, ImageIcon, Loader2,
 } from "lucide-react";
 import {
   getAdminMenu, addCategory, updateCategory, deleteCategory,
-  addItem, updateItem, toggleItem, deleteItem,
+  addItem, updateItem, toggleItem, deleteItem, uploadCategoryPhoto,
 } from "@/src/lib/supabase-admin";
 import type { Venue, CategoryWithItems, MenuItem } from "@/src/lib/supabase";
 
@@ -43,13 +45,13 @@ export default function AdminVenuePage() {
   async function handleAddCategory() {
     if (!newCatRo.trim()) return;
     const maxOrder = Math.max(0, ...menu.map((c) => c.sort_order));
-    await addCategory(v, newCatRo.trim(), newCatEn.trim() || newCatRo.trim(), maxOrder + 1);
+    await addCategory(v, newCatRo.trim(), newCatEn.trim() || newCatRo.trim(), maxOrder + 1, null);
     setNewCatRo(""); setNewCatEn(""); setAddingCat(false);
     refresh();
   }
 
   async function handleDeleteCategory(id: string) {
-    if (!confirm("Ștergi categoria și toate produsele din ea?")) return;
+    if (!confirm("Ștergi categoria și tot ce conține?")) return;
     await deleteCategory(id);
     refresh();
   }
@@ -82,7 +84,7 @@ export default function AdminVenuePage() {
         </h1>
         <button
           onClick={() => setAddingCat(true)}
-          className="flex items-center gap-2 rounded-full px-4 py-2 text-[11px] font-semibold tracking-[0.22em] uppercase transition-all"
+          className="flex items-center gap-2 rounded-lg px-4 py-2 text-[11px] font-semibold tracking-[0.22em] uppercase transition-all"
           style={{ background: accent, color: v === "cafe" ? "#1a1411" : "#fff" }}
         >
           <Plus className="h-3.5 w-3.5" /> Categorie nouă
@@ -96,12 +98,14 @@ export default function AdminVenuePage() {
             placeholder="Nume RO"
             value={newCatRo}
             onChange={(e) => setNewCatRo(e.target.value)}
+            onKeyDown={(e) => e.key === "Enter" && handleAddCategory()}
             className="flex-1 rounded-lg border border-white/10 bg-white/[0.04] px-3 py-2 text-sm text-[#f5f0e8] placeholder-white/25 outline-none focus:border-white/25"
           />
           <input
             placeholder="Nume EN"
             value={newCatEn}
             onChange={(e) => setNewCatEn(e.target.value)}
+            onKeyDown={(e) => e.key === "Enter" && handleAddCategory()}
             className="flex-1 rounded-lg border border-white/10 bg-white/[0.04] px-3 py-2 text-sm text-[#f5f0e8] placeholder-white/25 outline-none focus:border-white/25"
           />
           <button onClick={handleAddCategory} className="rounded-lg p-2 text-green-400 hover:bg-green-400/10">
@@ -125,6 +129,8 @@ export default function AdminVenuePage() {
           onToggleItem={handleToggleItem}
           onDeleteItem={handleDeleteItem}
           onRefresh={refresh}
+          expandedSet={expanded}
+          onToggleExpandSub={(id) => toggleExpanded(id)}
         />
       ))}
     </div>
@@ -133,7 +139,8 @@ export default function AdminVenuePage() {
 
 function CategoryBlock({
   cat, accent, venue, expanded, onToggleExpand, onDeleteCategory,
-  onToggleItem, onDeleteItem, onRefresh,
+  onToggleItem, onDeleteItem, onRefresh, isSubcategory = false,
+  expandedSet, onToggleExpandSub,
 }: {
   cat: CategoryWithItems;
   accent: string;
@@ -144,11 +151,19 @@ function CategoryBlock({
   onToggleItem: (item: MenuItem) => void;
   onDeleteItem: (id: string) => void;
   onRefresh: () => void;
+  isSubcategory?: boolean;
+  expandedSet: string[];
+  onToggleExpandSub: (id: string) => void;
 }) {
   const [editingName, setEditingName] = useState(false);
   const [nameRo, setNameRo] = useState(cat.name_ro);
   const [nameEn, setNameEn] = useState(cat.name_en);
   const [addingItem, setAddingItem] = useState(false);
+  const [addingSubcat, setAddingSubcat] = useState(false);
+  const [newSubRo, setNewSubRo] = useState("");
+  const [newSubEn, setNewSubEn] = useState("");
+  const [uploading, setUploading] = useState(false);
+  const photoInputRef = useRef<HTMLInputElement>(null);
 
   async function saveCategory() {
     await updateCategory(cat.id, { name_ro: nameRo, name_en: nameEn });
@@ -156,44 +171,107 @@ function CategoryBlock({
     onRefresh();
   }
 
+  async function handlePhotoUpload(e: React.ChangeEvent<HTMLInputElement>) {
+    const file = e.target.files?.[0];
+    if (!file) return;
+    setUploading(true);
+    const url = await uploadCategoryPhoto(file, cat.id);
+    if (url) await updateCategory(cat.id, { photo_url: url });
+    setUploading(false);
+    onRefresh();
+  }
+
+  async function handleRemovePhoto() {
+    await updateCategory(cat.id, { photo_url: null });
+    onRefresh();
+  }
+
+  async function handleAddSubcategory() {
+    if (!newSubRo.trim()) return;
+    const maxOrder = Math.max(0, ...cat.subcategories.map((c) => c.sort_order));
+    await addCategory(venue, newSubRo.trim(), newSubEn.trim() || newSubRo.trim(), maxOrder + 1, cat.id);
+    setNewSubRo(""); setNewSubEn(""); setAddingSubcat(false);
+    onRefresh();
+  }
+
+  const totalItems = cat.items.length + cat.subcategories.reduce((n, s) => n + s.items.length, 0);
+
+  const isOpen = isSubcategory || expanded;
+
   return (
-    <div className="rounded-xl border border-white/8 bg-white/[0.03] overflow-hidden">
+    <div className={`rounded-xl border overflow-hidden ${isSubcategory ? "border-white/5 bg-white/[0.015] ml-6" : "border-white/8 bg-white/[0.03]"}`}>
+      {/* Header */}
       <div className="flex items-center gap-3 px-5 py-4">
-        <button onClick={onToggleExpand} className="flex-1 flex items-center gap-3 text-left">
-          {expanded
-            ? <ChevronUp className="h-4 w-4 text-white/30" />
-            : <ChevronDown className="h-4 w-4 text-white/30" />
-          }
+        <button
+          onClick={isSubcategory ? undefined : onToggleExpand}
+          className={`flex-1 flex items-center gap-3 text-left min-w-0 ${isSubcategory ? "cursor-default" : ""}`}
+        >
+          {!isSubcategory && (expanded
+            ? <ChevronUp className="h-4 w-4 shrink-0 text-white/30" />
+            : <ChevronDown className="h-4 w-4 shrink-0 text-white/30" />
+          )}
           {editingName ? (
             <div className="flex flex-1 flex-wrap items-center gap-2" onClick={(e) => e.stopPropagation()}>
               <input value={nameRo} onChange={(e) => setNameRo(e.target.value)}
-                className="flex-1 rounded-lg border border-white/15 bg-white/[0.06] px-3 py-1.5 text-sm text-[#f5f0e8] outline-none" />
+                onKeyDown={(e) => e.key === "Enter" && saveCategory()}
+                className="flex-1 rounded-lg border border-white/15 bg-white/[0.06] px-3 py-1.5 text-sm text-[#f5f0e8] outline-none min-w-[100px]" />
               <input value={nameEn} onChange={(e) => setNameEn(e.target.value)}
-                className="flex-1 rounded-lg border border-white/15 bg-white/[0.06] px-3 py-1.5 text-sm text-[#f5f0e8] outline-none" />
+                onKeyDown={(e) => e.key === "Enter" && saveCategory()}
+                className="flex-1 rounded-lg border border-white/15 bg-white/[0.06] px-3 py-1.5 text-sm text-[#f5f0e8] outline-none min-w-[100px]" />
               <button onClick={saveCategory} className="text-green-400 hover:text-green-300"><Check className="h-4 w-4" /></button>
               <button onClick={() => setEditingName(false)} className="text-red-400 hover:text-red-300"><X className="h-4 w-4" /></button>
             </div>
           ) : (
-            <span className="flex-1 font-semibold text-[#f5f0e8]">
-              {cat.name_ro} <span className="text-white/30">/ {cat.name_en}</span>
-              <span className="ml-2 text-xs text-white/25">({cat.items.length})</span>
-            </span>
+            <div className="flex min-w-0 flex-1 items-center gap-3">
+              {/* Photo thumbnail */}
+              {cat.photo_url && (
+                <div className="relative h-8 w-12 shrink-0 overflow-hidden rounded">
+                  <Image src={cat.photo_url} alt={cat.name_ro} fill className="object-cover" sizes="48px" />
+                </div>
+              )}
+              <span className="truncate font-semibold text-[#f5f0e8]">
+                {cat.name_ro}
+                <span className="text-white/30"> / {cat.name_en}</span>
+                <span className="ml-2 text-xs text-white/25">({totalItems})</span>
+              </span>
+            </div>
           )}
         </button>
+
         {!editingName && (
-          <div className="flex items-center gap-2">
-            <button onClick={() => setEditingName(true)} className="rounded-lg p-2 text-white/30 hover:text-white/70">
+          <div className="flex shrink-0 items-center gap-1">
+            {/* Photo upload */}
+            <label className="relative cursor-pointer rounded-lg p-2 text-white/30 hover:text-white/70 transition-colors" title="Adaugă/schimbă poza">
+              {uploading
+                ? <Loader2 className="h-3.5 w-3.5 animate-spin" />
+                : <ImageIcon className="h-3.5 w-3.5" />
+              }
+              <input
+                ref={photoInputRef}
+                type="file"
+                accept="image/*"
+                className="absolute inset-0 cursor-pointer opacity-0"
+                onChange={handlePhotoUpload}
+              />
+            </label>
+            {cat.photo_url && (
+              <button onClick={handleRemovePhoto} className="rounded-lg p-2 text-white/20 hover:text-red-400 transition-colors" title="Elimină poza">
+                <X className="h-3 w-3" />
+              </button>
+            )}
+            <button onClick={() => setEditingName(true)} className="rounded-lg p-2 text-white/30 hover:text-white/70 transition-colors">
               <Pencil className="h-3.5 w-3.5" />
             </button>
-            <button onClick={onDeleteCategory} className="rounded-lg p-2 text-white/30 hover:text-red-400">
+            <button onClick={onDeleteCategory} className="rounded-lg p-2 text-white/30 hover:text-red-400 transition-colors">
               <Trash2 className="h-3.5 w-3.5" />
             </button>
           </div>
         )}
       </div>
 
-      {expanded && (
-        <div className="border-t border-white/6 px-5 pb-4">
+      {isOpen && (
+        <div className="border-t border-white/6 px-5 pb-5">
+          {/* Items */}
           <div className="divide-y divide-white/5">
             {cat.items.map((item) => (
               <ItemRow
@@ -224,6 +302,62 @@ function CategoryBlock({
             >
               <Plus className="h-3.5 w-3.5" /> Adaugă produs
             </button>
+          )}
+
+          {/* Subcategories — only for top-level */}
+          {!isSubcategory && (
+            <div className="mt-5 space-y-3">
+              {cat.subcategories.map((sub) => (
+                <CategoryBlock
+                  key={sub.id}
+                  cat={sub}
+                  accent={accent}
+                  venue={venue}
+                  expanded={false}
+                  onToggleExpand={() => {}}
+                  onDeleteCategory={async () => {
+                    if (!confirm("Ștergi subcategoria și produsele ei?")) return;
+                    await deleteCategory(sub.id);
+                    onRefresh();
+                  }}
+                  onToggleItem={onToggleItem}
+                  onDeleteItem={onDeleteItem}
+                  onRefresh={onRefresh}
+                  isSubcategory
+                  expandedSet={expandedSet}
+                  onToggleExpandSub={onToggleExpandSub}
+                />
+              ))}
+
+              {addingSubcat ? (
+                <div className="ml-6 flex flex-wrap items-center gap-3 rounded-xl border border-white/8 bg-white/[0.03] p-3">
+                  <input
+                    autoFocus
+                    placeholder="Subcategorie RO"
+                    value={newSubRo}
+                    onChange={(e) => setNewSubRo(e.target.value)}
+                    onKeyDown={(e) => e.key === "Enter" && handleAddSubcategory()}
+                    className="flex-1 rounded-lg border border-white/10 bg-white/[0.06] px-3 py-2 text-sm text-[#f5f0e8] placeholder-white/25 outline-none min-w-[120px]"
+                  />
+                  <input
+                    placeholder="Subcategorie EN"
+                    value={newSubEn}
+                    onChange={(e) => setNewSubEn(e.target.value)}
+                    onKeyDown={(e) => e.key === "Enter" && handleAddSubcategory()}
+                    className="flex-1 rounded-lg border border-white/10 bg-white/[0.06] px-3 py-2 text-sm text-[#f5f0e8] placeholder-white/25 outline-none min-w-[120px]"
+                  />
+                  <button onClick={handleAddSubcategory} className="rounded-lg p-2 text-green-400 hover:bg-green-400/10"><Check className="h-4 w-4" /></button>
+                  <button onClick={() => setAddingSubcat(false)} className="rounded-lg p-2 text-red-400 hover:bg-red-400/10"><X className="h-4 w-4" /></button>
+                </div>
+              ) : (
+                <button
+                  onClick={() => setAddingSubcat(true)}
+                  className="ml-6 mt-1 flex items-center gap-2 text-[11px] font-semibold tracking-[0.2em] uppercase text-white/20 transition-colors hover:text-white/50"
+                >
+                  <Plus className="h-3.5 w-3.5" /> Subcategorie
+                </button>
+              )}
+            </div>
           )}
         </div>
       )}
@@ -327,6 +461,7 @@ function AddItemForm({ categoryId, sortOrder, onDone, onCancel }: {
   return (
     <div className="mt-3 flex flex-wrap items-center gap-2 rounded-xl border border-white/10 bg-white/[0.04] p-3">
       <input autoFocus value={nameRo} onChange={(e) => setNameRo(e.target.value)} placeholder="Nume RO *"
+        onKeyDown={(e) => e.key === "Enter" && handleAdd()}
         className="flex-1 rounded-lg border border-white/10 bg-white/[0.06] px-3 py-2 text-sm text-[#f5f0e8] placeholder-white/25 outline-none min-w-[120px]" />
       <input value={nameEn} onChange={(e) => setNameEn(e.target.value)} placeholder="Nume EN"
         className="flex-1 rounded-lg border border-white/10 bg-white/[0.06] px-3 py-2 text-sm text-[#f5f0e8] placeholder-white/25 outline-none min-w-[120px]" />

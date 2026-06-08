@@ -5,7 +5,6 @@ import Image from "next/image";
 import { useLanguage } from "@/src/i18n/language-context";
 import { SiteNav } from "@/src/components/site/site-nav";
 import { BackButton } from "@/src/components/site/back-button";
-import { ContactActions } from "@/src/components/site/contact-actions";
 import { AddressLink } from "@/src/components/site/address-link";
 import { Reveal } from "@/src/components/footer/reveal";
 import estrelaImg from "@/src/assets/bere/Estrela_Galiza.svg";
@@ -20,7 +19,12 @@ import p4 from "@/src/assets/images/images-crisscafee/WhatsApp Image 2026-06-01 
 import p5 from "@/src/assets/images/images-crisscafee/WhatsApp Image 2026-06-01 at 21.28.57 (1).jpeg";
 import p6 from "@/src/assets/images/images-crisscafee/WhatsApp Image 2026-06-01 at 21.29.01.jpeg";
 import p7 from "@/src/assets/images/images-crisscafee/WhatsApp Image 2026-06-01 at 21.29.01 (1).jpeg";
-import { PHONE_TEL, PHONE_DISPLAY } from "@/src/lib/contact";
+import p8 from "@/src/assets/images/images-crisscafee/WhatsApp Image 2026-06-01 at 19.28.56.jpeg";
+import p9 from "@/src/assets/images/images-crisscafee/WhatsApp Image 2026-06-01 at 21.28.56 (4).jpeg";
+import p10 from "@/src/assets/images/images-crisscafee/WhatsApp Image 2026-06-01 at 21.28.56 (5).jpeg";
+import p11 from "@/src/assets/images/images-crisscafee/WhatsApp Image 2026-06-01 at 21.29.01 (2).jpeg";
+import { WHATSAPP_URL } from "@/src/lib/contact";
+import { ReservationTrigger } from "@/src/components/site/reservation-modal";
 
 const BEERS = [
   { img: estrelaImg, name: "Estrela Galiza", dark: true },
@@ -28,7 +32,7 @@ const BEERS = [
   { img: krombacherImg, name: "Krombacher", dark: false },
 ];
 
-const PHOTOS = [p1, p2, p3, p4, p5, p6, p7].map((img) => img.src);
+const PHOTOS = [p1, p2, p3, p4, p5, p6, p7, p8, p9, p10, p11].map((img) => img.src);
 
 function GoldDivider() {
   return (
@@ -62,82 +66,98 @@ export default function CrissCafePage() {
       <SiteNav />
       <BackButton />
 
-      {/* â”€â”€ Cinematic video hero with text overlay â”€â”€ */}
-      <section className="relative isolate flex min-h-screen min-h-[100svh] flex-col overflow-hidden">
-        {/* Video */}
+      {/* Hero — full-bleed video, content anchored right */}
+      <section className="relative isolate flex min-h-screen min-h-[100svh] overflow-hidden">
+
+        {/* Video — always full coverage */}
         <video
-          className="absolute inset-0 h-full w-full object-cover -z-20"
+          className="absolute inset-0 -z-20 h-full w-full object-cover"
           style={{ filter: "saturate(0.88) brightness(0.54) contrast(1.06)" }}
           autoPlay muted loop playsInline preload="metadata"
         >
           <source src={cafeVideo} type="video/mp4" />
         </video>
 
-        {/* Gradient overlay */}
+        {/* Overlay: dark on right (content side), fades to transparent left so video shows */}
         <div
           className="absolute inset-0 -z-10"
           style={{
-            background: `
-              radial-gradient(120% 80% at 50% 40%, transparent 0%, rgba(10,8,6,0.5) 65%, rgba(10,8,6,0.92) 100%),
-              linear-gradient(180deg, rgba(10,8,6,0.45) 0%, rgba(10,8,6,0.06) 35%, rgba(10,8,6,0.85) 100%)
-            `,
+            background: [
+              "linear-gradient(to left, rgba(10,8,6,0.96) 0%, rgba(10,8,6,0.80) 25%, rgba(10,8,6,0.42) 50%, rgba(10,8,6,0.08) 70%, transparent 88%)",
+              "linear-gradient(to top, rgba(10,8,6,0.72) 0%, transparent 38%)",
+              "linear-gradient(to bottom, rgba(10,8,6,0.55) 0%, transparent 22%)",
+              "radial-gradient(ellipse 55% 60% at 78% 55%, rgba(201,168,106,0.08) 0%, transparent 70%)",
+            ].join(", "),
           }}
         />
 
-        {/* Hero text â€” centered over video */}
-        <div className="relative z-10 flex flex-1 flex-col items-center justify-start px-6 pt-32 pb-10 text-center">
-          <span
-            className="inline-flex items-center rounded-full border border-white/20 bg-white/[0.05] px-3.5 py-1 text-[0.62rem] uppercase tracking-[0.28em] text-white/70"
-            style={{ animation: "crd-fade-up 1100ms var(--ease-expo) 0ms both" }}
-          >
-            {t.cafe.kind}
-          </span>
-          <h1
-            className="mt-5 font-display text-[clamp(3rem,9vw,7rem)] font-semibold leading-[0.95] tracking-[-0.02em] text-[#f5f0e8] text-balance"
-            style={{ animation: "crd-fade-up 1200ms var(--ease-expo) 110ms both" }}
-          >
-            Criss Cafe
-          </h1>
-          <p
-            className="mx-auto mt-6 max-w-2xl text-[clamp(1.1rem,1.6vw,1.4rem)] leading-[1.75] text-[#f5f0e8]/75 text-pretty"
-            style={{ animation: "crd-fade-up 1200ms var(--ease-expo) 220ms both" }}
-          >
-            {t.pages.cafe}
-          </p>
-        </div>
+        {/* Content — centered on mobile, right-anchored on desktop */}
+        <div className="relative z-10 flex min-h-screen min-h-[100svh] w-full flex-col items-center justify-center gap-10 px-8 pb-20 text-center lg:ml-auto lg:w-[54%] lg:items-start lg:px-16 lg:text-left">
 
-        {/* Buttons + scroll cue â€” pinned to bottom */}
-        <div className="relative z-10 mt-auto flex flex-col items-center gap-5 pb-8">
+          {/* Wordmark */}
           <div
-            className="flex flex-wrap justify-center gap-3"
-            style={{ animation: "crd-fade-up 1100ms var(--ease-expo) 330ms both" }}
+            className="flex flex-col items-center lg:items-start"
+            style={{ animation: "crd-fade-up 1000ms var(--ease-expo) 60ms both" }}
+          >
+            <div className="mb-4 h-px w-10 bg-[#c9a86a]/55 lg:ml-0" aria-hidden />
+            <h1
+              className="font-display leading-[0.9] text-[#f5f0e8]"
+              style={{ fontFamily: "var(--font-cinzel)" }}
+            >
+              <span className="block text-[clamp(1rem,2.4vw,1.6rem)] font-light tracking-[0.35em] text-[#f5f0e8]/52">
+                Criss
+              </span>
+              <span
+                className="block text-[clamp(3.8rem,8.5vw,6rem)] font-semibold tracking-[-0.02em]"
+                style={{ textShadow: "0 2px 40px rgba(201,168,106,0.38), 0 0 80px rgba(201,168,106,0.15)" }}
+              >
+                Cafe
+              </span>
+            </h1>
+          </div>
+
+          {/* Buttons */}
+          <div
+            className="flex flex-wrap justify-center gap-3 lg:justify-start"
+            style={{ animation: "crd-fade-up 1000ms var(--ease-expo) 200ms both" }}
           >
             <Link
-              href="/meniu"
-              className="inline-flex items-center gap-2 rounded-full bg-[#c9a86a] px-6 py-3 text-[11px] font-semibold tracking-[0.28em] uppercase text-[#1a1411] transition-all duration-300 hover:-translate-y-0.5 hover:shadow-[0_12px_30px_-8px_rgba(201,168,106,0.5)]"
+              href="/meniu/cafe"
+              className="inline-flex items-center gap-2 rounded-lg bg-[#c9a86a] px-7 py-3.5 text-[11px] font-semibold tracking-[0.26em] uppercase text-[#1a1411] transition-all duration-300 hover:-translate-y-0.5 hover:shadow-[0_12px_30px_-8px_rgba(201,168,106,0.5)]"
             >
-              {lang === "ro" ? "Vezi meniul" : "View menu"} →
+              {t.cafe.viewMenuHero} &rarr;
             </Link>
-            <a
-              href={`tel:${PHONE_TEL}`}
-              className="inline-flex items-center gap-2 rounded-full border border-white/25 px-6 py-3 text-[11px] font-medium tracking-[0.28em] uppercase text-[#f5f0e8]/75 transition-all duration-300 hover:border-white/50 hover:text-[#f5f0e8]"
+            <ReservationTrigger
+              className="inline-flex items-center gap-2 rounded-lg px-7 py-3.5 text-[11px] font-medium tracking-[0.26em] uppercase text-[#c9a86a]/72 transition-all duration-300 hover:text-[#c9a86a]"
+              style={{ border: "1px solid rgba(201,168,106,0.28)" }}
             >
-              {lang === "ro" ? "Rezervare" : "Book a table"}
-            </a>
+              {t.cafe.reserveCta}
+            </ReservationTrigger>
           </div>
-          <div className="flex flex-col items-center gap-3 text-[10px] tracking-[0.4em] uppercase text-white/45">
-            <span>scroll</span>
-            <div className="h-12 w-px origin-top bg-gradient-to-b from-transparent to-[#c9a86a] animate-[scrollLine_2.4s_ease-in-out_infinite]" aria-hidden />
+
+          {/* Scroll — mouse icon */}
+          <div
+            className="flex flex-col items-center gap-0 text-white/30 lg:items-start"
+            style={{ animation: "crd-fade-up 1000ms var(--ease-expo) 340ms both" }}
+            aria-hidden
+          >
+            <svg width="20" height="32" viewBox="0 0 20 32" fill="none" className="text-white/28">
+              <rect x="1" y="1" width="18" height="30" rx="9" stroke="currentColor" strokeWidth="1.2" />
+              <rect
+                x="9" y="6" width="2" height="7" rx="1" fill="currentColor"
+                className="animate-[mouseScroll_2s_ease-in-out_infinite]"
+              />
+            </svg>
           </div>
         </div>
       </section>
 
-      {/* â”€â”€ Info row â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€ */}
+      {/* ── Info row ── */}
       <div className="bg-crd-bg">
         <Reveal>
-          <div className="mx-auto grid max-w-5xl gap-10 px-6 py-16 sm:px-8 md:grid-cols-3">
+          <div className="mx-auto grid max-w-5xl gap-10 px-6 py-16 sm:px-8 md:grid-cols-2">
             <div className="flex flex-col items-center border-t border-[#c9a86a]/20 pt-5 text-center">
-              <p className="mb-1 text-xs font-semibold uppercase tracking-[0.3em] text-[#c9a86a]/60 sm:text-sm">Capacitate</p>
+              <p className="mb-1 text-xs font-semibold uppercase tracking-[0.3em] text-[#c9a86a]/60 sm:text-sm">{t.cafe.capacityLabel}</p>
               <p className="font-serif text-xl text-[#f5f0e8]">{t.cafe.seats}</p>
             </div>
             <div className="flex flex-col items-center border-t border-[#c9a86a]/20 pt-5 text-center">
@@ -151,17 +171,50 @@ export default function CrissCafePage() {
                 ))}
               </dl>
             </div>
-            <div className="flex flex-col items-center border-t border-[#c9a86a]/20 pt-5 text-center">
-              <p className="mb-3 text-xs font-semibold uppercase tracking-[0.3em] text-[#c9a86a]/60 sm:text-sm">{t.cafe.contactLabel}</p>
-              <ContactActions />
-              <div className="mt-3"><AddressLink /></div>
-            </div>
           </div>
         </Reveal>
 
         <GoldDivider />
 
-        {/* â”€â”€ Beers â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€ */}
+        {/* ── SEO story section ── */}
+        <Reveal>
+          <div className="mx-auto mt-20 max-w-3xl px-6 sm:px-8 text-center">
+            <p className="mb-4 text-[0.62rem] font-semibold uppercase tracking-[0.38em] text-[#c9a86a]/60">
+              {lang === "ro" ? "Povestea noastră" : "Our story"}
+            </p>
+            <h2 className="font-serif font-light leading-[1.1] text-[#f5f0e8] text-balance"
+                style={{ fontSize: "clamp(2rem,4.5vw,3.2rem)" }}>
+              {lang === "ro"
+                ? <>Nu vindem cafea.<br /><em className="italic text-[#c9a86a]">Vindem 20 de minute de pace.</em></>
+                : <>We don&apos;t sell coffee.<br /><em className="italic text-[#c9a86a]">We sell 20 minutes of peace.</em></>
+              }
+            </h2>
+            <p className="mx-auto mt-7 max-w-xl font-serif italic text-[1.1rem] leading-[1.7] text-[#f5f0e8]/65 text-pretty">
+              {lang === "ro"
+                ? "Criss Cafe e o afacere de familie construită pe un principiu simplu: dacă nu e bun, nu iese din bucătărie. De la espresso la cocktailuri, de la pizza la paste — totul e făcut cu grijă, pentru oameni care știu diferența."
+                : "Criss Cafe is a family business built on one principle: if it isn't good, it doesn't leave the kitchen. From espresso to cocktails, from pizza to pasta — everything is made with care, for people who know the difference."
+              }
+            </p>
+            <p className="mx-auto mt-4 max-w-xl font-serif italic text-[1.05rem] leading-[1.7] text-[#f5f0e8]/45 text-pretty">
+              {lang === "ro"
+                ? "Lounge, pub, social club — în inima Târgu Mureșului, pe Piața Trandafirilor. Vino o dată și înțelegi de ce lumea revine."
+                : "Lounge, pub, social club — in the heart of Târgu Mureș, on Piața Trandafirilor. Come once and you'll understand why people keep coming back."
+              }
+            </p>
+            <div className="mt-10 flex flex-wrap justify-center gap-4">
+              <ReservationTrigger
+                className="inline-flex items-center gap-2.5 rounded-lg bg-[#c9a86a] px-7 py-3.5 text-[11px] font-semibold tracking-[0.28em] uppercase text-[#1a1411] transition-all duration-300 hover:-translate-y-0.5 hover:shadow-[0_14px_40px_-10px_rgba(201,168,106,0.5)]"
+              >
+                {t.cafe.reserveCta} →
+              </ReservationTrigger>
+              <AddressLink className="inline-flex items-center gap-2.5 rounded-lg border border-white/15 px-7 py-3.5 text-[11px] font-medium tracking-[0.28em] uppercase text-[#f5f0e8]/60 transition-all duration-300 hover:border-[#c9a86a]/40 hover:text-[#c9a86a]" />
+            </div>
+          </div>
+        </Reveal>
+
+        <div className="mt-20"><GoldDivider /></div>
+
+        {/* ── Beers ── */}
         <div className="mx-auto mt-16 max-w-5xl px-6 sm:px-8">
           <Reveal>
             <h2 className="mb-10 text-center font-display text-[clamp(2rem,4vw,3.5rem)] font-semibold leading-tight tracking-[-0.02em] text-[#f5f0e8]">
@@ -188,7 +241,7 @@ export default function CrissCafePage() {
           </div>
         </div>
 
-        {/* â”€â”€ Instagram â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€ */}
+        {/* ── Instagram ── */}
         <Reveal>
           <div className="mx-auto mt-10 max-w-5xl px-6 sm:px-8">
             <a href="https://www.instagram.com/criss.cafe" target="_blank" rel="noopener noreferrer"
@@ -203,7 +256,7 @@ export default function CrissCafePage() {
                   <IgIcon />
                   <span className="text-sm font-medium text-[#f5f0e8]">@criss.cafe</span>
                 </div>
-                <p className="text-xs text-[#a89f90]">{lang === "ro" ? "Urmărește-ne pe Instagram" : "Follow us on Instagram"}</p>
+                <p className="text-xs text-[#a89f90]">{t.cafe.followIg}</p>
               </div>
               <span className="text-[#c9a86a]/50 transition-transform duration-300 group-hover:translate-x-1">→</span>
             </a>
@@ -212,27 +265,27 @@ export default function CrissCafePage() {
 
         <div className="mt-16"><GoldDivider /></div>
 
-        {/* â”€â”€ Menu button â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€ */}
+        {/* ── Menu button ── */}
         <Reveal>
           <div className="mx-auto mt-16 max-w-5xl px-6 sm:px-8 text-center">
             <h2 className="mb-6 font-display text-[clamp(2rem,4vw,3.5rem)] font-semibold leading-tight tracking-[-0.02em] text-[#f5f0e8]">
-              {lang === "ro" ? "Meniu" : "Menu"}
+              {t.cafe.menuHeading}
             </h2>
-            <Link href="/meniu"
+            <Link href="/meniu/cafe"
               className="inline-flex items-center gap-3 rounded-full bg-[#c9a86a] px-8 py-4 text-[11.5px] font-semibold tracking-[0.28em] uppercase text-[#1a1411] transition-all duration-300 hover:-translate-y-0.5 hover:shadow-[0_14px_40px_-10px_rgba(201,168,106,0.5)]"
             >
-              {lang === "ro" ? "Vezi meniul complet" : "View full menu"} →
+              {t.cafe.viewMenuCta} →
             </Link>
           </div>
         </Reveal>
 
         <div className="mt-16"><GoldDivider /></div>
 
-        {/* â”€â”€ Gallery â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€ */}
+        {/* ── Gallery ── */}
         <div className="mx-auto mt-16 max-w-5xl px-6 sm:px-8">
           <Reveal>
             <h2 className="mb-10 font-display text-[clamp(2rem,4vw,3.5rem)] font-semibold leading-tight tracking-[-0.02em] text-[#f5f0e8]">
-              {lang === "ro" ? "Galerie foto" : "Gallery"}
+              {t.cafe.galleryHeading}
             </h2>
           </Reveal>
           <Reveal delay={60}>
@@ -257,22 +310,22 @@ export default function CrissCafePage() {
           </Reveal>
         </div>
 
-        {/* â”€â”€ CTA band â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€ */}
+        {/* ── CTA band ── */}
         <Reveal>
           <div className="mx-auto max-w-5xl px-6 py-24 sm:px-8 text-center">
             <p className="font-serif italic text-lg text-[#f5f0e8]/60 mb-8">
-              {lang === "ro" ? "Rezervă-ți masa sau explorează meniul" : "Reserve your table or explore the menu"}
+              {t.cafe.bookTableNote}
             </p>
             <div className="flex flex-wrap items-center justify-center gap-4">
-              <a href={`tel:${PHONE_TEL}`}
+              <ReservationTrigger
                 className="inline-flex items-center gap-3 rounded-full bg-[#c9a86a] px-7 py-3.5 text-[11px] font-semibold tracking-[0.28em] uppercase text-[#1a1411] transition-all duration-300 hover:-translate-y-0.5 hover:shadow-[0_14px_40px_-10px_rgba(201,168,106,0.5)]"
               >
-                {lang === "ro" ? "Rezervare" : "Book a table"} · {PHONE_DISPLAY}
-              </a>
-              <Link href="/meniu"
+                {t.cafe.reserveCta} →
+              </ReservationTrigger>
+              <Link href="/meniu/cafe"
                 className="inline-flex items-center gap-3 rounded-full border border-white/20 px-7 py-3.5 text-[11px] font-medium tracking-[0.28em] uppercase text-[#f5f0e8]/75 transition-all duration-300 hover:border-[#c9a86a]/50 hover:text-[#c9a86a]"
               >
-                {lang === "ro" ? "Meniu" : "Menu"} →
+                {t.cafe.menuHeading} →
               </Link>
             </div>
           </div>
@@ -282,4 +335,3 @@ export default function CrissCafePage() {
     </main>
   );
 }
-

@@ -2,8 +2,11 @@
 
 import { useEffect, useRef } from "react";
 import { useRouter } from "next/navigation";
-import { Coffee, Music, X } from "lucide-react";
+import Image from "next/image";
+import { X, UtensilsCrossed, Wine } from "lucide-react";
 import { useLanguage } from "@/src/i18n/language-context";
+import cafeImg from "@/src/assets/meniu/cafe/coffe.jpeg";
+import clubImg from "@/src/assets/images/images-crissclub/djs/WhatsApp Image 2026-06-02 at 17.36.51.jpeg";
 
 interface MenuChoiceModalProps {
   open: boolean;
@@ -18,11 +21,8 @@ export function MenuChoiceModal({ open, onClose }: MenuChoiceModalProps) {
   useEffect(() => {
     const dialog = dialogRef.current;
     if (!dialog) return;
-    if (open) {
-      dialog.showModal();
-    } else {
-      dialog.close();
-    }
+    if (open) dialog.showModal();
+    else dialog.close();
   }, [open]);
 
   useEffect(() => {
@@ -39,9 +39,7 @@ export function MenuChoiceModal({ open, onClose }: MenuChoiceModalProps) {
     if (
       e.clientX < rect.left || e.clientX > rect.right ||
       e.clientY < rect.top || e.clientY > rect.bottom
-    ) {
-      onClose();
-    }
+    ) onClose();
   }
 
   function navigate(path: string) {
@@ -53,77 +51,196 @@ export function MenuChoiceModal({ open, onClose }: MenuChoiceModalProps) {
     <dialog
       ref={dialogRef}
       onClick={handleBackdropClick}
-      className="m-auto w-full max-w-lg rounded-2xl border border-white/10 bg-[#0e0c0a] p-0 backdrop:bg-black/70 backdrop:backdrop-blur-sm open:animate-[fadeIn_200ms_ease-out]"
-      style={{ boxShadow: "0 32px 80px rgba(0,0,0,0.8)" }}
+      className="dialog-sheet m-auto w-full max-w-2xl overflow-hidden rounded-xl border border-white/[0.07] bg-[#080604] p-0 backdrop:bg-black/75 backdrop:backdrop-blur-sm open:animate-[fadeIn_220ms_cubic-bezier(0.16,1,0.3,1)]"
+      style={{ boxShadow: "0 40px 100px rgba(0,0,0,0.85), 0 0 0 1px rgba(255,255,255,0.04)" }}
     >
-      <div className="flex items-center justify-between border-b border-white/8 px-6 py-5">
-        <div>
-          <p className="text-[0.6rem] font-semibold uppercase tracking-[0.35em] text-[#c9a86a]/60">
-            {lang === "ro" ? "Alege meniul" : "Choose menu"}
-          </p>
-          <h2 className="mt-0.5 font-display text-xl font-semibold tracking-[-0.01em] text-[#f5f0e8]"
-              style={{ fontFamily: "var(--font-cinzel)" }}>
-            {lang === "ro" ? "Unde vrei să mergi?" : "Where are you headed?"}
-          </h2>
-        </div>
+      {/* Handle bar — mobile only */}
+      <div className="flex justify-center pt-3 pb-1 sm:hidden" aria-hidden>
+        <div className="h-1 w-10 rounded-full bg-white/15" />
+      </div>
+
+      {/* Header — mobile only */}
+      <div className="flex items-center justify-between px-6 pb-3 pt-2 sm:hidden">
+        <p className="text-[0.6rem] font-semibold uppercase tracking-[0.36em] text-white/35">
+          {lang === "ro" ? "Alege meniul" : "Choose menu"}
+        </p>
         <button
           onClick={onClose}
-          className="rounded-full p-2 text-white/30 transition-colors hover:bg-white/8 hover:text-white/70"
+          aria-label="Închide"
+          className="flex h-7 w-7 items-center justify-center rounded-md border border-white/10 bg-white/[0.05] text-white/40 transition-all hover:border-white/25 hover:text-white"
         >
-          <X className="h-4 w-4" />
+          <X className="h-3 w-3" />
         </button>
       </div>
 
-      <div className="grid grid-cols-2 gap-3 p-5">
+      {/* ── MOBILE: compact rows ── */}
+      <div className="divide-y divide-white/[0.06] sm:hidden">
+
+        {/* Cafe row */}
         <button
           onClick={() => navigate("/meniu/cafe")}
-          className="group relative overflow-hidden rounded-xl border border-[#c9a86a]/20 bg-[#0a0806] p-6 text-left transition-all duration-300 hover:border-[#c9a86a]/50 hover:-translate-y-0.5"
+          className="group flex w-full items-center gap-4 px-6 py-4 text-left transition-colors duration-200 active:bg-white/[0.06] hover:bg-white/[0.04]"
         >
-          <div
-            aria-hidden
-            className="pointer-events-none absolute inset-0 opacity-0 transition-opacity duration-300 group-hover:opacity-100"
-            style={{ background: "radial-gradient(ellipse at top, rgba(201,168,106,0.12), transparent 70%)" }}
-          />
-          <Coffee className="mb-4 h-7 w-7 text-[#c9a86a]" />
-          <p className="text-[0.6rem] font-semibold uppercase tracking-[0.3em] text-[#c9a86a]/50">
-            {lang === "ro" ? "Cafenea" : "Cafe"}
-          </p>
-          <h3 className="mt-1 font-display text-lg font-semibold text-[#f5f0e8]"
-              style={{ fontFamily: "var(--font-cinzel)" }}>
-            Criss Cafe
-          </h3>
-          <p className="mt-2 text-xs text-[#a89f90]">
-            {lang === "ro" ? "Cafea, băuturi, deserturi" : "Coffee, drinks, desserts"}
-          </p>
-          <span className="mt-4 inline-block text-[#c9a86a]/40 transition-all duration-300 group-hover:translate-x-1 group-hover:text-[#c9a86a]">
-            →
-          </span>
+          <div className="relative h-16 w-16 shrink-0 overflow-hidden rounded-lg border border-white/10">
+            <Image
+              src={cafeImg}
+              alt="Criss Cafe"
+              fill
+              className="object-cover transition-transform duration-500 group-hover:scale-105"
+              sizes="64px"
+            />
+            <div className="absolute inset-0 bg-[#080604]/30" />
+          </div>
+          <div className="flex-1 min-w-0">
+            <p className="text-[0.58rem] font-semibold uppercase tracking-[0.3em] text-[#c9a86a]/60">
+              {lang === "ro" ? "Cafenea" : "Cafe"}
+            </p>
+            <p className="mt-0.5 font-display text-[1.15rem] font-semibold tracking-[-0.01em] text-[#f5f0e8]"
+               style={{ fontFamily: "var(--font-cinzel)" }}>
+              Criss Cafe
+            </p>
+            <p className="mt-0.5 text-[11px] text-[#f5f0e8]/38">
+              {lang === "ro" ? "Cafea · Băuturi · Deserturi" : "Coffee · Drinks · Desserts"}
+            </p>
+          </div>
+          <span className="shrink-0 text-[#c9a86a]/30 transition-transform duration-300 group-hover:translate-x-1">→</span>
         </button>
 
+        {/* Club row */}
         <button
           onClick={() => navigate("/meniu/club")}
-          className="group relative overflow-hidden rounded-xl border border-[#ff3da3]/15 bg-[#0a0806] p-6 text-left transition-all duration-300 hover:border-[#ff3da3]/40 hover:-translate-y-0.5"
+          className="group flex w-full items-center gap-4 px-6 py-4 text-left transition-colors duration-200 active:bg-white/[0.06] hover:bg-white/[0.04]"
         >
-          <div
-            aria-hidden
-            className="pointer-events-none absolute inset-0 opacity-0 transition-opacity duration-300 group-hover:opacity-100"
-            style={{ background: "radial-gradient(ellipse at top, rgba(255,61,163,0.08), transparent 70%)" }}
-          />
-          <Music className="mb-4 h-7 w-7 text-[#ff3da3]" />
-          <p className="text-[0.6rem] font-semibold uppercase tracking-[0.3em] text-[#ff3da3]/50">
-            Club
-          </p>
-          <h3 className="mt-1 font-display text-lg font-semibold text-[#f5f0e8]"
-              style={{ fontFamily: "var(--font-cinzel)" }}>
-            Criss Club
-          </h3>
-          <p className="mt-2 text-xs text-[#a89f90]">
-            {lang === "ro" ? "Sticle, cocktailuri, shots" : "Bottles, cocktails, shots"}
-          </p>
-          <span className="mt-4 inline-block text-[#ff3da3]/40 transition-all duration-300 group-hover:translate-x-1 group-hover:text-[#ff3da3]">
-            →
-          </span>
+          <div className="relative h-16 w-16 shrink-0 overflow-hidden rounded-lg border border-white/10">
+            <Image
+              src={clubImg}
+              alt="Criss Club"
+              fill
+              className="object-cover object-top transition-transform duration-500 group-hover:scale-105"
+              sizes="64px"
+            />
+            <div className="absolute inset-0 bg-[#080604]/30" />
+          </div>
+          <div className="flex-1 min-w-0">
+            <p className="text-[0.58rem] font-semibold uppercase tracking-[0.3em] text-[#ff3da3]/55">
+              Club
+            </p>
+            <p className="mt-0.5 font-display text-[1.15rem] font-semibold tracking-[-0.01em] text-[#f5f0e8]"
+               style={{ fontFamily: "var(--font-cinzel)" }}>
+              Criss Club
+            </p>
+            <p className="mt-0.5 text-[11px] text-[#f5f0e8]/38">
+              {lang === "ro" ? "Cocktailuri · Sticle · Shots" : "Cocktails · Bottles · Shots"}
+            </p>
+          </div>
+          <span className="shrink-0 text-[#ff3da3]/30 transition-transform duration-300 group-hover:translate-x-1">→</span>
         </button>
+      </div>
+
+      {/* Mobile footer spacing */}
+      <div className="h-2 sm:hidden" />
+
+      {/* ── DESKTOP: full split-image layout ── */}
+      <div className="hidden sm:block">
+        {/* Close */}
+        <button
+          onClick={onClose}
+          aria-label="Închide"
+          className="absolute right-4 top-4 z-30 flex h-8 w-8 items-center justify-center rounded-md border border-white/20 bg-black/50 text-white/70 backdrop-blur-sm transition-all duration-200 hover:border-white/40 hover:text-white"
+        >
+          <X className="h-3.5 w-3.5" />
+        </button>
+
+        <div className="flex">
+          {/* Criss Cafe */}
+          <button
+            onClick={() => navigate("/meniu/cafe")}
+            className="group relative flex-1 overflow-hidden text-left"
+            style={{ minHeight: "340px" }}
+          >
+            <Image
+              src={cafeImg}
+              alt="Criss Cafe"
+              fill
+              className="object-cover object-center transition-transform duration-700 ease-out group-hover:scale-[1.03]"
+              sizes="50vw"
+              priority
+            />
+            <div
+              className="absolute inset-0 transition-opacity duration-500 group-hover:opacity-70"
+              style={{ background: "linear-gradient(to top, rgba(8,6,4,0.88) 0%, rgba(8,6,4,0.4) 55%, rgba(8,6,4,0.18) 100%)" }}
+            />
+            <div
+              className="absolute inset-0 opacity-0 transition-opacity duration-500 group-hover:opacity-100"
+              style={{ background: "radial-gradient(ellipse at 30% 80%, rgba(201,168,106,0.14), transparent 65%)" }}
+            />
+            <div className="absolute inset-x-0 bottom-0 flex flex-col gap-1.5 p-7">
+              <span className="text-[0.58rem] font-semibold uppercase tracking-[0.38em] text-[#c9a86a]/60 transition-colors duration-300 group-hover:text-[#c9a86a]/90">
+                {lang === "ro" ? "Cafenea" : "Cafe"}
+              </span>
+              <h3 className="font-display text-[1.85rem] font-semibold leading-none tracking-[-0.02em] text-[#f5f0e8]"
+                  style={{ fontFamily: "var(--font-cinzel)" }}>
+                Criss Cafe
+              </h3>
+              <p className="mt-1 text-[11px] text-[#f5f0e8]/40 transition-colors duration-300 group-hover:text-[#f5f0e8]/60">
+                {lang === "ro" ? "Cafea · Băuturi · Deserturi" : "Coffee · Drinks · Desserts"}
+              </p>
+              <span className="mt-3 flex items-center gap-2 text-[#c9a86a]/40 transition-all duration-300 group-hover:gap-3 group-hover:text-[#c9a86a]">
+                <span className="text-sm">→</span>
+                <span className="h-px flex-1 max-w-[40px] origin-left scale-x-0 bg-[#c9a86a]/50 transition-transform duration-500 group-hover:scale-x-100" />
+              </span>
+            </div>
+            <div className="absolute bottom-0 left-0 right-0 h-[2px] origin-left scale-x-0 bg-gradient-to-r from-[#c9a86a] to-transparent transition-transform duration-500 ease-out group-hover:scale-x-100" />
+          </button>
+
+          <div className="w-px bg-white/[0.06]" />
+
+          {/* Criss Club */}
+          <button
+            onClick={() => navigate("/meniu/club")}
+            className="group relative flex-1 overflow-hidden text-left"
+            style={{ minHeight: "340px" }}
+          >
+            <Image
+              src={clubImg}
+              alt="Criss Club"
+              fill
+              className="object-cover object-center transition-transform duration-700 ease-out group-hover:scale-[1.03]"
+              sizes="50vw"
+            />
+            <div
+              className="absolute inset-0 transition-opacity duration-500 group-hover:opacity-70"
+              style={{ background: "linear-gradient(to top, rgba(8,6,4,0.90) 0%, rgba(8,6,4,0.45) 55%, rgba(8,6,4,0.20) 100%)" }}
+            />
+            <div
+              className="absolute inset-0 opacity-0 transition-opacity duration-500 group-hover:opacity-100"
+              style={{ background: "radial-gradient(ellipse at 70% 80%, rgba(255,61,163,0.12), transparent 65%)" }}
+            />
+            <div className="absolute inset-x-0 bottom-0 flex flex-col gap-1.5 p-7">
+              <span className="text-[0.58rem] font-semibold uppercase tracking-[0.38em] text-[#ff3da3]/55 transition-colors duration-300 group-hover:text-[#ff3da3]/85">
+                Club
+              </span>
+              <h3 className="font-display text-[1.85rem] font-semibold leading-none tracking-[-0.02em] text-[#f5f0e8]"
+                  style={{ fontFamily: "var(--font-cinzel)" }}>
+                Criss Club
+              </h3>
+              <p className="mt-1 text-[11px] text-[#f5f0e8]/40 transition-colors duration-300 group-hover:text-[#f5f0e8]/60">
+                {lang === "ro" ? "Cocktailuri · Sticle · Shots" : "Cocktails · Bottles · Shots"}
+              </p>
+              <span className="mt-3 flex items-center gap-2 text-[#ff3da3]/40 transition-all duration-300 group-hover:gap-3 group-hover:text-[#ff3da3]">
+                <span className="text-sm">→</span>
+                <span className="h-px flex-1 max-w-[40px] origin-left scale-x-0 bg-[#ff3da3]/50 transition-transform duration-500 group-hover:scale-x-100" />
+              </span>
+            </div>
+            <div className="absolute bottom-0 left-0 right-0 h-[2px] origin-left scale-x-0 bg-gradient-to-r from-[#ff3da3] to-transparent transition-transform duration-500 ease-out group-hover:scale-x-100" />
+          </button>
+        </div>
+
+        <div className="border-t border-white/[0.05] px-7 py-4 text-center">
+          <p className="text-[9.5px] uppercase tracking-[0.42em] text-white/45">
+            {lang === "ro" ? "Alege destinația" : "Choose your destination"}
+          </p>
+        </div>
       </div>
     </dialog>
   );

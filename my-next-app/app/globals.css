@@ -188,6 +188,33 @@ body {
   50%      { box-shadow: 0 0 0 8px rgba(255,61,163,0); }
 }
 
+@keyframes slideUp {
+  from { transform: translateY(100%); opacity: 0; }
+  to   { transform: translateY(0);    opacity: 1; }
+}
+
+@keyframes mouseScroll {
+  0%   { transform: translateY(0);   opacity: 0.8; }
+  60%  { transform: translateY(9px); opacity: 0.15; }
+  100% { transform: translateY(0);   opacity: 0; }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .animate-\[mouseScroll_2s_ease-in-out_infinite\] { animation: none; }
+}
+
+/* Mobile bottom sheet — applied to <dialog class="dialog-sheet"> */
+@media (max-width: 639px) {
+  .dialog-sheet {
+    margin-top: auto !important;
+    margin-bottom: 0 !important;
+    width: 100% !important;
+    max-width: 100% !important;
+    border-radius: 1.25rem 1.25rem 0 0 !important;
+    animation: slideUp 300ms cubic-bezier(0.16, 1, 0.3, 1) both !important;
+  }
+}
+
 @media (prefers-reduced-motion: reduce) {
   .crd-beat,
   .crd-sweep {
