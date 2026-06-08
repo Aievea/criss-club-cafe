@@ -1,3 +1,6 @@
+"use client";
+
+import { useEffect, useRef } from "react";
 import Image from "next/image";
 import Link from "next/link";
 import { MuteButton } from "@/src/components/site/audio-player";
@@ -6,21 +9,36 @@ import clubVideo from "@/src/assets/video/video-crissclub/WhatsApp Video 2026-06
 import cafeVideo from "@/src/assets/video/video-crisscafee/WhatsApp Video 2026-06-01 at 21.26.11.mp4";
 
 export function HomepageHero() {
+  const cafeRef = useRef<HTMLVideoElement>(null);
+  const clubRef = useRef<HTMLVideoElement>(null);
+
+  useEffect(() => {
+    const tryPlay = (v: HTMLVideoElement | null) => {
+      if (!v) return;
+      v.muted = true;
+      v.play().catch(() => {});
+    };
+    tryPlay(cafeRef.current);
+    tryPlay(clubRef.current);
+  }, []);
+
   return (
     <section className="relative isolate flex min-h-screen min-h-[100svh] flex-col overflow-hidden">
-      {/* Two videos side by side â€” no card, raw split-screen */}
+      {/* Two videos side by side - no card, raw split-screen */}
       <div className="absolute inset-0 -z-20 flex">
         <video
+          ref={cafeRef}
           className="h-full w-1/2 object-cover"
           style={{ filter: "saturate(0.85) brightness(0.52) contrast(1.08)" }}
-          autoPlay loop muted playsInline
+          autoPlay loop muted playsInline preload="auto"
         >
           <source src={cafeVideo} type="video/mp4" />
         </video>
         <video
+          ref={clubRef}
           className="h-full w-1/2 object-cover"
           style={{ filter: "saturate(0.85) brightness(0.52) contrast(1.08)" }}
-          autoPlay loop muted playsInline
+          autoPlay loop muted playsInline preload="auto"
         >
           <source src={clubVideo} type="video/mp4" />
         </video>
@@ -37,9 +55,9 @@ export function HomepageHero() {
         }}
       />
 
-      {/* Content â€” flex-1, column, kicker+logo at top, tagline+CTAs at bottom */}
+      {/* Content - flex-1, column, kicker+logo at top, tagline+CTAs at bottom */}
       <div className="relative z-10 flex flex-1 flex-col items-center px-6 text-center">
-        {/* Kicker + Logo â€” pinned toward top */}
+        {/* Kicker + Logo - pinned toward top */}
         <div className="flex flex-col items-center gap-3 pt-24 lg:pt-[86px]">
           <div
             className="flex items-center gap-3.5 text-[11px] tracking-[0.42em] uppercase text-[#e6c787]"
@@ -59,7 +77,7 @@ export function HomepageHero() {
           </div>
         </div>
 
-        {/* Tagline + CTAs â€” pinned toward bottom */}
+        {/* Tagline + CTAs - pinned toward bottom */}
         <div className="mt-auto flex flex-col items-center gap-5 pb-16">
           <MuteButton />
           <p
@@ -92,7 +110,7 @@ export function HomepageHero() {
         </div>
       </div>
 
-      {/* Scroll cue â€” always anchored at the visual bottom */}
+      {/* Scroll cue - always anchored at the visual bottom */}
       <div className="relative z-10 flex flex-col items-center gap-3 pb-7 text-[10px] tracking-[0.4em] uppercase text-white/55">
         <span>scroll</span>
         <div
@@ -103,4 +121,3 @@ export function HomepageHero() {
     </section>
   );
 }
-

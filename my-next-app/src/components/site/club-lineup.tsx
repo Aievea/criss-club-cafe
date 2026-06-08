@@ -1,6 +1,5 @@
 import Image, { StaticImageData } from "next/image";
 import { Reveal } from "@/src/components/footer/reveal";
-import dj1 from "@/src/assets/images/images-crissclub/djs/WhatsApp Image 2026-06-01 at 21.29.01 (1).jpeg";
 import dj2 from "@/src/assets/images/images-crissclub/djs/WhatsApp Image 2026-06-02 at 17.36.51.jpeg";
 import dj3 from "@/src/assets/images/images-crissclub/djs/WhatsApp Image 2026-06-02 at 17.36.51 (1).jpeg";
 import dj4 from "@/src/assets/images/images-crissclub/djs/WhatsApp Image 2026-06-02 at 17.36.51 (2).jpeg";
@@ -13,7 +12,6 @@ import dj9 from "@/src/assets/images/images-crissclub/djs/WhatsApp Image 2026-06
 type Event = { date: string; title: string; who: string; img: StaticImageData };
 
 const EVENTS: Event[] = [
-  { date: "05 iunie · 22:00", title: "Manele All Night Long",       who: "DJ Criss Club",        img: dj1 },
   { date: "06 iunie · 22:00", title: "Everybody's Night",           who: "DJ Criss Club",        img: dj2 },
   { date: "07 iunie · 22:00", title: "Charisma Night",              who: "DJ Criss Club",        img: dj3 },
   { date: "12 iunie · 22:00", title: "Live Music · Special Guests", who: "Special Guests",       img: dj4 },
