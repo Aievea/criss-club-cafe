@@ -9,6 +9,7 @@ import clubLogoIg from "@/src/assets/images/logos/crisclublogoig.jpeg";
 import Link from "next/link";
 import { WHATSAPP_URL } from "@/src/lib/contact";
 import { ReservationTrigger } from "@/src/components/site/reservation-modal";
+import { AddressLink } from "@/src/components/site/address-link";
 
 function Divider() {
   return (
@@ -194,6 +195,40 @@ export default function CrissClubPage() {
         </Reveal>
 
         <Divider />
+
+        {/* Story section */}
+        <Reveal>
+          <div className="mx-auto mt-20 max-w-3xl px-6 sm:px-8 text-center">
+            <p className="mb-4 text-[0.62rem] font-semibold uppercase tracking-[0.38em] text-[#a855f7]/60">
+              {t.club.storyEyebrow}
+            </p>
+            <h2
+              className="font-serif font-light leading-[1.1] text-[#f5f0e8] text-balance"
+              style={{ fontSize: "clamp(2rem,4.5vw,3.2rem)" }}
+            >
+              {t.club.storyHeadline}
+              <br />
+              <em className="italic text-[#ff3da3]">{t.club.storyEm}</em>
+            </h2>
+            <p className="mx-auto mt-7 max-w-xl font-serif italic text-[1.1rem] leading-[1.7] text-[#f5f0e8]/65 text-pretty">
+              {t.club.storyP1}
+            </p>
+            <p className="mx-auto mt-4 max-w-xl font-serif italic text-[1.05rem] leading-[1.7] text-[#f5f0e8]/45 text-pretty">
+              {t.club.storyP2}
+            </p>
+            <div className="mt-10 flex flex-wrap justify-center gap-4">
+              <ReservationTrigger
+                className="inline-flex items-center gap-2.5 rounded-lg px-7 py-3.5 text-[11px] font-semibold tracking-[0.28em] uppercase text-white transition-all duration-300 hover:-translate-y-0.5 hover:shadow-[0_14px_40px_-10px_rgba(168,85,247,0.6)]"
+                style={{ background: "linear-gradient(135deg, #3b82f6 0%, #a855f7 52%, #ff3da3 100%)" }}
+              >
+                {t.club.bookCta} →
+              </ReservationTrigger>
+              <AddressLink className="inline-flex items-center gap-2.5 rounded-lg border border-white/15 px-7 py-3.5 text-[11px] font-medium tracking-[0.28em] uppercase text-[#f5f0e8]/60 transition-all duration-300 hover:border-[#a855f7]/40 hover:text-[#a855f7]" />
+            </div>
+          </div>
+        </Reveal>
+
+        <div className="mt-20"><Divider /></div>
 
         {/* Selective notice */}
         <Reveal>
