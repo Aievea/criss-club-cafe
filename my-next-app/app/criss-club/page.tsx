@@ -45,7 +45,7 @@ export default function CrissClubPage() {
       {/* Hero — full-bleed video, content anchored left */}
       <section className="relative isolate flex min-h-screen min-h-[100svh] overflow-hidden">
 
-        {/* Video — always full coverage */}
+        {/* Video — full background; visible only on right half on desktop */}
         <video
           className="absolute inset-0 -z-20 h-full w-full object-cover"
           style={{ filter: "saturate(0.82) brightness(0.55) contrast(1.1)" }}
@@ -54,28 +54,62 @@ export default function CrissClubPage() {
           <source src={clubVideo} type="video/mp4" />
         </video>
 
-        {/* Overlay: dark on left (content side), fades to transparent right so video shows */}
+        {/* Desktop: dark panel on the LEFT (content side) */}
         <div
-          className="absolute inset-0 -z-10"
+          className="pointer-events-none absolute inset-y-0 left-0 -z-10 hidden lg:block"
+          style={{
+            right: "54%",
+            background: [
+              "radial-gradient(ellipse 100% 40% at 0% 50%, rgba(7,5,16,0.6) 0%, transparent 70%)",
+              "#07050F",
+            ].join(", "),
+          }}
+        />
+        {/* Desktop: gradient blending left panel into right video */}
+        <div
+          className="pointer-events-none absolute inset-y-0 -z-10 hidden lg:block"
+          style={{ right: "40%", width: "18%", background: "linear-gradient(to left, transparent, #07050F)" }}
+        />
+        {/* Desktop: brand accent hairline at the right edge of the content panel */}
+        <div
+          className="pointer-events-none absolute inset-y-0 -z-[8] hidden lg:block"
+          style={{
+            left: "calc(46% - 1px)",
+            width: "1px",
+            background: "linear-gradient(to bottom, transparent 0%, rgba(168,85,247,0.5) 20%, rgba(255,61,163,0.6) 50%, rgba(168,85,247,0.5) 80%, transparent 100%)",
+          }}
+        />
+        {/* Desktop: top/bottom vignettes on the RIGHT video area */}
+        <div
+          className="pointer-events-none absolute top-0 -z-10 hidden lg:block"
+          style={{ left: "46%", right: 0, height: "12rem", background: "linear-gradient(to bottom, rgba(7,5,16,0.55), transparent)" }}
+        />
+        <div
+          className="pointer-events-none absolute bottom-0 -z-10 hidden lg:block"
+          style={{ left: "46%", right: 0, height: "12rem", background: "linear-gradient(to top, rgba(7,5,16,0.55), transparent)" }}
+        />
+
+        {/* Mobile overlay */}
+        <div
+          className="pointer-events-none absolute inset-0 -z-10 lg:hidden"
           style={{
             background: [
               "linear-gradient(to right, rgba(7,5,16,0.96) 0%, rgba(7,5,16,0.80) 25%, rgba(7,5,16,0.42) 50%, rgba(7,5,16,0.08) 70%, transparent 88%)",
               "linear-gradient(to top, rgba(7,5,16,0.72) 0%, transparent 38%)",
               "linear-gradient(to bottom, rgba(7,5,16,0.55) 0%, transparent 22%)",
-              "radial-gradient(ellipse 55% 60% at 22% 55%, rgba(139,92,246,0.10) 0%, transparent 70%)",
             ].join(", "),
           }}
         />
 
-        {/* Content — centered on mobile, left-anchored on desktop */}
-        <div className="relative z-10 flex min-h-screen min-h-[100svh] w-full flex-col items-center justify-center gap-10 px-8 pb-20 text-center lg:w-[54%] lg:items-start lg:px-16 lg:text-left">
+        {/* Content — centered on mobile, right-edge-of-left-panel on desktop (close to middle) */}
+        <div className="relative z-10 flex min-h-screen min-h-[100svh] w-full flex-col items-center justify-center gap-10 px-8 pb-20 text-center lg:w-[46%] lg:items-end lg:px-0 lg:pr-14 lg:text-right">
 
           {/* Wordmark */}
           <div
-            className="flex flex-col items-center lg:items-start"
+            className="flex flex-col items-center lg:items-end"
             style={{ animation: "crd-fade-up 1000ms var(--ease-expo) 60ms both" }}
           >
-            <div className="mb-4 h-px w-10 bg-[#ff3da3]/55 lg:ml-0" aria-hidden />
+            <div className="mb-4 h-px w-10 bg-[#ff3da3]/55" aria-hidden />
             <h1
               className="font-display leading-[0.9] text-[#f5f0e8]"
               style={{ fontFamily: "var(--font-cinzel)" }}
@@ -94,7 +128,7 @@ export default function CrissClubPage() {
 
           {/* Buttons */}
           <div
-            className="flex flex-wrap justify-center gap-3 lg:justify-start"
+            className="flex flex-wrap justify-center gap-3 lg:justify-end"
             style={{ animation: "crd-fade-up 1000ms var(--ease-expo) 200ms both" }}
           >
             <ReservationTrigger
@@ -112,19 +146,19 @@ export default function CrissClubPage() {
             </Link>
           </div>
 
-          {/* Scroll — mouse icon */}
+          {/* Scroll indicator */}
           <div
-            className="flex flex-col items-center gap-0 text-white/30 lg:items-start"
+            className="flex flex-col items-center gap-2 lg:items-end"
             style={{ animation: "crd-fade-up 1000ms var(--ease-expo) 340ms both" }}
             aria-hidden
           >
-            <svg width="20" height="32" viewBox="0 0 20 32" fill="none" className="text-white/28">
-              <rect x="1" y="1" width="18" height="30" rx="9" stroke="currentColor" strokeWidth="1.2" />
-              <rect
-                x="9" y="6" width="2" height="7" rx="1" fill="currentColor"
-                className="animate-[mouseScroll_2s_ease-in-out_infinite]"
+            <span className="text-[8px] font-medium tracking-[0.44em] uppercase text-[#ff3da3]/40">scroll</span>
+            <div className="relative h-10 w-px overflow-hidden">
+              <div
+                className="absolute inset-x-0 top-0 h-full origin-top animate-[scrollLine_2.4s_cubic-bezier(0.4,0,0.6,1)_infinite]"
+                style={{ background: "linear-gradient(to bottom, #ff3da3, rgba(168,85,247,0.3), transparent)" }}
               />
-            </svg>
+            </div>
           </div>
         </div>
       </section>

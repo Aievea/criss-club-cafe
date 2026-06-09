@@ -62,12 +62,24 @@ export function HomepageHero() {
         }}
       />
 
-      {/* ── Center divider ── */}
+      {/* ── Per-side ambient color tints ── */}
+      <div
+        aria-hidden
+        className="pointer-events-none absolute inset-y-0 left-0 -z-10 w-1/2"
+        style={{ background: "radial-gradient(ellipse 80% 55% at 30% 54%, rgba(201,168,106,0.09) 0%, transparent 70%)" }}
+      />
+      <div
+        aria-hidden
+        className="pointer-events-none absolute inset-y-0 right-0 -z-10 w-1/2"
+        style={{ background: "radial-gradient(ellipse 80% 55% at 70% 54%, rgba(168,85,247,0.10) 0%, transparent 70%)" }}
+      />
+
+      {/* ── Center divider — gold top half, purple bottom half ── */}
       <div
         aria-hidden
         className="pointer-events-none absolute inset-y-0 left-1/2 -z-10 w-px -translate-x-1/2"
         style={{
-          background: "linear-gradient(to bottom, transparent 0%, rgba(201,168,106,0.25) 25%, rgba(201,168,106,0.18) 75%, transparent 100%)",
+          background: "linear-gradient(to bottom, transparent 0%, rgba(201,168,106,0.30) 25%, rgba(201,168,106,0.20) 48%, rgba(168,85,247,0.20) 52%, rgba(168,85,247,0.28) 75%, transparent 100%)",
         }}
       />
 
@@ -176,36 +188,33 @@ export function HomepageHero() {
       </div>
 
       {/* ── Venue labels — mid-screen ── */}
+
       <Link
         href="/criss-cafe"
-        className="pointer-events-auto group absolute left-1/4 top-[52%] z-10 -translate-x-1/2 -translate-y-1/2 flex flex-col items-center gap-2.5"
+        className="pointer-events-auto group absolute left-1/4 top-[52%] z-10 -translate-x-1/2 -translate-y-1/2 flex flex-col items-center gap-3"
         aria-label="Criss Cafe"
       >
-        <span className="text-[9px] tracking-[0.45em] uppercase text-[#c9a86a]/45 transition-colors duration-400 group-hover:text-[#c9a86a]/80">
-          ← {" "}{t.hero.cafeLabel}
+        <span className="text-[8px] font-medium tracking-[0.5em] uppercase text-[#c9a86a]/45 transition-colors duration-300 group-hover:text-[#c9a86a]/85">
+          ← {t.hero.cafeLabel}
         </span>
-        <span
-          className="select-none whitespace-nowrap font-display text-[clamp(1rem,2.2vw,1.8rem)] font-semibold tracking-[0.16em] uppercase text-[#f5f0e8]/45 transition-all duration-400 group-hover:text-[#f5f0e8]/90"
-        >
+        <span className="select-none whitespace-nowrap font-display text-[clamp(1rem,2.3vw,1.9rem)] font-semibold tracking-[0.13em] uppercase text-[#f5f0e8]/38 transition-colors duration-300 group-hover:text-[#f5f0e8]/95">
           Criss Cafe
         </span>
-        <span className="h-px w-6 bg-[#c9a86a]/35 transition-all duration-500 group-hover:w-20 group-hover:bg-[#c9a86a]/70" />
+        <span className="h-px w-5 bg-[#c9a86a]/35 transition-all duration-500 group-hover:w-14 group-hover:bg-[#c9a86a]/70" />
       </Link>
 
       <Link
         href="/criss-club"
-        className="pointer-events-auto group absolute left-3/4 top-[52%] z-10 -translate-x-1/2 -translate-y-1/2 flex flex-col items-center gap-2.5"
+        className="pointer-events-auto group absolute left-3/4 top-[52%] z-10 -translate-x-1/2 -translate-y-1/2 flex flex-col items-center gap-3"
         aria-label="Criss Club"
       >
-        <span className="text-[9px] tracking-[0.45em] uppercase text-[#c9a86a]/45 transition-colors duration-400 group-hover:text-[#c9a86a]/80">
-          Club {" "}→
+        <span className="text-[8px] font-medium tracking-[0.5em] uppercase text-[#ff3da3]/45 transition-colors duration-300 group-hover:text-[#ff3da3]/85">
+          Club →
         </span>
-        <span
-          className="select-none whitespace-nowrap font-display text-[clamp(1rem,2.2vw,1.8rem)] font-semibold tracking-[0.16em] uppercase text-[#f5f0e8]/45 transition-all duration-400 group-hover:text-[#f5f0e8]/90"
-        >
+        <span className="select-none whitespace-nowrap font-display text-[clamp(1rem,2.3vw,1.9rem)] font-semibold tracking-[0.13em] uppercase text-[#f5f0e8]/38 transition-colors duration-300 group-hover:text-[#f5f0e8]/95">
           Criss&nbsp;Club
         </span>
-        <span className="h-px w-6 bg-[#c9a86a]/35 transition-all duration-500 group-hover:w-20 group-hover:bg-[#c9a86a]/70" />
+        <span className="h-px w-5 bg-[#ff3da3]/35 transition-all duration-500 group-hover:w-14 group-hover:bg-[#ff3da3]/70" />
       </Link>
 
       {/* ── Scroll indicator ── */}
