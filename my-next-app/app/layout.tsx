@@ -44,9 +44,10 @@ const pinyonScript = Pinyon_Script({
 });
 
 export const metadata: Metadata = {
-  title: "Cris Royal Delivery — Criss Cafe & Criss Club",
+  title: "Criss Cafe & Club Târgu Mureș — Cafenea, Lounge & Social Club",
   description:
-    "Criss Cafe Lounge & Pub, Criss Club Social Club și serviciile Cris Royal Delivery din Târgu Mureș.",
+    "Cafenea, lounge, pub și social club în inima Târgu Mureșului, pe Piața Trandafirilor.",
+  icons: { icon: "/favicon.png" },
 };
 
 export default function RootLayout({
