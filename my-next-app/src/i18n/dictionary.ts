@@ -60,6 +60,11 @@ export const dictionary = {
       bookNightNote: "Rezervă-ți locul pentru seara perfectă",
       bookCta: "Rezervare",
       homeCta: "Acasă",
+      storyEyebrow: "Povestea noastră",
+      storyHeadline: "Nu e pentru toată lumea.",
+      storyEm: "Și asta e tocmai ideea.",
+      storyP1: "Criss Club e un social club selectiv — un spațiu pentru cei care știu ce caută. Muzică bună, atmosferă autentică, petreceri care rămân în amintire. 220+ persoane, un singur vibe.",
+      storyP2: "În inima Târgu Mureșului, pe Piața Trandafirilor. Majorate, zile de naștere, petreceri și evenimente private de noapte — cu paza noastră, cu siguranța noastră.",
     },
 
     services: {
@@ -261,6 +266,11 @@ export const dictionary = {
       bookNightNote: "Book your spot for the perfect night",
       bookCta: "Book now",
       homeCta: "Home",
+      storyEyebrow: "Our story",
+      storyHeadline: "Not for everyone.",
+      storyEm: "And that's exactly the point.",
+      storyP1: "Criss Club is a selective social club — a space for those who know what they're looking for. Good music, real atmosphere, parties worth remembering. 220+ people, one vibe.",
+      storyP2: "In the heart of Târgu Mureș, on Piața Trandafirilor. Birthdays, private parties and night events — our venue, our security, your night.",
     },
 
     services: {
