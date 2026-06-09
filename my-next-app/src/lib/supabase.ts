@@ -1,9 +1,11 @@
 import { createClient } from "@supabase/supabase-js";
 import { createBrowserClient as createSSRBrowserClient } from "@supabase/ssr";
 
-const URL = process.env.NEXT_PUBLIC_SUPABASE_URL!;
-const ANON = process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY!;
+const URL = process.env.NEXT_PUBLIC_SUPABASE_URL || "https://placeholder.supabase.co";
+const ANON = process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY || "placeholder";
 
+// Falls back to placeholder values at build time so module import doesn't throw
+// when env vars are absent. Real values must be set in Vercel project settings.
 export const supabase = createClient(URL, ANON);
 
 export function createBrowserClient() {
