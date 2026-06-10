@@ -10,6 +10,18 @@ const nextConfig: NextConfig = {
       "*.pdf": { type: "asset" },
     },
   },
+  async headers() {
+    return [
+      {
+        // Pages (not hashed _next/static assets) — always revalidate so
+        // visitors get the latest deploy instead of a stale cached page.
+        source: "/((?!_next/static|_next/image).*)",
+        headers: [
+          { key: "Cache-Control", value: "no-cache, must-revalidate" },
+        ],
+      },
+    ];
+  },
 };
 
 export default nextConfig;

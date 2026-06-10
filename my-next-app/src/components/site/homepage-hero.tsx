@@ -85,7 +85,7 @@ export function HomepageHero() {
 
 
       {/* ── Main content ── */}
-      <div className="relative z-10 flex flex-1 flex-col items-center px-6 text-center">
+      <div className="pointer-events-none relative z-20 flex flex-1 flex-col items-center px-6 text-center">
 
         {/* Address + Logo */}
         <div className="flex flex-col items-center gap-4 pt-24 lg:pt-20">
@@ -130,7 +130,7 @@ export function HomepageHero() {
 
           {/* CTA row */}
           <div
-            className="flex flex-wrap items-center justify-center gap-3"
+            className="pointer-events-auto flex flex-wrap items-center justify-center gap-3"
             style={{ animation: "crd-fade-up 1100ms var(--ease-expo) 400ms both" }}
           >
             {/* Primary — gold fill with glow */}
@@ -189,7 +189,7 @@ export function HomepageHero() {
 
       <Link
         href="/criss-cafe"
-        className="pointer-events-auto group absolute left-1/4 top-[52%] z-10 -translate-x-1/2 -translate-y-1/2 flex flex-col items-center gap-3"
+        className="pointer-events-auto group absolute inset-y-0 left-0 z-10 flex w-1/2 flex-col items-center justify-center gap-3"
         aria-label="Criss Cafe"
       >
         <span className="text-[8px] font-medium tracking-[0.5em] uppercase text-[#c9a86a]/45 transition-colors duration-300 group-hover:text-[#c9a86a]/85">
@@ -203,7 +203,7 @@ export function HomepageHero() {
 
       <Link
         href="/criss-club"
-        className="pointer-events-auto group absolute left-3/4 top-[52%] z-10 -translate-x-1/2 -translate-y-1/2 flex flex-col items-center gap-3"
+        className="pointer-events-auto group absolute inset-y-0 right-0 z-10 flex w-1/2 flex-col items-center justify-center gap-3"
         aria-label="Criss Club"
       >
         <span className="text-[8px] font-medium tracking-[0.5em] uppercase text-[#ff3da3]/45 transition-colors duration-300 group-hover:text-[#ff3da3]/85">

@@ -7,6 +7,9 @@ import { useLanguage } from "@/src/i18n/language-context";
 
 const STORAGE_KEY = "crd-audio-interacted";
 
+// Background music + mute button temporarily disabled — flip to true to restore.
+const AUDIO_ENABLED = false;
+
 type AudioCtx = { playing: boolean; toggle: () => void };
 const Ctx = createContext<AudioCtx>({ playing: true, toggle: () => {} });
 
@@ -15,6 +18,7 @@ export function AudioProvider({ children }: { children: React.ReactNode }) {
   const [playing, setPlaying] = useState(true);
 
   useEffect(() => {
+    if (!AUDIO_ENABLED) return;
     const el = new Audio(music);
     el.loop = true;
     el.volume = 0.06;
@@ -76,6 +80,8 @@ export function AudioProvider({ children }: { children: React.ReactNode }) {
 export function MuteButton() {
   const { playing, toggle } = useContext(Ctx);
   const { t } = useLanguage();
+
+  if (!AUDIO_ENABLED) return null;
 
   return (
     <button
