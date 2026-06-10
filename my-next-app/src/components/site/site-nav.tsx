@@ -45,7 +45,12 @@ export function SiteNav() {
         }`}
       >
         {/* Logo */}
-        <Link href="/" className="pointer-events-auto transition-opacity hover:opacity-80 flex-shrink-0">
+        <Link
+          href="/"
+          className={`pointer-events-auto transition-all duration-500 ease-[var(--ease-expo)] hover:opacity-80 flex-shrink-0 ${
+            pathname === "/" && !scrolled ? "opacity-0 -translate-y-2 scale-75 pointer-events-none" : "opacity-100 translate-y-0 scale-100"
+          }`}
+        >
           <Image
             src={logo}
             alt="Criss Club & Cafe"

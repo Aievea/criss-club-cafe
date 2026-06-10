@@ -15,6 +15,7 @@ export function HomepageHero() {
   const cafeRef = useRef<HTMLVideoElement>(null);
   const clubRef = useRef<HTMLVideoElement>(null);
   const [menuOpen, setMenuOpen] = useState(false);
+  const [scrolled, setScrolled] = useState(false);
   const { t } = useLanguage();
 
   useEffect(() => {
@@ -26,6 +27,13 @@ export function HomepageHero() {
     };
     tryPlay(cafeRef.current);
     tryPlay(clubRef.current);
+  }, []);
+
+  useEffect(() => {
+    const onScroll = () => setScrolled(window.scrollY > 50);
+    window.addEventListener("scroll", onScroll, { passive: true });
+    onScroll();
+    return () => window.removeEventListener("scroll", onScroll);
   }, []);
 
   return (
@@ -99,12 +107,18 @@ export function HomepageHero() {
           </div>
 
           <div style={{ animation: "crd-fade-up 1200ms var(--ease-expo) 100ms both" }}>
-            <Image
-              src={logo}
-              alt="Criss Club · Social Club"
-              className="w-[min(420px,68vw)] brightness-0 invert drop-shadow-[0_4px_32px_rgba(230,199,135,0.22)]"
-              priority
-            />
+            <div
+              className={`origin-top transition-all duration-500 ease-[var(--ease-expo)] ${
+                scrolled ? "-translate-y-20 scale-[0.22] opacity-0 sm:-translate-y-24" : "translate-y-0 scale-100 opacity-100"
+              }`}
+            >
+              <Image
+                src={logo}
+                alt="Criss Club · Social Club"
+                className="w-[min(420px,68vw)] brightness-0 invert drop-shadow-[0_4px_32px_rgba(230,199,135,0.22)]"
+                priority
+              />
+            </div>
           </div>
         </div>
 
