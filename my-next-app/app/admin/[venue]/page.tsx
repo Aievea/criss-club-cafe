@@ -140,7 +140,7 @@ export default function AdminVenuePage() {
 function CategoryBlock({
   cat, accent, venue, expanded, onToggleExpand, onDeleteCategory,
   onToggleItem, onDeleteItem, onRefresh, isSubcategory = false,
-  expandedSet, onToggleExpandSub,
+  expandedSet, onToggleExpandSub, onMoveUp, onMoveDown,
 }: {
   cat: CategoryWithItems;
   accent: string;
@@ -154,6 +154,8 @@ function CategoryBlock({
   isSubcategory?: boolean;
   expandedSet: string[];
   onToggleExpandSub: (id: string) => void;
+  onMoveUp?: () => void;
+  onMoveDown?: () => void;
 }) {
   const [editingName, setEditingName] = useState(false);
   const [nameRo, setNameRo] = useState(cat.name_ro);
@@ -194,6 +196,19 @@ function CategoryBlock({
     await Promise.all([
       updateItem(a.id, { sort_order: b.sort_order }),
       updateItem(b.id, { sort_order: a.sort_order }),
+    ]);
+    onRefresh();
+  }
+
+  async function handleMoveSubcategory(index: number, direction: -1 | 1) {
+    const subs = cat.subcategories;
+    const target = index + direction;
+    if (target < 0 || target >= subs.length) return;
+    const a = subs[index];
+    const b = subs[target];
+    await Promise.all([
+      updateCategory(a.id, { sort_order: b.sort_order }),
+      updateCategory(b.id, { sort_order: a.sort_order }),
     ]);
     onRefresh();
   }
@@ -252,6 +267,27 @@ function CategoryBlock({
 
         {!editingName && (
           <div className="flex shrink-0 items-center gap-1">
+            {/* Reorder (subcategories only) */}
+            {(onMoveUp || onMoveDown) && (
+              <>
+                <button
+                  onClick={onMoveUp}
+                  disabled={!onMoveUp}
+                  className="rounded-lg p-2 text-white/30 hover:text-white/70 transition-colors disabled:opacity-15 disabled:hover:text-white/30"
+                  title="Mută în sus"
+                >
+                  <ArrowUp className="h-3.5 w-3.5" />
+                </button>
+                <button
+                  onClick={onMoveDown}
+                  disabled={!onMoveDown}
+                  className="rounded-lg p-2 text-white/30 hover:text-white/70 transition-colors disabled:opacity-15 disabled:hover:text-white/30"
+                  title="Mută în jos"
+                >
+                  <ArrowDown className="h-3.5 w-3.5" />
+                </button>
+              </>
+            )}
             {/* Photo upload */}
             <label className="relative cursor-pointer rounded-lg p-2 text-white/30 hover:text-white/70 transition-colors" title="Adaugă/schimbă poza">
               {uploading
@@ -321,7 +357,7 @@ function CategoryBlock({
           {/* Subcategories — only for top-level */}
           {!isSubcategory && (
             <div className="mt-5 space-y-3">
-              {cat.subcategories.map((sub) => (
+              {cat.subcategories.map((sub, i) => (
                 <CategoryBlock
                   key={sub.id}
                   cat={sub}
@@ -340,6 +376,8 @@ function CategoryBlock({
                   isSubcategory
                   expandedSet={expandedSet}
                   onToggleExpandSub={onToggleExpandSub}
+                  onMoveUp={i > 0 ? () => handleMoveSubcategory(i, -1) : undefined}
+                  onMoveDown={i < cat.subcategories.length - 1 ? () => handleMoveSubcategory(i, 1) : undefined}
                 />
               ))}
 
