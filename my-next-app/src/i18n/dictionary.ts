@@ -202,9 +202,8 @@ export const dictionary = {
     reservation: {
       heading: "Rezervare",
       hint: "Alege un număr",
-      num1sub: "rezervări · info · cafenea",
-      num2sub: "rezervări · info · club",
-      or: "Sau contactează-ne pe",
+      num1sub: "cafenea",
+      num2sub: "club",
     },
 
     pages: {
@@ -408,9 +407,8 @@ export const dictionary = {
     reservation: {
       heading: "Reservation",
       hint: "Choose a number",
-      num1sub: "bookings · info · café",
-      num2sub: "bookings · info · club",
-      or: "Or reach us on",
+      num1sub: "café",
+      num2sub: "club",
     },
 
     pages: {

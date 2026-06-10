@@ -84,8 +84,8 @@ export function ReservationModal({ open, onClose }: ReservationModalProps) {
             <Phone className="h-[18px] w-[18px] text-[#c9a86a]" strokeWidth={1.4} />
           </span>
           <div className="flex-1 min-w-0">
-            <p className="text-[1.08rem] font-semibold tabular-nums tracking-[0.03em] text-[#f5f0e8]">{PHONE_DISPLAY}</p>
-            <p className="mt-0.5 text-[10px] text-[#a89f90]/70">{r.num1sub}</p>
+            <p className="text-[13px] text-[#a89f90]/70">{r.num1sub}</p>
+            <p className="mt-0.5 text-[1.08rem] font-semibold tabular-nums tracking-[0.03em] text-[#f5f0e8]">{PHONE_DISPLAY}</p>
           </div>
           <span className="shrink-0 text-[#c9a86a]/35 transition-transform duration-300 group-hover:translate-x-1">→</span>
         </a>
@@ -100,30 +100,29 @@ export function ReservationModal({ open, onClose }: ReservationModalProps) {
             <Phone className="h-[18px] w-[18px] text-[#c9a86a]" strokeWidth={1.4} />
           </span>
           <div className="flex-1 min-w-0">
-            <p className="text-[1.08rem] font-semibold tabular-nums tracking-[0.03em] text-[#f5f0e8]">{PHONE2_DISPLAY}</p>
-            <p className="mt-0.5 text-[10px] text-[#a89f90]/70">{r.num2sub}</p>
+            <p className="text-[13px] text-[#a89f90]/70">{r.num2sub}</p>
+            <p className="mt-0.5 text-[1.08rem] font-semibold tabular-nums tracking-[0.03em] text-[#f5f0e8]">{PHONE2_DISPLAY}</p>
           </div>
           <span className="shrink-0 text-[#c9a86a]/35 transition-transform duration-300 group-hover:translate-x-1">→</span>
         </a>
-      </div>
 
-      {/* WhatsApp row */}
-      <a
-        href={WHATSAPP_URL}
-        target="_blank"
-        rel="noopener noreferrer"
-        onClick={onClose}
-        className="group flex items-center gap-4 px-6 py-5 transition-colors duration-200 active:bg-white/[0.06] sm:px-7 hover:bg-white/[0.04]"
-      >
-        <span className="flex h-11 w-11 shrink-0 items-center justify-center rounded-xl border border-[#25d366]/25 bg-[#25d366]/[0.09] transition-colors group-hover:bg-[#25d366]/[0.18]">
-          <MessageCircle className="h-[18px] w-[18px] text-[#25d366]" strokeWidth={1.4} />
-        </span>
-        <div className="flex-1 min-w-0">
-          <p className="text-[1.08rem] font-semibold tracking-[0.01em] text-[#f5f0e8]">WhatsApp</p>
-          <p className="mt-0.5 text-[10px] text-[#a89f90]/70">{r.or}</p>
-        </div>
-        <span className="shrink-0 text-[#25d366]/35 transition-transform duration-300 group-hover:translate-x-1">→</span>
-      </a>
+        {/* WhatsApp row */}
+        <a
+          href={WHATSAPP_URL}
+          target="_blank"
+          rel="noopener noreferrer"
+          onClick={onClose}
+          className="group flex items-center gap-4 px-6 py-5 transition-colors duration-200 active:bg-white/[0.06] sm:px-7 hover:bg-white/[0.04]"
+        >
+          <span className="flex h-11 w-11 shrink-0 items-center justify-center rounded-xl border border-[#25d366]/25 bg-[#25d366]/[0.09] transition-colors group-hover:bg-[#25d366]/[0.18]">
+            <MessageCircle className="h-[18px] w-[18px] text-[#25d366]" strokeWidth={1.4} />
+          </span>
+          <div className="flex-1 min-w-0">
+            <p className="text-[1.08rem] font-semibold tracking-[0.01em] text-[#f5f0e8]">WhatsApp</p>
+          </div>
+          <span className="shrink-0 text-[#25d366]/35 transition-transform duration-300 group-hover:translate-x-1">→</span>
+        </a>
+      </div>
     </dialog>
   );
 }
