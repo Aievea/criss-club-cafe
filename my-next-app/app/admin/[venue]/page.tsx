@@ -67,6 +67,18 @@ export default function AdminVenuePage() {
     refresh();
   }
 
+  async function handleMoveCategory(index: number, direction: -1 | 1) {
+    const target = index + direction;
+    if (target < 0 || target >= menu.length) return;
+    const a = menu[index];
+    const b = menu[target];
+    await Promise.all([
+      updateCategory(a.id, { sort_order: b.sort_order }),
+      updateCategory(b.id, { sort_order: a.sort_order }),
+    ]);
+    refresh();
+  }
+
   if (loading) {
     return (
       <div className="flex items-center justify-center py-32">
@@ -117,7 +129,7 @@ export default function AdminVenuePage() {
         </div>
       )}
 
-      {menu.map((cat) => (
+      {menu.map((cat, i) => (
         <CategoryBlock
           key={cat.id}
           cat={cat}
@@ -131,6 +143,8 @@ export default function AdminVenuePage() {
           onRefresh={refresh}
           expandedSet={expanded}
           onToggleExpandSub={(id) => toggleExpanded(id)}
+          onMoveUp={i > 0 ? () => handleMoveCategory(i, -1) : undefined}
+          onMoveDown={i < menu.length - 1 ? () => handleMoveCategory(i, 1) : undefined}
         />
       ))}
     </div>
