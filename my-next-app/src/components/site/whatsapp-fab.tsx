@@ -1,4 +1,9 @@
+"use client";
+
+import { useLanguage } from "@/src/i18n/language-context";
+
 export function WhatsAppFab() {
+  const { t } = useLanguage();
   return (
     <a
       href="https://wa.me/40746521799"
@@ -30,7 +35,7 @@ export function WhatsAppFab() {
 
       {/* Expanding label */}
       <span className="relative z-10 max-w-0 overflow-hidden whitespace-nowrap text-[10px] font-bold tracking-[0.22em] uppercase opacity-0 transition-all duration-[450ms] ease-[cubic-bezier(0.2,0.7,0.2,1)] group-hover:ml-3.5 group-hover:max-w-[280px] group-hover:opacity-100">
-        Contact us on WhatsApp
+        {t.whatsapp.cta}
       </span>
     </a>
   );

@@ -56,10 +56,7 @@ export function ReservationModal({ open, onClose }: ReservationModalProps) {
       {/* Header */}
       <div className="flex items-center justify-between border-b border-white/[0.06] px-6 pb-5 pt-4 sm:px-7 sm:pt-7">
         <div>
-          <p className="text-[0.58rem] font-semibold uppercase tracking-[0.38em] text-[#c9a86a]/60">
-            {r.heading}
-          </p>
-          <p className="mt-1 font-display text-[1.25rem] font-semibold tracking-[-0.01em] text-[#f5f0e8]">
+          <p className="font-display text-[1.25rem] font-semibold tracking-[-0.01em] text-[#f5f0e8]">
             {r.hint}
           </p>
         </div>

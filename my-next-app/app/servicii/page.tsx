@@ -4,7 +4,7 @@ import type { SVGProps } from "react";
 import { useLanguage } from "@/src/i18n/language-context";
 import { SiteNav } from "@/src/components/site/site-nav";
 import { BackButton } from "@/src/components/site/back-button";
-import { ContactActions } from "@/src/components/site/contact-actions";
+import { ReservationTrigger } from "@/src/components/site/reservation-modal";
 import { AddressLink } from "@/src/components/site/address-link";
 import { Reveal } from "@/src/components/footer/reveal";
 import {
@@ -12,6 +12,7 @@ import {
   CateringIcon,
   CocktailIcon,
   BouquetIcon,
+  PhoneIcon,
 } from "@/src/components/footer/icons";
 
 type IconFn = (p: SVGProps<SVGSVGElement>) => React.ReactElement;
@@ -116,10 +117,12 @@ export default function ServiciiPage() {
         {/* â”€â”€ Contact â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€ */}
         <Reveal>
           <div className="flex flex-col items-center gap-5 py-24 text-center">
-            <p className="font-serif italic text-sm text-[#f5f0e8]/30 tracking-wide">
+            <ReservationTrigger className="group inline-flex items-center gap-3 rounded-full border border-crd-gold/30 py-2.5 pl-2.5 pr-8 text-base font-medium text-crd-ink transition-[transform,border-color,background-color] duration-[450ms] [transition-timing-function:var(--ease-spring)] hover:-translate-y-0.5 hover:border-crd-gold/60 hover:bg-crd-gold/[0.06] active:scale-[0.97] focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-crd-gold">
+              <span className="flex h-9 w-9 items-center justify-center rounded-full border border-crd-gold/30 text-crd-gold transition-transform duration-300 [transition-timing-function:var(--ease-spring)] group-hover:scale-110">
+                <PhoneIcon className="h-5 w-5" />
+              </span>
               {t.cafe.contactLabel}
-            </p>
-            <ContactActions />
+            </ReservationTrigger>
             <AddressLink />
           </div>
         </Reveal>

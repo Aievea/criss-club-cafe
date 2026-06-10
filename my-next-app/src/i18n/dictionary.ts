@@ -101,7 +101,7 @@ export const dictionary = {
     },
 
     bottom: {
-      copyright: "© 2026 Cris Royal Delivery SRL",
+      copyright: "Cris Royal Delivery SRL",
       built: "Construit cu pasiune pentru Târgu Mureș",
       crafted: "made by",
     },
@@ -132,6 +132,10 @@ export const dictionary = {
     audio: {
       on: "Muzică",
       off: "Muzică oprită",
+    },
+
+    whatsapp: {
+      cta: "Scrie-ne pe WhatsApp",
     },
 
     visit: {
@@ -306,7 +310,7 @@ export const dictionary = {
     },
 
     bottom: {
-      copyright: "© 2026 Cris Royal Delivery SRL",
+      copyright: "Cris Royal Delivery SRL",
       built: "Built with passion for Târgu Mureș",
       crafted: "made by",
     },
@@ -337,6 +341,10 @@ export const dictionary = {
     audio: {
       on: "Music",
       off: "Music off",
+    },
+
+    whatsapp: {
+      cta: "Contact us on WhatsApp",
     },
 
     visit: {

@@ -370,7 +370,7 @@ export function Footer({ variant }: { variant?: "club" }) {
 
         <div className="mx-auto flex w-full max-w-6xl flex-col items-center gap-5 px-6 py-7 text-center sm:px-8 md:flex-row md:justify-between md:gap-6 md:text-left lg:px-10">
           <p className="order-2 text-[0.88rem] tracking-wide text-[#a89f90] md:order-1">
-            {t.bottom.copyright}
+            © {new Date().getFullYear()} {t.bottom.copyright}
           </p>
 
           <p className="crd-beat-trigger order-1 flex items-center gap-2 text-[0.88rem] text-[#f5f0e8]/70 md:order-2">
