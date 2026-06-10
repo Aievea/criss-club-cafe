@@ -10,7 +10,10 @@ const ITEMS: MarqueeItem[] = [
   { text: "Cocktails", italic: true },
   { text: "Espresso", italic: false },
   { text: "Live Music", italic: true },
-  { text: "Manele All Night", italic: false },
+  { text: "Piece of Your Heart", italic: true },
+  { text: "Breaking Me", italic: false },
+  { text: "Tell Me Who", italic: true },
+  { text: "Losing It", italic: false },
 ];
 
 function Dot() {

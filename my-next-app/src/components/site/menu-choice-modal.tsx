@@ -51,9 +51,12 @@ export function MenuChoiceModal({ open, onClose }: MenuChoiceModalProps) {
     <dialog
       ref={dialogRef}
       onClick={handleBackdropClick}
-      className="dialog-sheet m-auto w-full max-w-2xl overflow-hidden rounded-xl border border-white/[0.07] bg-[#080604] p-0 backdrop:bg-black/75 backdrop:backdrop-blur-sm open:animate-[fadeIn_220ms_cubic-bezier(0.16,1,0.3,1)]"
-      style={{ boxShadow: "0 40px 100px rgba(0,0,0,0.85), 0 0 0 1px rgba(255,255,255,0.04)" }}
+      className="dialog-sheet m-auto w-full max-w-2xl overflow-hidden rounded-xl border border-white/[0.07] bg-[#080604] p-0 backdrop:bg-black/75 backdrop:backdrop-blur-sm open:animate-[fadeIn_260ms_cubic-bezier(0.16,1,0.3,1)]"
+      style={{ boxShadow: "0 40px 100px rgba(0,0,0,0.9), 0 0 0 1px rgba(255,255,255,0.05)" }}
     >
+      {/* Gold accent line */}
+      <div aria-hidden className="h-px bg-gradient-to-r from-transparent via-[#c9a86a]/40 to-transparent" />
+
       {/* Handle bar — mobile only */}
       <div className="flex justify-center pt-3 pb-1 sm:hidden" aria-hidden>
         <div className="h-1 w-10 rounded-full bg-white/15" />
@@ -79,15 +82,15 @@ export function MenuChoiceModal({ open, onClose }: MenuChoiceModalProps) {
         {/* Cafe row */}
         <button
           onClick={() => navigate("/meniu/cafe")}
-          className="group flex w-full items-center gap-4 px-6 py-4 text-left transition-colors duration-200 active:bg-white/[0.06] hover:bg-white/[0.04]"
+          className="group flex w-full items-center gap-4 px-6 py-5 text-left transition-colors duration-200 active:bg-white/[0.06] hover:bg-white/[0.04]"
         >
-          <div className="relative h-16 w-16 shrink-0 overflow-hidden rounded-lg border border-white/10">
+          <div className="relative h-20 w-20 shrink-0 overflow-hidden rounded-xl border border-white/10">
             <Image
               src={cafeImg}
               alt="Criss Cafe"
               fill
               className="object-cover transition-transform duration-500 group-hover:scale-105"
-              sizes="64px"
+              sizes="80px"
             />
             <div className="absolute inset-0 bg-[#080604]/30" />
           </div>
@@ -109,15 +112,15 @@ export function MenuChoiceModal({ open, onClose }: MenuChoiceModalProps) {
         {/* Club row */}
         <button
           onClick={() => navigate("/meniu/club")}
-          className="group flex w-full items-center gap-4 px-6 py-4 text-left transition-colors duration-200 active:bg-white/[0.06] hover:bg-white/[0.04]"
+          className="group flex w-full items-center gap-4 px-6 py-5 text-left transition-colors duration-200 active:bg-white/[0.06] hover:bg-white/[0.04]"
         >
-          <div className="relative h-16 w-16 shrink-0 overflow-hidden rounded-lg border border-white/10">
+          <div className="relative h-20 w-20 shrink-0 overflow-hidden rounded-xl border border-white/10">
             <Image
               src={clubImg}
               alt="Criss Club"
               fill
               className="object-cover object-top transition-transform duration-500 group-hover:scale-105"
-              sizes="64px"
+              sizes="80px"
             />
             <div className="absolute inset-0 bg-[#080604]/30" />
           </div>

@@ -65,7 +65,7 @@ export function VideoCard({
         />
 
         {/* Content */}
-        <div className="absolute inset-x-0 bottom-0 flex flex-col items-start gap-2 p-7 sm:p-8 lg:p-10">
+        <div className="absolute inset-x-0 bottom-0 flex flex-col items-start gap-2 p-7 pb-12 sm:p-8 sm:pb-8 lg:p-10">
           <span className="font-serif text-sm italic text-white/50 sm:text-base">
             {kind}
           </span>
@@ -75,7 +75,7 @@ export function VideoCard({
           </h3>
 
           {/* Button-in-button CTA */}
-          <span className="mt-4 inline-flex items-center gap-2.5 rounded-full bg-white/[0.1] pl-5 pr-2 py-2 text-sm font-medium text-crd-ink ring-1 ring-white/[0.12] backdrop-blur-sm transition-all duration-[500ms] ease-[cubic-bezier(0.32,0.72,0,1)] active:scale-[0.97] group-hover:-translate-y-1 group-hover:bg-white/[0.18] group-hover:ring-white/25">
+          <span className="mt-4 inline-flex items-center gap-2.5 rounded-full bg-white/20 pl-5 pr-2 py-2 text-sm font-medium text-crd-ink ring-1 ring-white/25 backdrop-blur-sm transition-all duration-[500ms] ease-[cubic-bezier(0.32,0.72,0,1)] active:scale-[0.97] sm:bg-white/[0.1] sm:ring-white/[0.12] group-hover:-translate-y-1 group-hover:bg-white/[0.18] group-hover:ring-white/25">
             {cta}
             <span className="flex h-7 w-7 items-center justify-center rounded-full bg-white/[0.12] ring-1 ring-white/[0.15] transition-transform duration-[500ms] ease-[cubic-bezier(0.32,0.72,0,1)] group-hover:translate-x-0.5 group-hover:-translate-y-0.5 group-hover:scale-105">
               <DiagonalArrow />
