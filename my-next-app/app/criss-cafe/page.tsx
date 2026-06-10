@@ -155,18 +155,18 @@ export default function CrissCafePage() {
             className="flex flex-wrap justify-center gap-3 lg:justify-start"
             style={{ animation: "crd-fade-up 1000ms var(--ease-expo) 200ms both" }}
           >
-            <Link
-              href="/meniu/cafe"
+            <ReservationTrigger
               className="inline-flex items-center gap-2 rounded-lg bg-[#c9a86a] px-7 py-3.5 text-[11px] font-semibold tracking-[0.26em] uppercase text-[#1a1411] transition-all duration-300 hover:-translate-y-0.5 hover:shadow-[0_12px_30px_-8px_rgba(201,168,106,0.5)]"
             >
-              {t.cafe.viewMenuHero} &rarr;
-            </Link>
-            <ReservationTrigger
+              {t.cafe.reserveCta} &rarr;
+            </ReservationTrigger>
+            <Link
+              href="/meniu/cafe"
               className="inline-flex items-center gap-2 rounded-lg px-7 py-3.5 text-[11px] font-medium tracking-[0.26em] uppercase text-[#c9a86a]/72 transition-all duration-300 hover:text-[#c9a86a]"
               style={{ border: "1px solid rgba(201,168,106,0.28)" }}
             >
-              {t.cafe.reserveCta}
-            </ReservationTrigger>
+              {t.cafe.viewMenuHero} &rarr;
+            </Link>
           </div>
 
           {/* Scroll indicator */}
@@ -278,7 +278,7 @@ export default function CrissCafePage() {
         {/* ── Instagram ── */}
         <Reveal>
           <div className="mx-auto mt-10 max-w-5xl px-6 sm:px-8">
-            <a href="https://www.instagram.com/criss.cafe" target="_blank" rel="noopener noreferrer"
+            <a href="https://www.instagram.com/criss_cafe_/" target="_blank" rel="noopener noreferrer"
               className="group flex items-center gap-5 rounded-2xl border border-[#c9a86a]/15 bg-[#0e0c0a] px-5 py-4 transition-all duration-300 hover:border-[#c9a86a]/30"
             >
               <div className="h-14 w-14 shrink-0 overflow-hidden rounded-full bg-white p-1 shadow-[0_4px_16px_rgba(0,0,0,0.35)]">
@@ -288,7 +288,7 @@ export default function CrissCafePage() {
               <div className="flex-1">
                 <div className="mb-1 flex items-center gap-2">
                   <IgIcon />
-                  <span className="text-sm font-medium text-[#f5f0e8]">@criss.cafe</span>
+                  <span className="text-sm font-medium text-[#f5f0e8]">@criss_cafe_</span>
                 </div>
                 <p className="text-xs text-[#a89f90]">{t.cafe.followIg}</p>
               </div>

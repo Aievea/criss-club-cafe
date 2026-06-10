@@ -111,9 +111,7 @@ export function HomepageHero() {
         {/* Tagline + CTAs */}
         <div className="mt-auto flex flex-col items-center gap-6 pb-16">
 
-          <div style={{ animation: "crd-fade-up 900ms var(--ease-expo) 220ms both" }}>
-            <MuteButton />
-          </div>
+          <MuteButton />
 
           <p
             className="font-serif italic text-[#ece1c8]/85"

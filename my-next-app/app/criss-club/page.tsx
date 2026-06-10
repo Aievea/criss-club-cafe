@@ -248,7 +248,7 @@ export default function CrissClubPage() {
         <Reveal>
           <div className="mx-auto mt-6 max-w-5xl px-6 sm:px-8">
             <a
-              href="https://www.instagram.com/criss.club"
+              href="https://www.instagram.com/criss_club_/"
               target="_blank"
               rel="noopener noreferrer"
               className="group flex items-center gap-5 rounded-2xl border border-[#a855f7]/15 bg-[#0a0710] px-5 py-4 transition-all duration-300 hover:border-[#a855f7]/30 hover:shadow-[0_0_24px_rgba(168,85,247,0.08)]"
@@ -260,7 +260,7 @@ export default function CrissClubPage() {
               <div className="flex-1">
                 <div className="mb-1 flex items-center gap-2">
                   <IgIcon />
-                  <span className="text-sm font-medium text-[#f5f0e8]">@criss.club</span>
+                  <span className="text-sm font-medium text-[#f5f0e8]">@criss_club_</span>
                 </div>
                 <p className="text-xs text-[#a89f90]">{t.club.followIg}</p>
               </div>
@@ -293,7 +293,7 @@ export default function CrissClubPage() {
               </h2>
               <div className="relative flex flex-wrap justify-center gap-3">
                 <a
-                  href="https://www.instagram.com/criss.club"
+                  href="https://www.instagram.com/criss_club_/"
                   target="_blank"
                   rel="noopener noreferrer"
                   className="inline-flex items-center gap-2.5 rounded-full bg-[#ff3da3] px-6 py-3 text-[11px] font-semibold tracking-[0.24em] uppercase text-white transition-all duration-300 hover:-translate-y-0.5 hover:shadow-[0_14px_36px_-10px_rgba(255,61,163,0.55)]"

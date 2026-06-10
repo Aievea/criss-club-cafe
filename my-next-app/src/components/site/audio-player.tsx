@@ -82,7 +82,7 @@ export function MuteButton() {
       data-mute-btn
       onClick={toggle}
       aria-label={playing ? "Oprește muzica" : "Pornește muzica"}
-      className="group inline-flex items-center gap-2 rounded-lg border border-white/15 bg-black/30 px-4 py-2.5 text-[11px] font-medium uppercase tracking-[0.22em] text-[#f5f0e8]/55 backdrop-blur-md transition-all duration-300 hover:border-[#c9a86a]/50 hover:text-[#c9a86a]"
+      className="group fixed bottom-6 left-6 z-[80] inline-flex items-center gap-2 rounded-lg border border-white/15 bg-black/30 px-4 py-2.5 text-[11px] font-medium uppercase tracking-[0.22em] text-[#f5f0e8]/55 backdrop-blur-md transition-all duration-300 hover:border-[#c9a86a]/50 hover:text-[#c9a86a]"
     >
       {playing
         ? <Volume2 className="h-4 w-4" strokeWidth={1.5} />
