@@ -1,7 +1,7 @@
 "use client";
 
 import { useEffect, useRef, useState } from "react";
-import { X, Phone } from "lucide-react";
+import { X, Phone, MessageCircle } from "lucide-react";
 import { useLanguage } from "@/src/i18n/language-context";
 import { PHONE_DISPLAY, PHONE_TEL, PHONE2_DISPLAY, PHONE2_TEL, WHATSAPP_URL } from "@/src/lib/contact";
 
@@ -42,9 +42,12 @@ export function ReservationModal({ open, onClose }: ReservationModalProps) {
     <dialog
       ref={dialogRef}
       onClick={handleBackdropClick}
-      className="dialog-sheet m-auto w-full max-w-sm overflow-hidden rounded-xl border border-white/[0.07] bg-[#0d0b09] p-0 sm:rounded-xl open:animate-[fadeIn_220ms_cubic-bezier(0.16,1,0.3,1)] backdrop:bg-black/70 backdrop:backdrop-blur-sm"
-      style={{ boxShadow: "0 32px 80px rgba(0,0,0,0.85), 0 0 0 1px rgba(255,255,255,0.04)" }}
+      className="dialog-sheet m-auto w-full max-w-sm overflow-hidden rounded-xl border border-white/[0.07] bg-[#0d0b09] p-0 sm:rounded-xl open:animate-[fadeIn_260ms_cubic-bezier(0.16,1,0.3,1)] backdrop:bg-black/75 backdrop:backdrop-blur-sm"
+      style={{ boxShadow: "0 40px 100px rgba(0,0,0,0.9), 0 0 0 1px rgba(255,255,255,0.05)" }}
     >
+      {/* Gold accent line */}
+      <div aria-hidden className="h-px bg-gradient-to-r from-transparent via-[#c9a86a]/50 to-transparent" />
+
       {/* Handle bar — mobile only */}
       <div className="flex justify-center pt-3 pb-1 sm:hidden" aria-hidden>
         <div className="h-1 w-10 rounded-full bg-white/15" />
@@ -104,21 +107,23 @@ export function ReservationModal({ open, onClose }: ReservationModalProps) {
         </a>
       </div>
 
-      {/* Footer */}
-      <div className="border-t border-white/[0.05] px-6 py-4 text-center sm:px-7">
-        <p className="text-[10px] uppercase tracking-[0.36em] text-white/30">
-          {r.or}{" "}
-          <a
-            href={WHATSAPP_URL}
-            target="_blank"
-            rel="noopener noreferrer"
-            onClick={onClose}
-            className="text-[#25d366]/60 transition-colors hover:text-[#25d366]"
-          >
-            WhatsApp
-          </a>
-        </p>
-      </div>
+      {/* WhatsApp row */}
+      <a
+        href={WHATSAPP_URL}
+        target="_blank"
+        rel="noopener noreferrer"
+        onClick={onClose}
+        className="group flex items-center gap-4 px-6 py-5 transition-colors duration-200 active:bg-white/[0.06] sm:px-7 hover:bg-white/[0.04]"
+      >
+        <span className="flex h-11 w-11 shrink-0 items-center justify-center rounded-xl border border-[#25d366]/25 bg-[#25d366]/[0.09] transition-colors group-hover:bg-[#25d366]/[0.18]">
+          <MessageCircle className="h-[18px] w-[18px] text-[#25d366]" strokeWidth={1.4} />
+        </span>
+        <div className="flex-1 min-w-0">
+          <p className="text-[1.08rem] font-semibold tracking-[0.01em] text-[#f5f0e8]">WhatsApp</p>
+          <p className="mt-0.5 text-[10px] text-[#a89f90]/70">{r.or}</p>
+        </div>
+        <span className="shrink-0 text-[#25d366]/35 transition-transform duration-300 group-hover:translate-x-1">→</span>
+      </a>
     </dialog>
   );
 }
