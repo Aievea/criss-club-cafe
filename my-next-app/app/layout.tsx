@@ -1,4 +1,4 @@
-import type { Metadata } from "next";
+import type { Metadata, Viewport } from "next";
 import { Geist, Geist_Mono, Cinzel, Cormorant_Garamond, Jost, Pinyon_Script } from "next/font/google";
 import "./globals.css";
 import { LanguageProvider } from "@/src/i18n/language-context";
@@ -48,6 +48,12 @@ export const metadata: Metadata = {
   description:
     "Cafenea, lounge, pub și social club în inima Târgu Mureșului, pe Piața Trandafirilor.",
   icons: { icon: "/favicon.png" },
+};
+
+export const viewport: Viewport = {
+  width: "device-width",
+  initialScale: 1,
+  viewportFit: "cover",
 };
 
 export default function RootLayout({

@@ -22,7 +22,10 @@ export function SiteNav() {
   const [scrolled, setScrolled] = useState(false);
 
   useEffect(() => {
-    const onScroll = () => setScrolled(window.scrollY > 50);
+    const onScroll = () => {
+      const y = window.scrollY;
+      setScrolled((prev) => (prev ? y > 30 : y > 60));
+    };
     window.addEventListener("scroll", onScroll, { passive: true });
     onScroll();
     return () => window.removeEventListener("scroll", onScroll);
@@ -37,24 +40,26 @@ export function SiteNav() {
 
   return (
     <>
-      <header
-        className={`fixed top-0 left-0 right-0 z-[60] flex items-center justify-between px-9 transition-all duration-300 pointer-events-none ${
-          scrolled
-            ? "py-3 bg-[#0a0a0a]/80 backdrop-blur-[14px] border-b border-white/[0.06]"
-            : "py-5 bg-transparent"
-        }`}
-      >
+      <header className="fixed top-0 left-0 right-0 z-[60] flex items-center justify-between px-9 pt-[calc(env(safe-area-inset-top)+1rem)] pb-4 pointer-events-auto">
+        {/* Background — fades in/out on scroll only, no other animation */}
+        <div
+          aria-hidden
+          className={`pointer-events-none absolute inset-0 -z-10 border-b border-white/[0.06] bg-[#0a0a0a]/80 backdrop-blur-[14px] transition-opacity duration-700 ease-in-out ${
+            scrolled ? "opacity-100" : "opacity-0"
+          }`}
+        />
+
         {/* Logo */}
         <Link
           href="/"
-          className={`pointer-events-auto transition-all duration-500 ease-[var(--ease-expo)] hover:opacity-80 flex-shrink-0 ${
-            pathname === "/" && !scrolled ? "opacity-0 -translate-y-2 scale-75 pointer-events-none" : "opacity-100 translate-y-0 scale-100"
+          className={`pointer-events-auto transition-opacity duration-500 ease-[var(--ease-expo)] hover:opacity-80 flex-shrink-0 ${
+            pathname === "/" && !scrolled ? "opacity-0 pointer-events-none" : "opacity-100"
           }`}
         >
           <Image
             src={logo}
             alt="Criss Club & Cafe"
-            className={`w-auto brightness-0 invert transition-all duration-300 ${scrolled ? "h-10" : "h-12"}`}
+            className="h-11 w-auto brightness-0 invert"
             priority
             unoptimized
           />
@@ -98,7 +103,7 @@ export function SiteNav() {
         onClick={() => setIsOpen((p) => !p)}
         aria-label={isOpen ? t.nav.closeMenu : t.nav.openMenu}
         aria-expanded={isOpen}
-        className="fixed top-4 right-9 z-[75] flex h-9 w-9 flex-col items-center justify-center gap-[5px] lg:hidden"
+        className="fixed top-[calc(env(safe-area-inset-top)+1rem)] right-9 z-[75] flex h-9 w-9 flex-col items-center justify-center gap-[5px] lg:hidden"
       >
         <span className={`block h-px w-5 bg-crd-ink transition-all duration-300 ${isOpen ? "translate-y-[6px] rotate-45" : ""}`} />
         <span className={`block h-px w-5 bg-crd-ink transition-all duration-300 ${isOpen ? "opacity-0" : ""}`} />

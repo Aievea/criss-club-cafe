@@ -1,8 +1,8 @@
 @import "tailwindcss";
 
 :root {
-  --background: #ffffff;
-  --foreground: #171717;
+  --background: #0a0a0a;
+  --foreground: #f5f0e8;
 
   /* Cris Royal brand system */
   --crd-bg: #0a0a0a;
@@ -60,13 +60,6 @@
   --color-crd-bg-2: var(--crd-bg-2);
   --color-crd-bg-3: var(--crd-bg-3);
   --font-script: var(--font-pinyon-script);
-}
-
-@media (prefers-color-scheme: dark) {
-  :root {
-    --background: #0a0a0a;
-    --foreground: #ededed;
-  }
 }
 
 body {
