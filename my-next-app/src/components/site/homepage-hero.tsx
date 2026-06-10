@@ -127,21 +127,6 @@ export function HomepageHero() {
 
           <MuteButton />
 
-          <p
-            className="font-serif italic text-[#ece1c8]/85"
-            style={{
-              fontSize: "clamp(17px,2vw,24px)",
-              letterSpacing: "0.04em",
-              animation: "crd-fade-up 1100ms var(--ease-expo) 280ms both",
-            }}
-          >
-            Lounge
-            <span className="mx-3 font-normal not-italic text-[#e6c787]/50">·</span>
-            Pub
-            <span className="mx-3 font-normal not-italic text-[#e6c787]/50">·</span>
-            Social Club
-          </p>
-
           {/* CTA row */}
           <div
             className="pointer-events-auto flex flex-wrap items-center justify-center gap-3"
