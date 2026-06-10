@@ -359,7 +359,7 @@ export default function CrissCafePage() {
               <Link href="/meniu/cafe"
                 className="inline-flex items-center gap-3 rounded-full border border-white/20 px-7 py-3.5 text-[11px] font-medium tracking-[0.28em] uppercase text-[#f5f0e8]/75 transition-all duration-300 hover:border-[#c9a86a]/50 hover:text-[#c9a86a]"
               >
-                {t.cafe.menuHeading} →
+                {t.cafe.viewMenuHero} →
               </Link>
             </div>
           </div>

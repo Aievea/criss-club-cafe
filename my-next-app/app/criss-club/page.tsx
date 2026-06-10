@@ -143,7 +143,7 @@ export default function CrissClubPage() {
               className="inline-flex items-center gap-2 rounded-lg px-7 py-3.5 text-[11px] font-medium tracking-[0.26em] uppercase text-[#ff3da3]/70 transition-all duration-300 hover:text-[#ff3da3] hover:border-[rgba(255,61,163,0.5)]"
               style={{ border: "1px solid rgba(255,61,163,0.28)" }}
             >
-              {lang === "ro" ? "Meniu" : "Menu"} &rarr;
+              {lang === "ro" ? "Vezi meniul" : "View menu"} &rarr;
             </Link>
           </div>
 
