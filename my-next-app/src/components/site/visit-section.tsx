@@ -78,13 +78,22 @@ export function VisitSection() {
 
           {/* Google Maps iframe — grayscale+invert = dark theme */}
           <iframe
-            src="https://maps.google.com/maps?q=Criss+Club+Cafe+Targu+Mures&output=embed&z=17&hl=ro"
+            src="https://maps.google.com/maps?q=46.5439,24.5608&output=embed&z=17&hl=ro"
             className="absolute inset-0 h-full w-full border-0"
             style={{ filter: "grayscale(1) invert(1) brightness(0.82) contrast(1.08) sepia(0.18)" }}
             loading="lazy"
             allowFullScreen
             referrerPolicy="no-referrer-when-downgrade"
             title="Criss Café & Club — Piața Trandafirilor 43, Târgu Mureș"
+          />
+
+          {/* Interaction blocker — keeps the embed static, click opens Google Maps */}
+          <a
+            href="https://maps.google.com/?q=Criss+Club+Cafe+Targu+Mures"
+            target="_blank"
+            rel="noopener noreferrer"
+            className="absolute inset-0 z-10"
+            aria-label={v.mapCta}
           />
 
           {/* Edge vignette — depth */}
@@ -105,7 +114,7 @@ export function VisitSection() {
           />
 
           {/* Floating label card — above pin */}
-          <div className="pointer-events-none absolute left-1/2 top-[42%] -translate-x-1/2 -translate-y-full flex flex-col items-center"
+          <div className="pointer-events-none absolute left-1/2 top-1/2 -translate-x-1/2 -translate-y-full flex flex-col items-center"
                style={{ marginTop: "-20px" }}>
             <div className="rounded-lg border border-[#c9a86a]/25 bg-[#0d0b09]/90 px-5 py-3 shadow-[0_12px_40px_rgba(0,0,0,0.7),0_0_0_1px_rgba(201,168,106,0.08)]"
                  style={{ backdropFilter: "blur(12px)" }}>
@@ -122,7 +131,7 @@ export function VisitSection() {
           </div>
 
           {/* Pin dot */}
-          <div className="pointer-events-none absolute left-1/2 top-[42%] -translate-x-1/2 -translate-y-1/2">
+          <div className="pointer-events-none absolute left-1/2 top-1/2 -translate-x-1/2 -translate-y-1/2">
             <div className="relative flex items-center justify-center">
               {/* Outer pulse ring */}
               <div className="absolute h-10 w-10 rounded-full border border-[#c9a86a]/30 animate-[waPulse_2s_ease-out_infinite]" />
