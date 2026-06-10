@@ -243,26 +243,26 @@ function CategoryBlock({
     <div className={`rounded-xl border overflow-hidden ${isSubcategory ? "border-white/5 bg-white/[0.015] ml-6" : "border-white/8 bg-white/[0.03]"}`}>
       {/* Header */}
       <div className="flex items-center gap-3 px-5 py-4">
-        <button
-          onClick={isSubcategory ? undefined : onToggleExpand}
-          className={`flex-1 flex items-center gap-3 text-left min-w-0 ${isSubcategory ? "cursor-default" : ""}`}
-        >
-          {!isSubcategory && (expanded
-            ? <ChevronUp className="h-4 w-4 shrink-0 text-white/30" />
-            : <ChevronDown className="h-4 w-4 shrink-0 text-white/30" />
-          )}
-          {editingName ? (
-            <div className="flex flex-1 flex-wrap items-center gap-2" onClick={(e) => e.stopPropagation()}>
-              <input value={nameRo} onChange={(e) => setNameRo(e.target.value)}
-                onKeyDown={(e) => e.key === "Enter" && saveCategory()}
-                className="flex-1 rounded-lg border border-white/15 bg-white/[0.06] px-3 py-1.5 text-sm text-[#f5f0e8] outline-none min-w-[100px]" />
-              <input value={nameEn} onChange={(e) => setNameEn(e.target.value)}
-                onKeyDown={(e) => e.key === "Enter" && saveCategory()}
-                className="flex-1 rounded-lg border border-white/15 bg-white/[0.06] px-3 py-1.5 text-sm text-[#f5f0e8] outline-none min-w-[100px]" />
-              <button onClick={saveCategory} className="text-green-400 hover:text-green-300"><Check className="h-4 w-4" /></button>
-              <button onClick={() => setEditingName(false)} className="text-red-400 hover:text-red-300"><X className="h-4 w-4" /></button>
-            </div>
-          ) : (
+        {editingName ? (
+          <div className="flex flex-1 flex-wrap items-center gap-2 min-w-0">
+            <input value={nameRo} onChange={(e) => setNameRo(e.target.value)}
+              onKeyDown={(e) => e.key === "Enter" && saveCategory()}
+              className="flex-1 rounded-lg border border-white/15 bg-white/[0.06] px-3 py-1.5 text-sm text-[#f5f0e8] outline-none min-w-[100px]" />
+            <input value={nameEn} onChange={(e) => setNameEn(e.target.value)}
+              onKeyDown={(e) => e.key === "Enter" && saveCategory()}
+              className="flex-1 rounded-lg border border-white/15 bg-white/[0.06] px-3 py-1.5 text-sm text-[#f5f0e8] outline-none min-w-[100px]" />
+            <button onClick={saveCategory} className="rounded-lg p-2 text-green-400 hover:bg-green-400/10"><Check className="h-4 w-4" /></button>
+            <button onClick={() => setEditingName(false)} className="rounded-lg p-2 text-red-400 hover:bg-red-400/10"><X className="h-4 w-4" /></button>
+          </div>
+        ) : (
+          <button
+            onClick={isSubcategory ? undefined : onToggleExpand}
+            className={`flex-1 flex items-center gap-3 text-left min-w-0 ${isSubcategory ? "cursor-default" : ""}`}
+          >
+            {!isSubcategory && (expanded
+              ? <ChevronUp className="h-4 w-4 shrink-0 text-white/30" />
+              : <ChevronDown className="h-4 w-4 shrink-0 text-white/30" />
+            )}
             <div className="flex min-w-0 flex-1 items-center gap-3">
               {/* Photo thumbnail */}
               {cat.photo_url && (
@@ -276,8 +276,8 @@ function CategoryBlock({
                 <span className="ml-2 text-xs text-white/25">({totalItems})</span>
               </span>
             </div>
-          )}
-        </button>
+          </button>
+        )}
 
         {!editingName && (
           <div className="flex shrink-0 items-center gap-1">
