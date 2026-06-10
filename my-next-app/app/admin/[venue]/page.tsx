@@ -5,7 +5,7 @@ import { useParams } from "next/navigation";
 import Image from "next/image";
 import {
   Plus, Trash2, Pencil, Check, X, ChevronDown, ChevronUp,
-  ToggleLeft, ToggleRight, ImageIcon, Loader2,
+  ToggleLeft, ToggleRight, ImageIcon, Loader2, ArrowUp, ArrowDown,
 } from "lucide-react";
 import {
   getAdminMenu, addCategory, updateCategory, deleteCategory,
@@ -186,6 +186,18 @@ function CategoryBlock({
     onRefresh();
   }
 
+  async function handleMoveItem(items: MenuItem[], index: number, direction: -1 | 1) {
+    const target = index + direction;
+    if (target < 0 || target >= items.length) return;
+    const a = items[index];
+    const b = items[target];
+    await Promise.all([
+      updateItem(a.id, { sort_order: b.sort_order }),
+      updateItem(b.id, { sort_order: a.sort_order }),
+    ]);
+    onRefresh();
+  }
+
   async function handleAddSubcategory() {
     if (!newSubRo.trim()) return;
     const maxOrder = Math.max(0, ...cat.subcategories.map((c) => c.sort_order));
@@ -273,7 +285,7 @@ function CategoryBlock({
         <div className="border-t border-white/6 px-5 pb-5">
           {/* Items */}
           <div className="divide-y divide-white/5">
-            {cat.items.map((item) => (
+            {cat.items.map((item, i) => (
               <ItemRow
                 key={item.id}
                 item={item}
@@ -281,6 +293,8 @@ function CategoryBlock({
                 onToggle={() => onToggleItem(item)}
                 onDelete={() => onDeleteItem(item.id)}
                 onRefresh={onRefresh}
+                onMoveUp={i > 0 ? () => handleMoveItem(cat.items, i, -1) : undefined}
+                onMoveDown={i < cat.items.length - 1 ? () => handleMoveItem(cat.items, i, 1) : undefined}
               />
             ))}
           </div>
@@ -365,12 +379,14 @@ function CategoryBlock({
   );
 }
 
-function ItemRow({ item, accent, onToggle, onDelete, onRefresh }: {
+function ItemRow({ item, accent, onToggle, onDelete, onRefresh, onMoveUp, onMoveDown }: {
   item: MenuItem;
   accent: string;
   onToggle: () => void;
   onDelete: () => void;
   onRefresh: () => void;
+  onMoveUp?: () => void;
+  onMoveDown?: () => void;
 }) {
   const [editing, setEditing] = useState(false);
   const [nameRo, setNameRo] = useState(item.name_ro);
@@ -408,6 +424,24 @@ function ItemRow({ item, accent, onToggle, onDelete, onRefresh }: {
 
   return (
     <div className={`flex items-center gap-3 py-3 ${!item.available ? "opacity-40" : ""}`}>
+      <div className="flex shrink-0 flex-col">
+        <button
+          onClick={onMoveUp}
+          disabled={!onMoveUp}
+          className="rounded p-0.5 text-white/30 hover:text-white/70 disabled:opacity-15 disabled:hover:text-white/30"
+          title="Mută în sus"
+        >
+          <ArrowUp className="h-3 w-3" />
+        </button>
+        <button
+          onClick={onMoveDown}
+          disabled={!onMoveDown}
+          className="rounded p-0.5 text-white/30 hover:text-white/70 disabled:opacity-15 disabled:hover:text-white/30"
+          title="Mută în jos"
+        >
+          <ArrowDown className="h-3 w-3" />
+        </button>
+      </div>
       <div className="flex-1">
         <span className="text-sm text-[#f5f0e8]">{item.name_ro}</span>
         {item.unit && <span className="ml-2 text-xs text-white/30">{item.unit}</span>}
