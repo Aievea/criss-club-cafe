@@ -108,7 +108,7 @@ export function HomepageHero() {
 
           <div style={{ animation: "crd-fade-up 1200ms var(--ease-expo) 100ms both" }}>
             <div
-              className={`origin-top transition-all duration-500 ease-[var(--ease-expo)] ${
+              className={`origin-top transition-all duration-700 ease-in-out ${
                 scrolled ? "-translate-y-20 scale-[0.22] opacity-0 sm:-translate-y-24" : "translate-y-0 scale-100 opacity-100"
               }`}
             >
