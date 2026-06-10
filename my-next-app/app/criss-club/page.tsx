@@ -1,5 +1,6 @@
 "use client";
 
+import Image from "next/image";
 import { useLanguage } from "@/src/i18n/language-context";
 import { SiteNav } from "@/src/components/site/site-nav";
 import { BackButton } from "@/src/components/site/back-button";
@@ -254,8 +255,7 @@ export default function CrissClubPage() {
               className="group flex items-center gap-5 rounded-2xl border border-[#a855f7]/15 bg-[#0a0710] px-5 py-4 transition-all duration-300 hover:border-[#a855f7]/30 hover:shadow-[0_0_24px_rgba(168,85,247,0.08)]"
             >
               <div className="h-14 w-14 shrink-0 overflow-hidden rounded-full bg-black shadow-[0_4px_16px_rgba(0,0,0,0.5)]">
-                {/* eslint-disable-next-line @next/next/no-img-element */}
-                <img src={clubLogoIg.src} alt="Criss Club" className="h-full w-full rounded-full object-cover" />
+                <Image src={clubLogoIg} alt="Criss Club" width={56} height={56} className="h-full w-full rounded-full object-cover" />
               </div>
               <div className="flex-1">
                 <div className="mb-1 flex items-center gap-2">

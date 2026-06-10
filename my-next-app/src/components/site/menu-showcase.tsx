@@ -56,6 +56,7 @@ export function MenuShowcase() {
                   src={IMGS[idx]}
                   alt={ch.title}
                   fill
+                  sizes="(max-width: 1024px) 100vw, 50vw"
                   className="object-cover transition-transform duration-[1400ms] ease-[cubic-bezier(0.2,0.7,0.2,1)] hover:scale-[1.06]"
                 />
                 <div className="absolute inset-0 bg-gradient-to-b from-transparent via-transparent to-[rgba(26,20,17,0.5)]" />

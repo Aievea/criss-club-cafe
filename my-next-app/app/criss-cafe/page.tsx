@@ -32,7 +32,7 @@ const BEERS = [
   { img: krombacherImg, name: "Krombacher", dark: false },
 ];
 
-const PHOTOS = [p1, p2, p3, p4, p5, p6, p7, p8, p9, p10, p11].map((img) => img.src);
+const PHOTOS = [p1, p2, p3, p4, p5, p6, p7, p8, p9, p10, p11];
 
 function GoldDivider() {
   return (
@@ -282,8 +282,7 @@ export default function CrissCafePage() {
               className="group flex items-center gap-5 rounded-2xl border border-[#c9a86a]/15 bg-[#0e0c0a] px-5 py-4 transition-all duration-300 hover:border-[#c9a86a]/30"
             >
               <div className="h-14 w-14 shrink-0 overflow-hidden rounded-full bg-white p-1 shadow-[0_4px_16px_rgba(0,0,0,0.35)]">
-                {/* eslint-disable-next-line @next/next/no-img-element */}
-                <img src={cafeLogoIg.src} alt="Criss Cafe" className="h-full w-full rounded-full object-cover" />
+                <Image src={cafeLogoIg} alt="Criss Cafe" width={56} height={56} className="h-full w-full rounded-full object-cover" />
               </div>
               <div className="flex-1">
                 <div className="mb-1 flex items-center gap-2">
@@ -326,16 +325,14 @@ export default function CrissCafePage() {
             <div className="grid grid-cols-2 gap-3 sm:grid-cols-3 lg:grid-cols-4">
               <div className="group col-span-2 overflow-hidden rounded-xl border border-[#c9a86a]/12 shadow-[0_8px_32px_rgba(0,0,0,0.35)]">
                 <div className="relative aspect-[16/9]">
-                  {/* eslint-disable-next-line @next/next/no-img-element */}
-                  <img src={PHOTOS[0]} alt="" loading="lazy" className="h-full w-full object-cover transition-transform duration-[1000ms] ease-[cubic-bezier(0.2,0.7,0.2,1)] group-hover:scale-[1.04]" />
+                  <Image src={PHOTOS[0]} alt="" fill sizes="(max-width: 640px) 100vw, (max-width: 1024px) 66vw, 640px" className="object-cover transition-transform duration-[1000ms] ease-[cubic-bezier(0.2,0.7,0.2,1)] group-hover:scale-[1.04]" />
                   <div className="pointer-events-none absolute inset-0 bg-gradient-to-t from-[#1a1411]/50 to-transparent opacity-0 transition-opacity duration-500 group-hover:opacity-100" />
                 </div>
               </div>
-              {PHOTOS.slice(1).map((src) => (
-                <div key={src} className="group overflow-hidden rounded-xl border border-[#c9a86a]/12 shadow-[0_4px_16px_rgba(0,0,0,0.3)]">
+              {PHOTOS.slice(1).map((img) => (
+                <div key={img.src} className="group overflow-hidden rounded-xl border border-[#c9a86a]/12 shadow-[0_4px_16px_rgba(0,0,0,0.3)]">
                   <div className="relative aspect-square">
-                    {/* eslint-disable-next-line @next/next/no-img-element */}
-                    <img src={src} alt="" loading="lazy" className="h-full w-full object-cover transition-transform duration-[1000ms] ease-[cubic-bezier(0.2,0.7,0.2,1)] group-hover:scale-[1.04]" />
+                    <Image src={img} alt="" fill sizes="(max-width: 640px) 50vw, (max-width: 1024px) 33vw, 256px" className="object-cover transition-transform duration-[1000ms] ease-[cubic-bezier(0.2,0.7,0.2,1)] group-hover:scale-[1.04]" />
                     <div className="pointer-events-none absolute inset-0 bg-gradient-to-t from-[#1a1411]/50 to-transparent opacity-0 transition-opacity duration-500 group-hover:opacity-100" />
                   </div>
                 </div>

@@ -104,6 +104,7 @@ export function ClubLineup() {
                   src={ev.img}
                   alt={ev.title}
                   fill
+                  sizes="(max-width: 768px) 50vw, 25vw"
                   className="object-cover transition-transform duration-[1200ms] ease-[cubic-bezier(0.2,0.7,0.2,1)] group-hover:scale-[1.05]"
                 />
               </button>
