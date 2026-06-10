@@ -303,7 +303,7 @@ function CategoryBlock({
               </>
             )}
             {/* Photo upload */}
-            <label className="relative cursor-pointer rounded-lg p-2 text-white/30 hover:text-white/70 transition-colors" title="Adaugă/schimbă poza">
+            <label className="cursor-pointer rounded-lg p-2 text-white/30 hover:text-white/70 transition-colors" title="Adaugă/schimbă poza">
               {uploading
                 ? <Loader2 className="h-3.5 w-3.5 animate-spin" />
                 : <ImageIcon className="h-3.5 w-3.5" />
@@ -312,7 +312,7 @@ function CategoryBlock({
                 ref={photoInputRef}
                 type="file"
                 accept="image/*"
-                className="absolute inset-0 cursor-pointer opacity-0"
+                className="hidden"
                 onChange={handlePhotoUpload}
               />
             </label>
