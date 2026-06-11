@@ -56,14 +56,14 @@ export function CategoryTabs({ menu, active, lang, getIcon, onSelect, activeClas
             <ChevronLeft className="h-4 w-4 text-white/60" />
           </button>
         )}
-        <div ref={scrollRef} className="scrollbar-hide flex snap-x gap-2 overflow-x-auto px-4 py-3 sm:px-8">
+        <div ref={scrollRef} className="scrollbar-hide flex gap-2 overflow-x-auto px-4 py-3 sm:px-8">
           {menu.map((cat) => {
             const Icon = getIcon(cat.name_ro);
             return (
               <button
                 key={cat.id}
                 onClick={() => onSelect(cat.id)}
-                className={`flex shrink-0 snap-start items-center gap-2 rounded-lg px-5 py-2.5 text-[11px] font-semibold tracking-[0.22em] uppercase transition-all duration-200 ${
+                className={`flex shrink-0 items-center gap-2 rounded-lg px-5 py-2.5 text-[11px] font-semibold tracking-[0.22em] uppercase transition-all duration-200 ${
                   active === cat.id ? activeClassName : inactiveClassName
                 }`}
               >
