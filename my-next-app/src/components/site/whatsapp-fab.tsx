@@ -6,7 +6,7 @@ import { useLanguage } from "@/src/i18n/language-context";
 export function WhatsAppFab() {
   const { t } = useLanguage();
   const pathname = usePathname();
-  if (pathname.startsWith("/admin")) return null;
+  if (pathname.startsWith("/admin") || pathname.startsWith("/meniu")) return null;
   return (
     <a
       href="https://wa.me/40746521799"

@@ -120,11 +120,11 @@ export default function AdminVenuePage() {
             onKeyDown={(e) => e.key === "Enter" && handleAddCategory()}
             className="flex-1 rounded-lg border border-white/10 bg-white/[0.04] px-3 py-2 text-sm text-[#f5f0e8] placeholder-white/25 outline-none focus:border-white/25"
           />
-          <button onClick={handleAddCategory} className="rounded-lg p-2 text-green-400 hover:bg-green-400/10">
-            <Check className="h-4 w-4" />
-          </button>
           <button onClick={() => setAddingCat(false)} className="rounded-lg p-2 text-red-400 hover:bg-red-400/10">
             <X className="h-4 w-4" />
+          </button>
+          <button onClick={handleAddCategory} className="rounded-lg p-2 text-green-400 hover:bg-green-400/10">
+            <Check className="h-4 w-4" />
           </button>
         </div>
       )}
@@ -251,8 +251,8 @@ function CategoryBlock({
             <input value={nameEn} onChange={(e) => setNameEn(e.target.value)}
               onKeyDown={(e) => e.key === "Enter" && saveCategory()}
               className="flex-1 rounded-lg border border-white/15 bg-white/[0.06] px-3 py-1.5 text-sm text-[#f5f0e8] outline-none min-w-[100px]" />
-            <button onClick={saveCategory} className="rounded-lg p-2 text-green-400 hover:bg-green-400/10"><Check className="h-4 w-4" /></button>
             <button onClick={() => setEditingName(false)} className="rounded-lg p-2 text-red-400 hover:bg-red-400/10"><X className="h-4 w-4" /></button>
+            <button onClick={saveCategory} className="rounded-lg p-2 text-green-400 hover:bg-green-400/10"><Check className="h-4 w-4" /></button>
           </div>
         ) : (
           <button
@@ -412,8 +412,8 @@ function CategoryBlock({
                     onKeyDown={(e) => e.key === "Enter" && handleAddSubcategory()}
                     className="flex-1 rounded-lg border border-white/10 bg-white/[0.06] px-3 py-2 text-sm text-[#f5f0e8] placeholder-white/25 outline-none min-w-[120px]"
                   />
-                  <button onClick={handleAddSubcategory} className="rounded-lg p-2 text-green-400 hover:bg-green-400/10"><Check className="h-4 w-4" /></button>
                   <button onClick={() => setAddingSubcat(false)} className="rounded-lg p-2 text-red-400 hover:bg-red-400/10"><X className="h-4 w-4" /></button>
+                  <button onClick={handleAddSubcategory} className="rounded-lg p-2 text-green-400 hover:bg-green-400/10"><Check className="h-4 w-4" /></button>
                 </div>
               ) : (
                 <button
@@ -463,21 +463,25 @@ function ItemRow({ item, accent, onToggle, onDelete, onRefresh, onMoveUp, onMove
 
   if (editing) {
     return (
-      <div className="flex flex-wrap items-center gap-2 py-3">
-        <input value={nameRo} onChange={(e) => setNameRo(e.target.value)} placeholder="Nume RO"
-          className="flex-1 rounded-lg border border-white/10 bg-white/[0.06] px-3 py-1.5 text-sm text-[#f5f0e8] outline-none min-w-[120px]" />
-        <input value={nameEn} onChange={(e) => setNameEn(e.target.value)} placeholder="Nume EN"
-          className="flex-1 rounded-lg border border-white/10 bg-white/[0.06] px-3 py-1.5 text-sm text-[#f5f0e8] outline-none min-w-[120px]" />
-        <input value={price} onChange={(e) => setPrice(e.target.value)} placeholder="Preț" type="number"
-          className="w-24 rounded-lg border border-white/10 bg-white/[0.06] px-3 py-1.5 text-sm text-[#f5f0e8] outline-none" />
-        <input value={unit} onChange={(e) => setUnit(e.target.value)} placeholder="Unitate"
-          className="w-24 rounded-lg border border-white/10 bg-white/[0.06] px-3 py-1.5 text-sm text-[#f5f0e8] outline-none" />
+      <div className="flex flex-col gap-2 py-3">
+        <div className="flex flex-wrap items-center gap-2">
+          <input value={nameRo} onChange={(e) => setNameRo(e.target.value)} placeholder="Nume RO"
+            className="flex-1 rounded-lg border border-white/10 bg-white/[0.06] px-3 py-1.5 text-sm text-[#f5f0e8] outline-none min-w-[120px]" />
+          <input value={nameEn} onChange={(e) => setNameEn(e.target.value)} placeholder="Nume EN"
+            className="flex-1 rounded-lg border border-white/10 bg-white/[0.06] px-3 py-1.5 text-sm text-[#f5f0e8] outline-none min-w-[120px]" />
+          <input value={price} onChange={(e) => setPrice(e.target.value)} placeholder="Preț" type="number"
+            className="w-24 rounded-lg border border-white/10 bg-white/[0.06] px-3 py-1.5 text-sm text-[#f5f0e8] outline-none" />
+          <input value={unit} onChange={(e) => setUnit(e.target.value)} placeholder="Unitate"
+            className="w-24 rounded-lg border border-white/10 bg-white/[0.06] px-3 py-1.5 text-sm text-[#f5f0e8] outline-none" />
+        </div>
         <input value={descRo} onChange={(e) => setDescRo(e.target.value)} placeholder="Descriere RO"
-          className="flex-1 basis-full rounded-lg border border-white/10 bg-white/[0.06] px-3 py-1.5 text-sm text-[#f5f0e8] placeholder-white/25 outline-none min-w-[200px]" />
+          className="w-full rounded-lg border border-white/10 bg-white/[0.06] px-3 py-1.5 text-sm text-[#f5f0e8] placeholder-white/25 outline-none" />
         <input value={descEn} onChange={(e) => setDescEn(e.target.value)} placeholder="Descriere EN"
-          className="flex-1 basis-full rounded-lg border border-white/10 bg-white/[0.06] px-3 py-1.5 text-sm text-[#f5f0e8] placeholder-white/25 outline-none min-w-[200px]" />
-        <button onClick={saveItem} className="text-green-400 hover:text-green-300"><Check className="h-4 w-4" /></button>
-        <button onClick={() => setEditing(false)} className="text-red-400 hover:text-red-300"><X className="h-4 w-4" /></button>
+          className="w-full rounded-lg border border-white/10 bg-white/[0.06] px-3 py-1.5 text-sm text-[#f5f0e8] placeholder-white/25 outline-none" />
+        <div className="flex items-center justify-end gap-2">
+          <button onClick={() => setEditing(false)} className="rounded-lg bg-red-400/15 px-4 py-2 text-red-400 hover:bg-red-400/25 hover:text-red-300"><X className="h-5 w-5" /></button>
+          <button onClick={saveItem} className="rounded-lg bg-green-400/15 px-4 py-2 text-green-400 hover:bg-green-400/25 hover:text-green-300"><Check className="h-5 w-5" /></button>
+        </div>
       </div>
     );
   }
@@ -574,8 +578,8 @@ function AddItemForm({ categoryId, sortOrder, onDone, onCancel }: {
         className="flex-1 basis-full rounded-lg border border-white/10 bg-white/[0.06] px-3 py-2 text-sm text-[#f5f0e8] placeholder-white/25 outline-none min-w-[200px]" />
       <input value={descEn} onChange={(e) => setDescEn(e.target.value)} placeholder="Descriere EN"
         className="flex-1 basis-full rounded-lg border border-white/10 bg-white/[0.06] px-3 py-2 text-sm text-[#f5f0e8] placeholder-white/25 outline-none min-w-[200px]" />
-      <button onClick={handleAdd} className="rounded-lg p-2 text-green-400 hover:bg-green-400/10"><Check className="h-4 w-4" /></button>
       <button onClick={onCancel} className="rounded-lg p-2 text-red-400 hover:bg-red-400/10"><X className="h-4 w-4" /></button>
+      <button onClick={handleAdd} className="rounded-lg p-2 text-green-400 hover:bg-green-400/10"><Check className="h-4 w-4" /></button>
     </div>
   );
 }

@@ -200,9 +200,11 @@ function ItemRow({ item, lang, accent, index }: {
           </p>
         )}
       </div>
-      <span className="shrink-0 font-display text-lg font-semibold tabular-nums" style={{ color: accent }}>
-        {item.price} <span className="text-sm font-normal" style={{ color: `${accent}99` }}>lei</span>
-      </span>
+      {item.price > 0 && (
+        <span className="shrink-0 font-display text-lg font-semibold tabular-nums" style={{ color: accent }}>
+          {item.price} <span className="text-sm font-normal" style={{ color: `${accent}99` }}>lei</span>
+        </span>
+      )}
     </div>
   );
 }

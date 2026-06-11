@@ -199,9 +199,11 @@ function ItemRow({ item, lang, accent, index }: {
           </p>
         )}
       </div>
-      <span className="shrink-0 font-display text-lg font-semibold tabular-nums text-[#c9a86a]">
-        {item.price} <span className="text-sm font-normal text-[#c9a86a]/60">lei</span>
-      </span>
+      {item.price > 0 && (
+        <span className="shrink-0 font-display text-lg font-semibold tabular-nums text-[#c9a86a]">
+          {item.price} <span className="text-sm font-normal text-[#c9a86a]/60">lei</span>
+        </span>
+      )}
     </div>
   );
 }
