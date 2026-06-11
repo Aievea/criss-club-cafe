@@ -7,11 +7,11 @@
  * set NEXT_PUBLIC_SITE_URL in the environment (e.g. Vercel project settings) and
  * everything updates at once; no code change needed.
  *
- * NOTE: `crisscafe.ro` is a PLACEHOLDER chosen to match the brand/Instagram. Swap
- * it the moment the real domain is known.
+ * NOTE: `crissclub.ro` is a PLACEHOLDER chosen to match the brand. Swap it the
+ * moment the real domain is known.
  */
 export const SITE_URL = (
-  process.env.NEXT_PUBLIC_SITE_URL || "https://crisscafe.ro"
+  process.env.NEXT_PUBLIC_SITE_URL || "https://crissclub.ro"
 ).replace(/\/$/, "");
 
 /** Brand name used in Open Graph `site_name` and schema. */
