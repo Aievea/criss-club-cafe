@@ -8,7 +8,7 @@ import { SiteNav } from "@/src/components/site/site-nav";
 import { BackButton } from "@/src/components/site/back-button";
 import { type CategoryWithItems } from "@/src/lib/supabase";
 import {
-  Wine, Zap, Beer, GlassWater, Music,
+  Wine, Zap, Beer, CupSoda, Martini, Percent, Flame, Sparkles, Coffee,
   type LucideIcon,
 } from "lucide-react";
 import club1 from "@/src/assets/images/images-crissclub/djs/WhatsApp Image 2026-06-02 at 17.36.51.jpeg";
@@ -18,11 +18,15 @@ import club4 from "@/src/assets/images/images-crissclub/djs/WhatsApp Image 2026-
 import club5 from "@/src/assets/images/images-crissclub/djs/WhatsApp Image 2026-06-02 at 17.38.10.jpeg";
 
 const CLUB_ICONS: Record<string, LucideIcon> = {
-  "Sticle": Wine,
-  "Cocktailuri": Music,
+  "Cocktailuri": Martini,
   "Shots": Zap,
+  "Băuturi răcoritoare": CupSoda,
   "Bere": Beer,
-  "Băuturi nealcoolice": GlassWater,
+  "Promoții": Percent,
+  "Băuturi Spirtoase": Flame,
+  "Vinuri": Wine,
+  "Champagne/Prosecco": Sparkles,
+  "Hot Drinks": Coffee,
 };
 
 function getClubIcon(nameRo: string): LucideIcon {

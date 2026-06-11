@@ -12,18 +12,23 @@ import bauturiImg from "@/src/assets/meniu/cafe/bauturi.jpeg";
 import cocktailsImg from "@/src/assets/meniu/cafe/cocktailuri.jpeg";
 import mancareImg from "@/src/assets/meniu/cafe/mancare.jpeg";
 import {
-  Coffee, GlassWater, Citrus, Beer, Wine, IceCream, Leaf,
+  Coffee, CupSoda, Citrus, Beer, Martini, Flame, Zap, Wine, Sparkles, Leaf, PlugZap, Utensils,
   type LucideIcon,
 } from "lucide-react";
 
 const CAFE_ICONS: Record<string, LucideIcon> = {
   "Cafea": Coffee,
-  "Băuturi reci": GlassWater,
+  "Băuturi răcoritoare": CupSoda,
   "Sucuri naturale": Citrus,
   "Bere": Beer,
-  "Cocktailuri": Wine,
-  "Aperitive": Leaf,
-  "Deserturi": IceCream,
+  "Cocktailuri": Martini,
+  "Băuturi Spirtoase": Flame,
+  "Shots": Zap,
+  "Vinuri": Wine,
+  "Prosecco/Champagne": Sparkles,
+  "Ceaiuri": Leaf,
+  "Băuturi Energizante": PlugZap,
+  "Meniu Mâncare": Utensils,
 };
 
 function getCafeIcon(nameRo: string): LucideIcon {
