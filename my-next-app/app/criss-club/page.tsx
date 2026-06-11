@@ -3,7 +3,6 @@
 import Image from "next/image";
 import { useLanguage } from "@/src/i18n/language-context";
 import { SiteNav } from "@/src/components/site/site-nav";
-import { BackButton } from "@/src/components/site/back-button";
 import { Reveal } from "@/src/components/footer/reveal";
 import clubVideo from "@/src/assets/video/video-crissclub/WhatsApp Video 2026-06-02 at 17.35.15.mp4";
 import clubLogoIg from "@/src/assets/images/logos/crisclublogoig.jpeg";
@@ -42,7 +41,6 @@ export default function CrissClubPage() {
   return (
     <main className="overflow-hidden bg-crd-bg font-body text-crd-ink">
       <SiteNav />
-      <BackButton />
 
       {/* Hero — full-bleed video, content anchored left */}
       <section className="relative isolate flex min-h-screen min-h-[100svh] overflow-hidden">

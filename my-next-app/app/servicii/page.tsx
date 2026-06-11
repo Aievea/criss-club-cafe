@@ -3,7 +3,6 @@
 import type { SVGProps } from "react";
 import { useLanguage } from "@/src/i18n/language-context";
 import { SiteNav } from "@/src/components/site/site-nav";
-import { BackButton } from "@/src/components/site/back-button";
 import { ReservationTrigger } from "@/src/components/site/reservation-modal";
 import { AddressLink } from "@/src/components/site/address-link";
 import { Reveal } from "@/src/components/footer/reveal";
@@ -32,7 +31,6 @@ export default function ServiciiPage() {
       style={{ background: "#06050400", backgroundColor: "#080706" }}
     >
       <SiteNav />
-      <BackButton />
 
       {/* Fixed decorative orbs */}
       <div aria-hidden className="pointer-events-none fixed inset-0 overflow-hidden -z-10">

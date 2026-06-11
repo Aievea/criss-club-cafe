@@ -2,7 +2,6 @@
 
 import Link from "next/link";
 import { SiteNav } from "@/src/components/site/site-nav";
-import { BackButton } from "@/src/components/site/back-button";
 import { useLanguage } from "@/src/i18n/language-context";
 
 export default function MeniuPage() {
@@ -11,7 +10,6 @@ export default function MeniuPage() {
   return (
     <main className="flex min-h-screen flex-col overflow-hidden bg-crd-bg font-body text-crd-ink">
       <SiteNav />
-      <BackButton />
 
       <div className="flex flex-1 flex-col items-center justify-center px-6 py-20 text-center">
         <span className="inline-flex items-center rounded-full border border-white/20 bg-white/[0.05] px-3.5 py-1 text-[0.62rem] uppercase tracking-[0.28em] text-white/60">

@@ -4,7 +4,6 @@ import Link from "next/link";
 import Image from "next/image";
 import { useLanguage } from "@/src/i18n/language-context";
 import { SiteNav } from "@/src/components/site/site-nav";
-import { BackButton } from "@/src/components/site/back-button";
 import { AddressLink } from "@/src/components/site/address-link";
 import { Reveal } from "@/src/components/footer/reveal";
 import estrelaImg from "@/src/assets/bere/Estrela_Galiza.svg";
@@ -74,7 +73,6 @@ export default function CrissCafePage() {
   return (
     <main className="overflow-hidden bg-crd-bg font-body text-crd-ink">
       <SiteNav />
-      <BackButton />
 
       {/* Hero — full-bleed video, content anchored right */}
       <section className="relative isolate flex min-h-screen min-h-[100svh] overflow-hidden">

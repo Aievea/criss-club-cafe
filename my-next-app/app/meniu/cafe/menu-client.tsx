@@ -4,7 +4,6 @@ import { useRef, useState } from "react";
 import Link from "next/link";
 import { useLanguage } from "@/src/i18n/language-context";
 import { SiteNav } from "@/src/components/site/site-nav";
-import { BackButton } from "@/src/components/site/back-button";
 import { CategoryTabs } from "@/src/components/site/category-tabs";
 import { type CategoryWithItems } from "@/src/lib/supabase";
 import Image, { type StaticImageData } from "next/image";
@@ -65,9 +64,8 @@ export function CafeMenuClient({ menu }: { menu: CategoryWithItems[] }) {
   }
 
   return (
-    <main className="min-h-screen overflow-x-hidden bg-crd-bg font-body text-crd-ink">
+    <main className="min-h-screen bg-crd-bg font-body text-crd-ink">
       <SiteNav />
-      <BackButton />
 
       {/* Hero */}
       <div className="pt-28 pb-10 text-center px-6">
