@@ -445,6 +445,8 @@ function ItemRow({ item, accent, onToggle, onDelete, onRefresh, onMoveUp, onMove
   const [nameEn, setNameEn] = useState(item.name_en);
   const [price, setPrice] = useState(String(item.price));
   const [unit, setUnit] = useState(item.unit ?? "");
+  const [descRo, setDescRo] = useState(item.description_ro ?? "");
+  const [descEn, setDescEn] = useState(item.description_en ?? "");
 
   async function saveItem() {
     await updateItem(item.id, {
@@ -452,6 +454,8 @@ function ItemRow({ item, accent, onToggle, onDelete, onRefresh, onMoveUp, onMove
       name_en: nameEn,
       price: parseFloat(price) || 0,
       unit: unit || null,
+      description_ro: descRo.trim() || null,
+      description_en: descEn.trim() || null,
     });
     setEditing(false);
     onRefresh();
@@ -468,6 +472,10 @@ function ItemRow({ item, accent, onToggle, onDelete, onRefresh, onMoveUp, onMove
           className="w-24 rounded-lg border border-white/10 bg-white/[0.06] px-3 py-1.5 text-sm text-[#f5f0e8] outline-none" />
         <input value={unit} onChange={(e) => setUnit(e.target.value)} placeholder="Unitate"
           className="w-24 rounded-lg border border-white/10 bg-white/[0.06] px-3 py-1.5 text-sm text-[#f5f0e8] outline-none" />
+        <input value={descRo} onChange={(e) => setDescRo(e.target.value)} placeholder="Descriere RO"
+          className="flex-1 basis-full rounded-lg border border-white/10 bg-white/[0.06] px-3 py-1.5 text-sm text-[#f5f0e8] placeholder-white/25 outline-none min-w-[200px]" />
+        <input value={descEn} onChange={(e) => setDescEn(e.target.value)} placeholder="Descriere EN"
+          className="flex-1 basis-full rounded-lg border border-white/10 bg-white/[0.06] px-3 py-1.5 text-sm text-[#f5f0e8] placeholder-white/25 outline-none min-w-[200px]" />
         <button onClick={saveItem} className="text-green-400 hover:text-green-300"><Check className="h-4 w-4" /></button>
         <button onClick={() => setEditing(false)} className="text-red-400 hover:text-red-300"><X className="h-4 w-4" /></button>
       </div>
@@ -494,9 +502,14 @@ function ItemRow({ item, accent, onToggle, onDelete, onRefresh, onMoveUp, onMove
           <ArrowDown className="h-3 w-3" />
         </button>
       </div>
-      <div className="flex-1">
-        <span className="text-sm text-[#f5f0e8]">{item.name_ro}</span>
-        {item.unit && <span className="ml-2 text-xs text-white/30">{item.unit}</span>}
+      <div className="flex-1 min-w-0">
+        <div>
+          <span className="text-sm text-[#f5f0e8]">{item.name_ro}</span>
+          {item.unit && <span className="ml-2 text-xs text-white/30">{item.unit}</span>}
+        </div>
+        {item.description_ro && (
+          <p className="mt-0.5 truncate text-xs text-white/35">{item.description_ro}</p>
+        )}
       </div>
       <span className="tabular-nums text-sm font-semibold" style={{ color: accent }}>
         {item.price} lei
@@ -527,6 +540,8 @@ function AddItemForm({ categoryId, sortOrder, onDone, onCancel }: {
   const [nameEn, setNameEn] = useState("");
   const [price, setPrice] = useState("");
   const [unit, setUnit] = useState("");
+  const [descRo, setDescRo] = useState("");
+  const [descEn, setDescEn] = useState("");
 
   async function handleAdd() {
     if (!nameRo.trim() || !price) return;
@@ -534,8 +549,8 @@ function AddItemForm({ categoryId, sortOrder, onDone, onCancel }: {
       category_id: categoryId,
       name_ro: nameRo.trim(),
       name_en: nameEn.trim() || nameRo.trim(),
-      description_ro: null,
-      description_en: null,
+      description_ro: descRo.trim() || null,
+      description_en: descEn.trim() || null,
       price: parseFloat(price),
       unit: unit.trim() || null,
       available: true,
@@ -555,6 +570,10 @@ function AddItemForm({ categoryId, sortOrder, onDone, onCancel }: {
         className="w-24 rounded-lg border border-white/10 bg-white/[0.06] px-3 py-2 text-sm text-[#f5f0e8] placeholder-white/25 outline-none" />
       <input value={unit} onChange={(e) => setUnit(e.target.value)} placeholder="ex: 330ml"
         className="w-24 rounded-lg border border-white/10 bg-white/[0.06] px-3 py-2 text-sm text-[#f5f0e8] placeholder-white/25 outline-none" />
+      <input value={descRo} onChange={(e) => setDescRo(e.target.value)} placeholder="Descriere RO"
+        className="flex-1 basis-full rounded-lg border border-white/10 bg-white/[0.06] px-3 py-2 text-sm text-[#f5f0e8] placeholder-white/25 outline-none min-w-[200px]" />
+      <input value={descEn} onChange={(e) => setDescEn(e.target.value)} placeholder="Descriere EN"
+        className="flex-1 basis-full rounded-lg border border-white/10 bg-white/[0.06] px-3 py-2 text-sm text-[#f5f0e8] placeholder-white/25 outline-none min-w-[200px]" />
       <button onClick={handleAdd} className="rounded-lg p-2 text-green-400 hover:bg-green-400/10"><Check className="h-4 w-4" /></button>
       <button onClick={onCancel} className="rounded-lg p-2 text-red-400 hover:bg-red-400/10"><X className="h-4 w-4" /></button>
     </div>

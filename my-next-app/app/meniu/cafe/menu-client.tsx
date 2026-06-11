@@ -191,13 +191,13 @@ function ItemRow({ item, lang, accent, index }: {
         <span className="text-base text-[#f5f0e8]">
           {lang === "ro" ? item.name_ro : item.name_en}
         </span>
+        {item.unit && (
+          <span className="ml-2 text-xs" style={{ color: `${accent}80` }}>{item.unit}</span>
+        )}
         {(lang === "ro" ? item.description_ro : item.description_en) && (
           <p className="mt-0.5 text-sm text-[#a89f90]">
             {lang === "ro" ? item.description_ro : item.description_en}
           </p>
-        )}
-        {item.unit && (
-          <span className="text-xs" style={{ color: `${accent}80` }}>{item.unit}</span>
         )}
       </div>
       <span className="shrink-0 font-display text-lg font-semibold tabular-nums" style={{ color: accent }}>
