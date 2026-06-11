@@ -6,6 +6,7 @@ import Image, { type StaticImageData } from "next/image";
 import { useLanguage } from "@/src/i18n/language-context";
 import { SiteNav } from "@/src/components/site/site-nav";
 import { BackButton } from "@/src/components/site/back-button";
+import { CategoryTabs } from "@/src/components/site/category-tabs";
 import { type CategoryWithItems } from "@/src/lib/supabase";
 import {
   Wine, Zap, Beer, CupSoda, Martini, Percent, Flame, Sparkles, Coffee,
@@ -20,10 +21,10 @@ import club5 from "@/src/assets/images/images-crissclub/djs/WhatsApp Image 2026-
 const CLUB_ICONS: Record<string, LucideIcon> = {
   "Cocktailuri": Martini,
   "Shots": Zap,
-  "Băuturi răcoritoare": CupSoda,
+  "Răcoritoare": CupSoda,
   "Bere": Beer,
   "Promoții": Percent,
-  "Băuturi Spirtoase": Flame,
+  "Spirtoase": Flame,
   "Vinuri": Wine,
   "Champagne/Prosecco": Sparkles,
   "Hot Drinks": Coffee,
@@ -54,13 +55,13 @@ export function ClubMenuClient({ menu }: { menu: CategoryWithItems[] }) {
     setActive(id);
     setTimeout(() => {
       if (!itemsRef.current) return;
-      const y = itemsRef.current.getBoundingClientRect().top + window.scrollY - 80;
+      const y = itemsRef.current.getBoundingClientRect().top + window.scrollY - 140;
       window.scrollTo({ top: y, behavior: "smooth" });
     }, 50);
   }
 
   return (
-    <main className="min-h-screen overflow-hidden bg-crd-bg font-body text-crd-ink">
+    <main className="min-h-screen overflow-x-hidden bg-crd-bg font-body text-crd-ink">
       <SiteNav />
       <BackButton />
 
@@ -85,28 +86,19 @@ export function ClubMenuClient({ menu }: { menu: CategoryWithItems[] }) {
           <div className="h-px w-24 animate-pulse bg-[#c9a86a]/50" />
         </div>
       ) : (
-        <div className="mx-auto max-w-4xl px-4 pb-24 sm:px-8">
-          {/* Category tabs */}
-          <div className="mb-10 flex flex-wrap justify-center gap-2">
-            {menu.map((cat) => {
-              const Icon = getClubIcon(cat.name_ro);
-              return (
-                <button
-                  key={cat.id}
-                  onClick={() => handleTabClick(cat.id)}
-                  className={`flex items-center gap-2 rounded-lg px-5 py-2.5 text-[11px] font-semibold tracking-[0.22em] uppercase transition-all duration-200 ${
-                    active === cat.id
-                      ? "bg-[#ff3da3] text-white"
-                      : "border border-white/15 text-[#f5f0e8]/50 hover:border-[#ff3da3]/40 hover:text-[#f5f0e8]"
-                  }`}
-                >
-                  <Icon className="h-3.5 w-3.5" />
-                  {lang === "ro" ? cat.name_ro : cat.name_en}
-                </button>
-              );
-            })}
-          </div>
+        <>
+          {/* Category tabs — sticky, horizontally scrollable */}
+          <CategoryTabs
+            menu={menu}
+            active={active}
+            lang={lang}
+            getIcon={getClubIcon}
+            onSelect={handleTabClick}
+            activeClassName="bg-[#ff3da3] text-white"
+            inactiveClassName="border border-white/15 text-[#f5f0e8]/50 hover:border-[#ff3da3]/40 hover:text-[#f5f0e8]"
+          />
 
+        <div className="mx-auto max-w-4xl px-4 pb-24 pt-8 sm:px-8">
           {/* Active category */}
           <div ref={itemsRef}>
             {menu
@@ -171,6 +163,7 @@ export function ClubMenuClient({ menu }: { menu: CategoryWithItems[] }) {
               })}
           </div>
         </div>
+        </>
       )}
     </main>
   );

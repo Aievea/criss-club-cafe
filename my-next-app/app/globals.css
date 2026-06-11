@@ -69,6 +69,15 @@ body {
   font-family: Arial, Helvetica, sans-serif;
 }
 
+/* Hides the scrollbar on horizontally-scrollable elements (e.g. menu category tabs) */
+.scrollbar-hide {
+  scrollbar-width: none;
+  -ms-overflow-style: none;
+}
+.scrollbar-hide::-webkit-scrollbar {
+  display: none;
+}
+
 /* ----------------------------------------------------------------------------
    Footer motion + craft utilities
    ------------------------------------------------------------------------- */
