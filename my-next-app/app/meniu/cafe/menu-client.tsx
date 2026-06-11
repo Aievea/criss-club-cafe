@@ -70,10 +70,7 @@ export function CafeMenuClient({ menu }: { menu: CategoryWithItems[] }) {
 
       {/* Hero */}
       <div className="pt-28 pb-10 text-center px-6">
-        <span className="inline-flex items-center rounded-full border border-white/20 bg-white/[0.05] px-3.5 py-1 text-[0.62rem] uppercase tracking-[0.28em] text-white/70">
-          {lang === "ro" ? "Cafenea" : "Cafe"}
-        </span>
-        <h1 className="mt-4 font-display text-[clamp(2.5rem,7vw,5rem)] font-semibold leading-[1] tracking-[-0.02em] text-[#f5f0e8]">
+        <h1 className="font-display text-[clamp(2.5rem,7vw,5rem)] font-semibold leading-[1] tracking-[-0.02em] text-[#f5f0e8]">
           Criss Cafe
         </h1>
         <p className="mt-3 font-serif italic text-[#c9a86a]/80">

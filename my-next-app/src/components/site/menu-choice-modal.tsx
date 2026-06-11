@@ -95,10 +95,7 @@ export function MenuChoiceModal({ open, onClose }: MenuChoiceModalProps) {
             <div className="absolute inset-0 bg-[#080604]/30" />
           </div>
           <div className="flex-1 min-w-0">
-            <p className="text-[0.58rem] font-semibold uppercase tracking-[0.3em] text-[#c9a86a]/60">
-              {lang === "ro" ? "Cafenea" : "Cafe"}
-            </p>
-            <p className="mt-0.5 font-display text-[1.15rem] font-semibold tracking-[-0.01em] text-[#f5f0e8]"
+            <p className="font-display text-[1.15rem] font-semibold tracking-[-0.01em] text-[#f5f0e8]"
                style={{ fontFamily: "var(--font-cinzel)" }}>
               Criss Cafe
             </p>
@@ -125,10 +122,7 @@ export function MenuChoiceModal({ open, onClose }: MenuChoiceModalProps) {
             <div className="absolute inset-0 bg-[#080604]/30" />
           </div>
           <div className="flex-1 min-w-0">
-            <p className="text-[0.58rem] font-semibold uppercase tracking-[0.3em] text-[#ff3da3]/55">
-              Club
-            </p>
-            <p className="mt-0.5 font-display text-[1.15rem] font-semibold tracking-[-0.01em] text-[#f5f0e8]"
+            <p className="font-display text-[1.15rem] font-semibold tracking-[-0.01em] text-[#f5f0e8]"
                style={{ fontFamily: "var(--font-cinzel)" }}>
               Criss Club
             </p>
@@ -178,9 +172,6 @@ export function MenuChoiceModal({ open, onClose }: MenuChoiceModalProps) {
               style={{ background: "radial-gradient(ellipse at 30% 80%, rgba(201,168,106,0.14), transparent 65%)" }}
             />
             <div className="absolute inset-x-0 bottom-0 flex flex-col gap-1.5 p-7">
-              <span className="text-[0.58rem] font-semibold uppercase tracking-[0.38em] text-[#c9a86a]/60 transition-colors duration-300 group-hover:text-[#c9a86a]/90">
-                {lang === "ro" ? "Cafenea" : "Cafe"}
-              </span>
               <h3 className="font-display text-[1.85rem] font-semibold leading-none tracking-[-0.02em] text-[#f5f0e8]"
                   style={{ fontFamily: "var(--font-cinzel)" }}>
                 Criss Cafe
@@ -220,9 +211,6 @@ export function MenuChoiceModal({ open, onClose }: MenuChoiceModalProps) {
               style={{ background: "radial-gradient(ellipse at 70% 80%, rgba(255,61,163,0.12), transparent 65%)" }}
             />
             <div className="absolute inset-x-0 bottom-0 flex flex-col gap-1.5 p-7">
-              <span className="text-[0.58rem] font-semibold uppercase tracking-[0.38em] text-[#ff3da3]/55 transition-colors duration-300 group-hover:text-[#ff3da3]/85">
-                Club
-              </span>
               <h3 className="font-display text-[1.85rem] font-semibold leading-none tracking-[-0.02em] text-[#f5f0e8]"
                   style={{ fontFamily: "var(--font-cinzel)" }}>
                 Criss Club

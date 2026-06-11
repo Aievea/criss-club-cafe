@@ -42,7 +42,7 @@ export function ReservationModal({ open, onClose }: ReservationModalProps) {
     <dialog
       ref={dialogRef}
       onClick={handleBackdropClick}
-      className="dialog-sheet m-auto w-full max-w-sm overflow-hidden rounded-xl border border-white/[0.07] bg-[#0d0b09] p-0 sm:rounded-xl open:animate-[fadeIn_260ms_cubic-bezier(0.16,1,0.3,1)] backdrop:bg-black/75 backdrop:backdrop-blur-sm"
+      className="dialog-sheet m-auto w-full max-w-sm overflow-hidden rounded-xl border border-white/[0.07] bg-[#0d0b09] p-0 text-left sm:rounded-xl open:animate-[fadeIn_260ms_cubic-bezier(0.16,1,0.3,1)] backdrop:bg-black/75 backdrop:backdrop-blur-sm"
       style={{ boxShadow: "0 40px 100px rgba(0,0,0,0.9), 0 0 0 1px rgba(255,255,255,0.05)" }}
     >
       {/* Gold accent line */}
