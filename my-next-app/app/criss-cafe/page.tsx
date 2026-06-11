@@ -34,6 +34,16 @@ const BEERS = [
 
 const PHOTOS = [p1, p2, p3, p4, p5, p6, p7, p8, p9, p10, p11];
 
+// Venue-level alt text for the gallery (rotated across the grid). Kept accurate
+// at the venue level rather than claiming specifics about each photo.
+const GALLERY_ALTS = [
+  "Atmosfera din Criss Cafe, lounge pe Piața Trandafirilor în Târgu Mureș",
+  "Interiorul Criss Cafe, cafenea în centrul Târgu Mureșului",
+  "Preparate și băuturi servite la Criss Cafe, Târgu Mureș",
+  "Barul și terasa Criss Cafe pe Piața Trandafirilor",
+  "Seară la Criss Cafe, lounge & pub în Târgu Mureș",
+];
+
 function GoldDivider() {
   return (
     <div className="mx-auto max-w-5xl px-6 sm:px-8">
@@ -325,14 +335,14 @@ export default function CrissCafePage() {
             <div className="grid grid-cols-2 gap-3 sm:grid-cols-3 lg:grid-cols-4">
               <div className="group col-span-2 overflow-hidden rounded-xl border border-[#c9a86a]/12 shadow-[0_8px_32px_rgba(0,0,0,0.35)]">
                 <div className="relative aspect-[16/9]">
-                  <Image src={PHOTOS[0]} alt="" fill sizes="(max-width: 640px) 100vw, (max-width: 1024px) 66vw, 640px" className="object-cover transition-transform duration-[1000ms] ease-[cubic-bezier(0.2,0.7,0.2,1)] group-hover:scale-[1.04]" />
+                  <Image src={PHOTOS[0]} alt={GALLERY_ALTS[0]} fill sizes="(max-width: 640px) 100vw, (max-width: 1024px) 66vw, 640px" className="object-cover transition-transform duration-[1000ms] ease-[cubic-bezier(0.2,0.7,0.2,1)] group-hover:scale-[1.04]" />
                   <div className="pointer-events-none absolute inset-0 bg-gradient-to-t from-[#1a1411]/50 to-transparent opacity-0 transition-opacity duration-500 group-hover:opacity-100" />
                 </div>
               </div>
-              {PHOTOS.slice(1).map((img) => (
+              {PHOTOS.slice(1).map((img, i) => (
                 <div key={img.src} className="group overflow-hidden rounded-xl border border-[#c9a86a]/12 shadow-[0_4px_16px_rgba(0,0,0,0.3)]">
                   <div className="relative aspect-square">
-                    <Image src={img} alt="" fill sizes="(max-width: 640px) 50vw, (max-width: 1024px) 33vw, 256px" className="object-cover transition-transform duration-[1000ms] ease-[cubic-bezier(0.2,0.7,0.2,1)] group-hover:scale-[1.04]" />
+                    <Image src={img} alt={GALLERY_ALTS[(i + 1) % GALLERY_ALTS.length]} fill sizes="(max-width: 640px) 50vw, (max-width: 1024px) 33vw, 256px" className="object-cover transition-transform duration-[1000ms] ease-[cubic-bezier(0.2,0.7,0.2,1)] group-hover:scale-[1.04]" />
                     <div className="pointer-events-none absolute inset-0 bg-gradient-to-t from-[#1a1411]/50 to-transparent opacity-0 transition-opacity duration-500 group-hover:opacity-100" />
                   </div>
                 </div>

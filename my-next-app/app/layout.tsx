@@ -5,6 +5,10 @@ import { LanguageProvider } from "@/src/i18n/language-context";
 import { ConditionalFooter } from "@/src/components/ConditionalFooter";
 import { WhatsAppFab } from "@/src/components/site/whatsapp-fab";
 import { AudioProvider } from "@/src/components/site/audio-player";
+import { JsonLd } from "@/src/components/JsonLd";
+import { organizationSchema } from "@/src/lib/schema";
+import { pageMetadata } from "@/src/lib/seo";
+import { SITE_URL } from "@/src/lib/site";
 
 const cinzel = Cinzel({
   variable: "--font-cinzel",
@@ -34,10 +38,14 @@ const pinyonScript = Pinyon_Script({
 });
 
 export const metadata: Metadata = {
-  title: "Criss Cafe & Club Târgu Mureș — Cafenea, Lounge & Social Club",
-  description:
-    "Cafenea, lounge, pub și social club în inima Târgu Mureșului, pe Piața Trandafirilor.",
-  icons: { icon: "/favicon.png" },
+  metadataBase: new URL(SITE_URL),
+  ...pageMetadata({
+    title: "Criss Cafe & Club Târgu Mureș — Cafenea, Lounge & Social Club",
+    description:
+      "Cafenea, lounge, pub și social club în inima Târgu Mureșului, pe Piața Trandafirilor.",
+    path: "/",
+  }),
+  icons: { icon: "/favicon.png", apple: "/favicon.png" },
 };
 
 export const viewport: Viewport = {
@@ -57,6 +65,7 @@ export default function RootLayout({
       className={`${cinzel.variable} ${cormorant.variable} ${jost.variable} ${pinyonScript.variable} h-full antialiased`}
     >
       <body className="min-h-full flex flex-col">
+        <JsonLd data={organizationSchema()} />
         <LanguageProvider>
           <AudioProvider>
           <div className="flex flex-1 flex-col">{children}</div>

@@ -39,6 +39,12 @@ export function HomepageHero() {
   return (
     <section className="relative isolate flex min-h-screen min-h-[100svh] flex-col overflow-hidden">
 
+      {/* Accessible, crawlable page title (the visual brand mark is an image). */}
+      <h1 className="sr-only">
+        Criss Cafe &amp; Club Târgu Mureș — cafenea, lounge, pub și social club pe
+        Piața Trandafirilor
+      </h1>
+
       {/* ── Videos ── */}
       <div className="absolute inset-0 -z-20 flex">
         <video
