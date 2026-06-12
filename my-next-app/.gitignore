@@ -39,3 +39,9 @@ yarn-error.log*
 # typescript
 *.tsbuildinfo
 next-env.d.ts
+
+# large source PDF — not imported anywhere, kept locally only
+src/assets/meniu/*.pdf
+
+# heap snapshots from `npm run dev:debug`
+*.heapsnapshot
