@@ -7,7 +7,7 @@ import {
   useEffect,
   useState,
 } from "react";
-import { dictionary, LANGS, type Dictionary, type Lang } from "./dictionary";
+import { dictionary, type Dictionary, type Lang } from "./dictionary";
 
 const STORAGE_KEY = "crd-lang";
 const DEFAULT_LANG: Lang = "ro";
@@ -20,10 +20,6 @@ type LanguageContextValue = {
 };
 
 const LanguageContext = createContext<LanguageContextValue | null>(null);
-
-function isLang(value: string | null): value is Lang {
-  return value !== null && (LANGS as string[]).includes(value);
-}
 
 export function LanguageProvider({ children }: { children: React.ReactNode }) {
   const [lang, setLangState] = useState<Lang>(DEFAULT_LANG);

@@ -1,7 +1,7 @@
 "use client";
 
 import { useState } from "react";
-import { MENU_TABS, type MenuTab } from "@/src/data/cafe-menu";
+import { MENU_TABS } from "@/src/data/cafe-menu";
 import { type Lang } from "@/src/i18n/dictionary";
 
 export function CafeMenu({ lang }: { lang: Lang }) {

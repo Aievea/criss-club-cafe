@@ -28,17 +28,28 @@ export default function AdminVenuePage() {
   const [newCatEn, setNewCatEn] = useState("");
   const [addingCat, setAddingCat] = useState(false);
 
-  // revalidate=false only on the initial load; every post-edit refresh also
-  // regenerates the cached public menu page.
-  const refresh = useCallback(async (revalidate: boolean | unknown = true) => {
-    setLoading(true);
+  const fetchMenu = useCallback(async () => {
     const data = await getAdminMenu(v);
     setMenu(data);
     setLoading(false);
-    if (revalidate) revalidateMenu(v);
   }, [v]);
 
-  useEffect(() => { refresh(false); }, [refresh]);
+  // Post-edit refresh also regenerates the cached public menu page.
+  const refresh = useCallback(() => {
+    setLoading(true);
+    fetchMenu().then(() => revalidateMenu(v));
+  }, [fetchMenu, v]);
+
+  useEffect(() => {
+    let active = true;
+    getAdminMenu(v).then((data) => {
+      if (active) {
+        setMenu(data);
+        setLoading(false);
+      }
+    });
+    return () => { active = false; };
+  }, [v]);
 
   function toggleExpanded(id: string) {
     setExpanded((prev) =>

@@ -36,8 +36,6 @@ export function SiteNav() {
     return () => document.body.classList.remove("overflow-hidden");
   }, [isOpen]);
 
-  useEffect(() => { setIsOpen(false); }, [pathname]);
-
   return (
     <>
       <header className="fixed top-0 left-0 right-0 z-[60] flex items-center justify-between px-9 pt-[calc(env(safe-area-inset-top)+1rem)] pb-4 pointer-events-auto">

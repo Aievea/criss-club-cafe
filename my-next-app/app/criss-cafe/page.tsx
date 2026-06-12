@@ -22,7 +22,6 @@ import p8 from "@/src/assets/images/images-crisscafee/WhatsApp Image 2026-06-01 
 import p9 from "@/src/assets/images/images-crisscafee/WhatsApp Image 2026-06-01 at 21.28.56 (4).jpeg";
 import p10 from "@/src/assets/images/images-crisscafee/WhatsApp Image 2026-06-01 at 21.28.56 (5).jpeg";
 import p11 from "@/src/assets/images/images-crisscafee/WhatsApp Image 2026-06-01 at 21.29.01 (2).jpeg";
-import { WHATSAPP_URL } from "@/src/lib/contact";
 import { ReservationTrigger } from "@/src/components/site/reservation-modal";
 
 const BEERS = [

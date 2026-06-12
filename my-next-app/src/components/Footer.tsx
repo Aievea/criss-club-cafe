@@ -5,7 +5,6 @@ import Image from "next/image";
 import Link from "next/link";
 import aieveaLogo from "@/images/logos/aievea.svg";
 import { useLanguage } from "@/src/i18n/language-context";
-import { DJS } from "@/src/i18n/dictionary";
 import { Reveal } from "./footer/reveal";
 import { LanguageToggle } from "./footer/language-toggle";
 import { useInView } from "./footer/use-in-view";
