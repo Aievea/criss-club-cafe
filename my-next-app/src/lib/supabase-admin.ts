@@ -44,6 +44,16 @@ export async function getAdminMenu(venue: Venue): Promise<CategoryWithItems[]> {
   return topLevel;
 }
 
+// Fire-and-forget: tells the server to regenerate the ISR-cached public menu
+// page so admin edits show up immediately instead of within the revalidate window.
+export function revalidateMenu(venue: Venue) {
+  fetch("/api/revalidate-menu", {
+    method: "POST",
+    headers: { "Content-Type": "application/json" },
+    body: JSON.stringify({ venue }),
+  }).catch(() => {});
+}
+
 export async function uploadCategoryPhoto(file: File, categoryId: string): Promise<string | null> {
   const sb = client();
   const ext = file.name.split(".").pop() ?? "jpg";

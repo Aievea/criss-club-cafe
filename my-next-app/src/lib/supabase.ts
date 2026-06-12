@@ -43,28 +43,23 @@ export interface CategoryWithItems extends MenuCategory {
 }
 
 export async function getMenu(venue: Venue): Promise<CategoryWithItems[]> {
+  // Single round trip: categories with their items embedded via the
+  // menu_items.category_id foreign key.
   const { data: categories } = await supabase
     .from("menu_categories")
-    .select("*")
+    .select("*, items:menu_items(*)")
     .eq("venue", venue)
-    .order("sort_order");
+    .eq("items.available", true)
+    .order("sort_order")
+    .order("sort_order", { referencedTable: "items" });
 
   if (!categories) return [];
-
-  const { data: items } = await supabase
-    .from("menu_items")
-    .select("*")
-    .in("category_id", categories.map((c) => c.id))
-    .eq("available", true)
-    .order("sort_order");
-
-  const allItems = items ?? [];
 
   const catMap = new Map<string, CategoryWithItems>();
   for (const cat of categories) {
     catMap.set(cat.id, {
       ...cat,
-      items: allItems.filter((i) => i.category_id === cat.id),
+      items: cat.items ?? [],
       subcategories: [],
     });
   }

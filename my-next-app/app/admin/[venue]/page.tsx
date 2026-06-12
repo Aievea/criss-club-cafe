@@ -10,6 +10,7 @@ import {
 import {
   getAdminMenu, addCategory, updateCategory, deleteCategory,
   addItem, updateItem, toggleItem, deleteItem, uploadCategoryPhoto,
+  revalidateMenu,
 } from "@/src/lib/supabase-admin";
 import type { Venue, CategoryWithItems, MenuItem } from "@/src/lib/supabase";
 
@@ -27,14 +28,17 @@ export default function AdminVenuePage() {
   const [newCatEn, setNewCatEn] = useState("");
   const [addingCat, setAddingCat] = useState(false);
 
-  const refresh = useCallback(async () => {
+  // revalidate=false only on the initial load; every post-edit refresh also
+  // regenerates the cached public menu page.
+  const refresh = useCallback(async (revalidate: boolean | unknown = true) => {
     setLoading(true);
     const data = await getAdminMenu(v);
     setMenu(data);
     setLoading(false);
+    if (revalidate) revalidateMenu(v);
   }, [v]);
 
-  useEffect(() => { refresh(); }, [refresh]);
+  useEffect(() => { refresh(false); }, [refresh]);
 
   function toggleExpanded(id: string) {
     setExpanded((prev) =>
