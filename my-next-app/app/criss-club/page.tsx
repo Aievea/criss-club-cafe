@@ -4,7 +4,8 @@ import Image from "next/image";
 import { useLanguage } from "@/src/i18n/language-context";
 import { SiteNav } from "@/src/components/site/site-nav";
 import { Reveal } from "@/src/components/footer/reveal";
-import clubVideo from "@/src/assets/video/video-crissclub/WhatsApp Video 2026-06-02 at 17.35.15.mp4";
+import clubVideo from "@/src/assets/video/video-crissclub/club-hero.mp4";
+import clubPoster from "@/src/assets/video/video-crissclub/club-poster.jpg";
 import clubLogoIg from "@/src/assets/images/logos/crisclublogoig.jpeg";
 import Link from "next/link";
 import { WHATSAPP_URL } from "@/src/lib/contact";
@@ -49,6 +50,7 @@ export default function CrissClubPage() {
         <video
           className="absolute inset-0 -z-20 h-full w-full object-cover"
           style={{ filter: "saturate(0.82) brightness(0.55) contrast(1.1)" }}
+          poster={clubPoster.src}
           autoPlay muted loop playsInline preload="metadata"
         >
           <source src={clubVideo} type="video/mp4" />

@@ -8,8 +8,10 @@ import { MuteButton } from "@/src/components/site/audio-player";
 import { ReservationTrigger } from "@/src/components/site/reservation-modal";
 import { useLanguage } from "@/src/i18n/language-context";
 import logo from "@/src/assets/images/logos/2cfd48d9-5856-4b6b-90cc-a9e14fc021d8_removalai_preview.png";
-import clubVideo from "@/src/assets/video/video-crissclub/WhatsApp Video 2026-06-02 at 17.35.15.mp4";
-import cafeVideo from "@/src/assets/video/video-crisscafee/WhatsApp Video 2026-06-01 at 21.26.11.mp4";
+import clubVideo from "@/src/assets/video/video-crissclub/club-hero.mp4";
+import cafeVideo from "@/src/assets/video/video-crisscafee/cafe-hero.mp4";
+import clubPoster from "@/src/assets/video/video-crissclub/club-poster.jpg";
+import cafePoster from "@/src/assets/video/video-crisscafee/cafe-poster.jpg";
 
 export function HomepageHero() {
   const cafeRef = useRef<HTMLVideoElement>(null);
@@ -51,6 +53,7 @@ export function HomepageHero() {
           ref={cafeRef}
           className="h-full w-1/2 object-cover"
           style={{ filter: "saturate(0.82) brightness(0.48) contrast(1.1)" }}
+          poster={cafePoster.src}
           autoPlay loop muted playsInline preload="metadata"
         >
           <source src={cafeVideo} type="video/mp4" />
@@ -59,6 +62,7 @@ export function HomepageHero() {
           ref={clubRef}
           className="h-full w-1/2 object-cover"
           style={{ filter: "saturate(0.82) brightness(0.48) contrast(1.1)" }}
+          poster={clubPoster.src}
           autoPlay loop muted playsInline preload="metadata"
         >
           <source src={clubVideo} type="video/mp4" />

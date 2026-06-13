@@ -9,7 +9,8 @@ import { Reveal } from "@/src/components/footer/reveal";
 import estrelaImg from "@/src/assets/bere/Estrela_Galiza.svg";
 import erdingerImg from "@/src/assets/bere/Erdinger_Weißbräu_logo.svg";
 import krombacherImg from "@/src/assets/bere/krombacher-vector-logo.svg";
-import cafeVideo from "@/src/assets/video/video-crisscafee/WhatsApp Video 2026-06-01 at 21.26.11.mp4";
+import cafeVideo from "@/src/assets/video/video-crisscafee/cafe-hero.mp4";
+import cafePoster from "@/src/assets/video/video-crisscafee/cafe-poster.jpg";
 import cafeLogoIg from "@/src/assets/images/logos/criscafelogoig.jpeg";
 import p1 from "@/src/assets/images/images-crisscafee/WhatsApp Image 2026-06-01 at 21.25.25.jpeg";
 import p2 from "@/src/assets/images/images-crisscafee/WhatsApp Image 2026-06-01 at 21.25.27.jpeg";
@@ -80,6 +81,7 @@ export default function CrissCafePage() {
         <video
           className="absolute inset-0 -z-20 h-full w-full object-cover"
           style={{ filter: "saturate(0.88) brightness(0.54) contrast(1.06)" }}
+          poster={cafePoster.src}
           autoPlay muted loop playsInline preload="metadata"
         >
           <source src={cafeVideo} type="video/mp4" />
