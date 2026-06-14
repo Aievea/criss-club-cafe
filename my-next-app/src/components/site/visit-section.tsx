@@ -81,7 +81,7 @@ export function VisitSection() {
             src="https://maps.google.com/maps?q=46.5439,24.5608&output=embed&z=17&hl=ro"
             className="absolute inset-0 h-full w-full border-0"
             style={{ filter: "grayscale(1) invert(1) brightness(0.82) contrast(1.08) sepia(0.18)" }}
-            loading="lazy"
+            loading="eager"
             allowFullScreen
             referrerPolicy="no-referrer-when-downgrade"
             title="Criss Café & Club — Piața Trandafirilor 43, Târgu Mureș"
