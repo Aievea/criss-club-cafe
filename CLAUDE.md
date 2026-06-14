@@ -8,7 +8,7 @@ This file provides guidance to Claude Code (claude.ai/code) when working with co
 
 ## Commands
 
-All commands run from `my-next-app/`:
+All commands run from the repo root:
 
 ```bash
 npm run dev      # dev server at http://localhost:3000
