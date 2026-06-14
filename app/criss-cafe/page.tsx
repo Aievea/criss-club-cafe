@@ -200,14 +200,14 @@ export default function CrissCafePage() {
         <Reveal>
           <div className="mx-auto grid max-w-5xl gap-10 px-6 py-16 sm:px-8 md:grid-cols-2">
             <div className="flex flex-col items-center border-t border-[#c9a86a]/20 pt-5 text-center">
-              <p className="mb-1 text-xs font-semibold uppercase tracking-[0.3em] text-[#c9a86a]/60 sm:text-sm">{t.cafe.capacityLabel}</p>
-              <p className="font-serif text-xl text-[#f5f0e8]">{t.cafe.seats}</p>
+              <p className="mb-1 text-sm font-semibold uppercase tracking-[0.3em] text-[#c9a86a]/60 sm:text-base">{t.cafe.capacityLabel}</p>
+              <p className="font-serif text-2xl text-[#f5f0e8]">{t.cafe.seats}</p>
             </div>
             <div className="flex flex-col items-center border-t border-[#c9a86a]/20 pt-5 text-center">
-              <p className="mb-3 text-xs font-semibold uppercase tracking-[0.3em] text-[#c9a86a]/60 sm:text-sm">{t.cafe.hoursLabel}</p>
+              <p className="mb-3 text-sm font-semibold uppercase tracking-[0.3em] text-[#c9a86a]/60 sm:text-base">{t.cafe.hoursLabel}</p>
               <dl className="w-full space-y-1.5">
                 {t.cafe.hours.map((row) => (
-                  <div key={row.days} className="flex justify-between text-base sm:text-lg">
+                  <div key={row.days} className="flex justify-between text-lg sm:text-xl">
                     <dt className="text-[#f5f0e8]/55">{row.days}</dt>
                     <dd className="tabular-nums text-[#f5f0e8]">{row.time}</dd>
                   </div>
@@ -222,23 +222,23 @@ export default function CrissCafePage() {
         {/* ── SEO story section ── */}
         <Reveal>
           <div className="mx-auto mt-20 max-w-3xl px-6 sm:px-8 text-center">
-            <p className="mb-4 text-[0.62rem] font-semibold uppercase tracking-[0.38em] text-[#c9a86a]/60">
+            <p className="mb-4 text-[0.7rem] font-semibold uppercase tracking-[0.38em] text-[#c9a86a]/60">
               {lang === "ro" ? "Povestea noastră" : "Our story"}
             </p>
             <h2 className="font-serif font-light leading-[1.1] text-[#f5f0e8] text-balance"
-                style={{ fontSize: "clamp(2rem,4.5vw,3.2rem)" }}>
+                style={{ fontSize: "clamp(2.2rem,4.5vw,3.6rem)" }}>
               {lang === "ro"
                 ? <>Nu vindem cafea.<br /><em className="italic text-[#c9a86a]">Vindem 20 de minute de pace.</em></>
                 : <>We don&apos;t sell coffee.<br /><em className="italic text-[#c9a86a]">We sell 20 minutes of peace.</em></>
               }
             </h2>
-            <p className="mx-auto mt-7 max-w-xl font-serif italic text-[1.1rem] leading-[1.7] text-[#f5f0e8]/65 text-pretty">
+            <p className="mx-auto mt-7 max-w-xl font-serif italic text-[1.25rem] leading-[1.7] text-[#f5f0e8]/65 text-pretty">
               {lang === "ro"
                 ? "Criss Cafe e o afacere de familie construită pe un principiu simplu: dacă nu e bun, nu iese din bucătărie. De la espresso la cocktailuri, de la pizza la paste — totul e făcut cu grijă, pentru oameni care știu diferența."
                 : "Criss Cafe is a family business built on one principle: if it isn't good, it doesn't leave the kitchen. From espresso to cocktails, from pizza to pasta — everything is made with care, for people who know the difference."
               }
             </p>
-            <p className="mx-auto mt-4 max-w-xl font-serif italic text-[1.05rem] leading-[1.7] text-[#f5f0e8]/45 text-pretty">
+            <p className="mx-auto mt-4 max-w-xl font-serif italic text-[1.15rem] leading-[1.7] text-[#f5f0e8]/45 text-pretty">
               {lang === "ro"
                 ? "Lounge, pub, social club — în inima Târgu Mureșului, pe Piața Trandafirilor. Vino o dată și înțelegi de ce lumea revine."
                 : "Lounge, pub, social club — in the heart of Târgu Mureș, on Piața Trandafirilor. Come once and you'll understand why people keep coming back."
@@ -298,7 +298,7 @@ export default function CrissCafePage() {
                   <IgIcon />
                   <span className="text-sm font-medium text-[#f5f0e8]">@criss_cafe_</span>
                 </div>
-                <p className="text-xs text-[#a89f90]">{t.cafe.followIg}</p>
+                <p className="text-sm text-[#a89f90]">{t.cafe.followIg}</p>
               </div>
               <span className="text-[#c9a86a]/50 transition-transform duration-300 group-hover:translate-x-1">→</span>
             </a>
@@ -353,7 +353,7 @@ export default function CrissCafePage() {
         {/* ── CTA band ── */}
         <Reveal>
           <div className="mx-auto max-w-5xl px-6 py-24 sm:px-8 text-center">
-            <p className="font-serif italic text-lg text-[#f5f0e8]/60 mb-8">
+            <p className="font-serif italic text-xl text-[#f5f0e8]/60 mb-8">
               {t.cafe.bookTableNote}
             </p>
             <div className="flex flex-wrap items-center justify-center gap-4">

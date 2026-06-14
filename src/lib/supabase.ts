@@ -42,6 +42,24 @@ export interface CategoryWithItems extends MenuCategory {
   subcategories: CategoryWithItems[];
 }
 
+export interface DJ {
+  id: string;
+  name: string;
+  sub: string | null;
+  photo_url: string | null;
+  sort_order: number;
+  active: boolean;
+}
+
+export async function getDJs(): Promise<DJ[]> {
+  const { data } = await supabase
+    .from("djs")
+    .select("*")
+    .eq("active", true)
+    .order("sort_order");
+  return data ?? [];
+}
+
 export async function getMenu(venue: Venue): Promise<CategoryWithItems[]> {
   // Single round trip: categories with their items embedded via the
   // menu_items.category_id foreign key.

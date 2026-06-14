@@ -6,7 +6,7 @@ import Image from "next/image";
 import { X } from "lucide-react";
 import { useLanguage } from "@/src/i18n/language-context";
 import cafeImg from "@/src/assets/meniu/cafe/coffe.jpeg";
-import clubImg from "@/src/assets/images/images-crissclub/djs/WhatsApp Image 2026-06-02 at 17.36.51.jpeg";
+import clubImg from "@/src/assets/images/images-crissclub/djs/djdavidserban.jpeg";
 
 interface MenuChoiceModalProps {
   open: boolean;

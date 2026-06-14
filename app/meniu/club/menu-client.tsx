@@ -11,11 +11,12 @@ import {
   Wine, Zap, Beer, CupSoda, Martini, Percent, Flame, Sparkles, Coffee,
   type LucideIcon,
 } from "lucide-react";
-import club1 from "@/src/assets/images/images-crissclub/djs/WhatsApp Image 2026-06-02 at 17.36.51.jpeg";
-import club2 from "@/src/assets/images/images-crissclub/djs/WhatsApp Image 2026-06-02 at 17.36.51 (1).jpeg";
-import club3 from "@/src/assets/images/images-crissclub/djs/WhatsApp Image 2026-06-02 at 17.36.52.jpeg";
-import club4 from "@/src/assets/images/images-crissclub/djs/WhatsApp Image 2026-06-02 at 17.36.52 (1).jpeg";
-import club5 from "@/src/assets/images/images-crissclub/djs/WhatsApp Image 2026-06-02 at 17.38.10.jpeg";
+import club1 from "@/src/assets/images/images-crissclub/djs/djdavidserban.jpeg";
+import club2 from "@/src/assets/images/images-crissclub/djs/djseft.jpeg";
+import club3 from "@/src/assets/images/images-crissclub/djs/djadrianstan.jpeg";
+import club4 from "@/src/assets/images/images-crissclub/djs/adriantepes.jpeg";
+// @ts-ignore
+import club5 from "@/src/assets/images/images-crissclub/djs/soa dj.jpeg";
 
 const CLUB_ICONS: Record<string, LucideIcon> = {
   "Cocktailuri": Martini,

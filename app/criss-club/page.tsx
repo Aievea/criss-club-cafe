@@ -11,6 +11,7 @@ import Link from "next/link";
 import { WHATSAPP_URL } from "@/src/lib/contact";
 import { ReservationTrigger } from "@/src/components/site/reservation-modal";
 import { AddressLink } from "@/src/components/site/address-link";
+import { DJGrid } from "@/src/components/site/dj-grid";
 
 function Divider() {
   return (
@@ -172,21 +173,21 @@ export default function CrissClubPage() {
         <Reveal>
           <div className="mx-auto grid max-w-5xl gap-10 px-6 py-16 sm:px-8 md:grid-cols-2">
             <div className="flex flex-col items-center border-t border-[#a855f7]/25 pt-5 text-center">
-              <p className="mb-1 text-xs font-semibold uppercase tracking-[0.3em] text-[#a855f7]/60 sm:text-sm">{t.club.capacityLabel}</p>
+              <p className="mb-1 text-sm font-semibold uppercase tracking-[0.3em] text-[#a855f7]/60 sm:text-base">{t.club.capacityLabel}</p>
               <div className="mt-1 flex items-baseline gap-3">
                 <span className="font-display text-3xl font-semibold tracking-[-0.02em] text-[#a855f7]">220+</span>
-                <span className="text-base text-[#a89f90]">{t.club.persoane}</span>
+                <span className="text-lg text-[#a89f90]">{t.club.persoane}</span>
               </div>
             </div>
             <div className="flex flex-col items-center border-t border-[#a855f7]/25 pt-5 text-center">
-              <p className="mb-2 text-xs font-semibold uppercase tracking-[0.3em] text-[#a855f7]/60 sm:text-sm">{t.club.hoursLabel}</p>
+              <p className="mb-2 text-sm font-semibold uppercase tracking-[0.3em] text-[#a855f7]/60 sm:text-base">{t.club.hoursLabel}</p>
               <div className="flex items-baseline gap-3">
                 <span className="font-display text-3xl font-semibold tracking-[-0.02em] text-[#a855f7]">04:00</span>
-                <span className="text-sm text-[#a89f90]">{t.club.nocturn}</span>
+                <span className="text-lg text-[#a89f90]">{t.club.nocturn}</span>
               </div>
               <div className="mt-3 flex flex-wrap justify-center gap-1.5">
                 {t.club.events.split(" • ").map((ev) => (
-                  <span key={ev} className="rounded-full border border-[#ff3da3]/20 bg-[#ff3da3]/[0.06] px-3 py-1.5 text-sm text-[#f5f0e8]/75">
+                  <span key={ev} className="rounded-full border border-[#ff3da3]/20 bg-[#ff3da3]/[0.06] px-3 py-1.5 text-base text-[#f5f0e8]/75">
                     {ev}
                   </span>
                 ))}
@@ -200,21 +201,21 @@ export default function CrissClubPage() {
         {/* Story section */}
         <Reveal>
           <div className="mx-auto mt-20 max-w-3xl px-6 sm:px-8 text-center">
-            <p className="mb-4 text-[0.62rem] font-semibold uppercase tracking-[0.38em] text-[#a855f7]/60">
+            <p className="mb-4 text-[0.7rem] font-semibold uppercase tracking-[0.38em] text-[#a855f7]/60">
               {t.club.storyEyebrow}
             </p>
             <h2
               className="font-serif font-light leading-[1.1] text-[#f5f0e8] text-balance"
-              style={{ fontSize: "clamp(2rem,4.5vw,3.2rem)" }}
+              style={{ fontSize: "clamp(2.2rem,4.5vw,3.6rem)" }}
             >
               {t.club.storyHeadline}
               <br />
               <em className="italic text-[#ff3da3]">{t.club.storyEm}</em>
             </h2>
-            <p className="mx-auto mt-7 max-w-xl font-serif italic text-[1.1rem] leading-[1.7] text-[#f5f0e8]/65 text-pretty">
+            <p className="mx-auto mt-7 max-w-xl font-serif italic text-[1.25rem] leading-[1.7] text-[#f5f0e8]/65 text-pretty">
               {t.club.storyP1}
             </p>
-            <p className="mx-auto mt-4 max-w-xl font-serif italic text-[1.05rem] leading-[1.7] text-[#f5f0e8]/45 text-pretty">
+            <p className="mx-auto mt-4 max-w-xl font-serif italic text-[1.15rem] leading-[1.7] text-[#f5f0e8]/45 text-pretty">
               {t.club.storyP2}
             </p>
             <div className="mt-10 flex flex-wrap justify-center gap-4">
@@ -231,6 +232,24 @@ export default function CrissClubPage() {
 
         <div className="mt-20"><Divider /></div>
 
+        {/* DJ Lineup */}
+        <Reveal>
+          <div className="mx-auto mt-16 max-w-5xl px-6 sm:px-8">
+            <div className="mb-10 text-center">
+              <h2
+                className="font-serif italic text-[#f5f0e8]/90"
+                style={{ fontSize: "clamp(1.8rem,3.5vw,2.6rem)" }}
+              >
+                {t.club.djLabel}
+              </h2>
+              <div className="mx-auto mt-3 h-px w-10 bg-gradient-to-r from-[#a855f7]/60 to-[#ff3da3]/60" />
+            </div>
+            <DJGrid />
+          </div>
+        </Reveal>
+
+        <div className="mt-16"><Divider /></div>
+
         {/* Selective notice */}
         <Reveal>
           <div className="mx-auto mt-12 max-w-5xl px-6 sm:px-8">
@@ -240,7 +259,7 @@ export default function CrissClubPage() {
                 className="pointer-events-none absolute inset-0 opacity-50"
                 style={{ background: "radial-gradient(ellipse at left, rgba(168,85,247,0.08), transparent 60%)" }}
               />
-              <p className="relative font-serif text-base italic leading-relaxed text-[#a855f7]/85">&#10022; {t.club.selective}</p>
+              <p className="relative font-serif text-lg italic leading-relaxed text-[#a855f7]/85">&#10022; {t.club.selective}</p>
             </div>
           </div>
         </Reveal>
@@ -262,7 +281,7 @@ export default function CrissClubPage() {
                   <IgIcon />
                   <span className="text-sm font-medium text-[#f5f0e8]">@criss_club_</span>
                 </div>
-                <p className="text-xs text-[#a89f90]">{t.club.followIg}</p>
+                <p className="text-sm text-[#a89f90]">{t.club.followIg}</p>
               </div>
               <span className="text-[#a855f7]/50 transition-transform duration-300 group-hover:translate-x-1">&rarr;</span>
             </a>
@@ -317,7 +336,7 @@ export default function CrissClubPage() {
               className="pointer-events-none absolute inset-0 rounded-2xl"
               style={{ background: "radial-gradient(ellipse 70% 80% at 50% 50%, rgba(139,92,246,0.08) 0%, transparent 70%)" }}
             />
-            <p className="relative font-serif italic text-lg text-[#a855f7]/70 mb-8">
+            <p className="relative font-serif italic text-xl text-[#a855f7]/70 mb-8">
               {t.club.bookNightNote}
             </p>
             <div className="relative flex flex-wrap items-center justify-center gap-4">

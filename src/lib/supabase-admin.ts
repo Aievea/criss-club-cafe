@@ -1,5 +1,5 @@
 import { createBrowserClient } from "@/src/lib/supabase";
-import type { Venue, MenuCategory, MenuItem, CategoryWithItems } from "@/src/lib/supabase";
+import type { Venue, MenuCategory, MenuItem, CategoryWithItems, DJ } from "@/src/lib/supabase";
 
 function client() {
   return createBrowserClient();
@@ -114,4 +114,33 @@ export async function toggleItem(id: string, available: boolean) {
 export async function deleteItem(id: string) {
   const { error } = await client().from("menu_items").delete().eq("id", id);
   return { error };
+}
+
+// ── DJs ──────────────────────────────────────────────────────────────────────
+
+export async function getDJsAdmin(): Promise<DJ[]> {
+  const { data } = await client().from("djs").select("*").order("sort_order");
+  return (data as DJ[]) ?? [];
+}
+
+export async function addDJ(name: string, sub: string | null, sort_order: number) {
+  return client().from("djs").insert({ name, sub: sub || null, sort_order, active: true }).select().single();
+}
+
+export async function updateDJ(id: string, patch: Partial<Pick<DJ, "name" | "sub" | "photo_url" | "sort_order" | "active">>) {
+  return client().from("djs").update(patch).eq("id", id);
+}
+
+export async function deleteDJ(id: string) {
+  return client().from("djs").delete().eq("id", id);
+}
+
+export async function uploadDJPhoto(file: File, djId: string): Promise<string | null> {
+  const sb = client();
+  const ext = file.name.split(".").pop() ?? "jpg";
+  const path = `djs/${djId}.${ext}`;
+  const { error } = await sb.storage.from("menu-photos").upload(path, file, { upsert: true });
+  if (error) return null;
+  const { data } = sb.storage.from("menu-photos").getPublicUrl(path);
+  return data.publicUrl;
 }
